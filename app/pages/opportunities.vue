@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const { isAuthenticated, signInWithGitHub } = useAuth()
 const client = useNeonClient()
 
 useSeoMeta({
@@ -154,13 +155,31 @@ const difficultyColor: Record<string, string> = {
 
       <!-- Startup Ideas -->
       <section>
-        <h2 class="text-2xl font-bold mb-2 flex items-center gap-2">
-          <UIcon
-            name="i-lucide-lightbulb"
-            class="text-orange-500"
+        <div class="flex items-center justify-between mb-2">
+          <h2 class="text-2xl font-bold flex items-center gap-2">
+            <UIcon
+              name="i-lucide-lightbulb"
+              class="text-orange-500"
+            />
+            Startup Ideas Looking for Founders
+          </h2>
+          <UButton
+            v-if="isAuthenticated"
+            to="/opportunities/submit-idea"
+            label="Share an Idea"
+            icon="i-lucide-plus"
+            size="sm"
+            variant="outline"
           />
-          Startup Ideas Looking for Founders
-        </h2>
+          <UButton
+            v-else
+            label="Sign in to share"
+            icon="i-lucide-log-in"
+            size="sm"
+            variant="ghost"
+            @click="signInWithGitHub"
+          />
+        </div>
         <p class="text-zinc-500 dark:text-zinc-400 mb-6">
           Bahrain-focused startup ideas that need technical co-founders or founding team members.
         </p>
@@ -242,13 +261,31 @@ const difficultyColor: Record<string, string> = {
 
       <!-- Job Listings -->
       <section>
-        <h2 class="text-2xl font-bold mb-2 flex items-center gap-2">
-          <UIcon
-            name="i-lucide-briefcase"
-            class="text-yellow-500"
+        <div class="flex items-center justify-between mb-2">
+          <h2 class="text-2xl font-bold flex items-center gap-2">
+            <UIcon
+              name="i-lucide-briefcase"
+              class="text-yellow-500"
+            />
+            Job Listings
+          </h2>
+          <UButton
+            v-if="isAuthenticated"
+            to="/opportunities/submit-job"
+            label="Submit a Job"
+            icon="i-lucide-plus"
+            size="sm"
+            variant="outline"
           />
-          Job Listings
-        </h2>
+          <UButton
+            v-else
+            label="Sign in to post"
+            icon="i-lucide-log-in"
+            size="sm"
+            variant="ghost"
+            @click="signInWithGitHub"
+          />
+        </div>
         <p class="text-zinc-500 dark:text-zinc-400 mb-6">
           JavaScript and web development positions in Bahrain.
         </p>
@@ -342,13 +379,26 @@ const difficultyColor: Record<string, string> = {
           <p class="text-zinc-500 dark:text-zinc-400 font-medium">
             More job listings coming soon
           </p>
-          <p class="text-sm text-zinc-400 dark:text-zinc-500 mt-1">
+          <UButton
+            v-if="isAuthenticated"
+            to="/opportunities/submit-job"
+            label="Submit a Job Listing"
+            icon="i-lucide-plus"
+            variant="outline"
+            size="sm"
+            class="mt-3"
+          />
+          <p
+            v-else
+            class="text-sm text-zinc-400 dark:text-zinc-500 mt-1"
+          >
             Know of a JavaScript role in Bahrain?
-            <a
-              href="https://github.com/bahrain-js"
-              target="_blank"
+            <button
               class="text-primary hover:underline"
-            >Let us know</a>
+              @click="signInWithGitHub"
+            >
+              Sign in to post
+            </button>
           </p>
         </div>
       </section>
