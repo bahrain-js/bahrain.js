@@ -674,8 +674,8 @@ useSeoMeta({
       class="relative overflow-hidden py-24 sm:py-32"
     >
       <!-- Animated gradient orbs -->
-      <div class="hero-orb absolute -top-32 -left-32 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
-      <div class="hero-orb absolute -bottom-32 -right-32 w-96 h-96 bg-yellow-400/10 rounded-full blur-3xl" />
+      <div class="hero-orb absolute -top-16 -left-16 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
+      <div class="hero-orb absolute -bottom-16 -right-16 w-96 h-96 bg-yellow-400/10 rounded-full blur-3xl" />
       <div class="hero-orb absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-primary/5 rounded-full blur-3xl" />
 
       <!-- Floating particles -->
@@ -1091,8 +1091,8 @@ useSeoMeta({
       class="py-20 bg-[var(--ui-bg-elevated)] relative overflow-hidden"
     >
       <!-- Parallax orbs -->
-      <div class="cta-orb-1 absolute -top-20 -right-20 w-72 h-72 bg-primary/8 rounded-full blur-3xl" />
-      <div class="cta-orb-2 absolute -bottom-20 -left-20 w-72 h-72 bg-yellow-400/8 rounded-full blur-3xl" />
+      <div class="cta-orb-1 absolute -top-10 -right-10 w-72 h-72 bg-primary/8 rounded-full blur-3xl" />
+      <div class="cta-orb-2 absolute -bottom-10 -left-10 w-72 h-72 bg-yellow-400/8 rounded-full blur-3xl" />
 
       <div class="mx-auto max-w-3xl px-6 text-center relative z-10">
         <h2
