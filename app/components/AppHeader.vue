@@ -46,7 +46,7 @@ const userMenuItems = computed(() => {
      <UHeader>
       <template #left>
         <NuxtLink to="/" class="flex items-center">
-          <AppLogo />
+          <AppLogo class="mt-10" />
         </NuxtLink>
       </template>
 

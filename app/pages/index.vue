@@ -123,6 +123,10 @@ const pipelineRef = ref<HTMLElement>()
 const tiersRef = ref<HTMLElement>()
 const ctaRef = ref<HTMLElement>()
 const particleContainer = ref<HTMLElement>()
+const divider1 = ref<HTMLElement>()
+const divider2 = ref<HTMLElement>()
+const divider3 = ref<HTMLElement>()
+const divider4 = ref<HTMLElement>()
 
 // ─── GSAP Animations ───
 onMounted(async () => {
@@ -227,6 +231,20 @@ onMounted(async () => {
         })
       })
     }
+
+    // ═══ HERO EXIT: Scale down + blur as you scroll past ═══
+    gsap.to(heroRef.value, {
+      scale: 0.92,
+      filter: 'blur(6px)',
+      autoAlpha: 0.4,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: heroRef.value,
+        start: 'center center',
+        end: 'bottom top',
+        scrub: true
+      }
+    })
   }
 
   // ═══ STATS: Counter + icon spin + scale pulse ═══
@@ -536,6 +554,119 @@ onMounted(async () => {
       }
     })
   }
+
+  // ═══ SECTION TRANSITIONS: Animated dividers + reveals ═══
+
+  // Wave divider 1: Hero → Stats — the SVG path draws itself
+  if (divider1.value) {
+    gsap.fromTo(divider1.value.querySelector('.divider-wave')!, {
+      clipPath: 'inset(0 100% 0 0)'
+    }, {
+      clipPath: 'inset(0 0% 0 0)',
+      ease: 'power2.out',
+      scrollTrigger: {
+        trigger: divider1.value,
+        start: 'top 90%',
+        end: 'top 50%',
+        scrub: 0.5
+      }
+    })
+  }
+
+  // Stats section parallax lift (rises slightly faster)
+  if (statsRef.value) {
+    gsap.fromTo(statsRef.value, {
+      yPercent: 8
+    }, {
+      yPercent: -3,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: statsRef.value,
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: true
+      }
+    })
+  }
+
+  // Wave divider 2: Stats → Features — slide from right
+  if (divider2.value) {
+    gsap.from(divider2.value, {
+      xPercent: 50,
+      autoAlpha: 0,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: divider2.value,
+        start: 'top 90%',
+        end: 'top 60%',
+        scrub: 0.5
+      }
+    })
+  }
+
+  // Features → Pipeline divider: diagonal wipe
+  if (divider3.value) {
+    gsap.fromTo(divider3.value.querySelector('.divider-wave')!, {
+      clipPath: 'polygon(0 0, 0 0, 0 100%, 0 100%)'
+    }, {
+      clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
+      ease: 'power2.inOut',
+      scrollTrigger: {
+        trigger: divider3.value,
+        start: 'top 85%',
+        end: 'top 50%',
+        scrub: 0.6
+      }
+    })
+  }
+
+  // Pipeline → Tiers divider: grow from center
+  if (divider4.value) {
+    gsap.fromTo(divider4.value.querySelector('.divider-wave')!, {
+      clipPath: 'inset(0 50% 0 50%)'
+    }, {
+      clipPath: 'inset(0 0% 0 0%)',
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: divider4.value,
+        start: 'top 85%',
+        end: 'top 55%',
+        scrub: 0.5
+      }
+    })
+  }
+
+  // Features section: slight parallax
+  if (featuresRef.value) {
+    gsap.fromTo(featuresRef.value, {
+      yPercent: 4
+    }, {
+      yPercent: -2,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: featuresRef.value,
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: true
+      }
+    })
+  }
+
+  // Tiers section: gentle parallax
+  if (tiersRef.value) {
+    gsap.fromTo(tiersRef.value, {
+      yPercent: 5
+    }, {
+      yPercent: -2,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: tiersRef.value,
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: true
+      }
+    })
+  }
 })
 
 useSeoMeta({
@@ -620,8 +751,15 @@ useSeoMeta({
       </div>
     </section>
 
+    <!-- Divider: Hero → Stats -->
+    <div ref="divider1" class="relative -mt-1 z-10">
+      <svg class="divider-wave w-full h-16 sm:h-24" viewBox="0 0 1440 96" preserveAspectRatio="none" fill="var(--ui-bg-elevated)">
+        <path d="M0,64 C240,96 480,32 720,64 C960,96 1200,32 1440,64 L1440,96 L0,96 Z" />
+      </svg>
+    </div>
+
     <!-- Community Stats -->
-    <section ref="statsRef" class="py-16 bg-[var(--ui-bg-elevated)]">
+    <section ref="statsRef" class="py-16 bg-[var(--ui-bg-elevated)] relative z-10">
       <div class="mx-auto max-w-5xl px-6">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
           <div
@@ -641,6 +779,13 @@ useSeoMeta({
         </div>
       </div>
     </section>
+
+    <!-- Divider: Stats → Events/Features -->
+    <div ref="divider2" class="relative -mt-1 z-10">
+      <svg class="divider-wave w-full h-16 sm:h-24 rotate-180" viewBox="0 0 1440 96" preserveAspectRatio="none" fill="var(--ui-bg-elevated)">
+        <path d="M0,32 C360,96 720,0 1080,64 C1260,96 1380,48 1440,32 L1440,96 L0,96 Z" />
+      </svg>
+    </div>
 
     <!-- Next Event Countdown -->
     <section
@@ -726,8 +871,15 @@ useSeoMeta({
       </div>
     </section>
 
+    <!-- Divider: Features → Pipeline -->
+    <div ref="divider3" class="relative -mt-1 z-10">
+      <svg class="divider-wave w-full h-16 sm:h-24" viewBox="0 0 1440 96" preserveAspectRatio="none" fill="var(--ui-bg-elevated)">
+        <path d="M0,96 C180,32 360,80 540,48 C720,16 900,64 1080,32 C1260,0 1380,48 1440,32 L1440,96 L0,96 Z" />
+      </svg>
+    </div>
+
     <!-- Pipeline -->
-    <section ref="pipelineRef" class="py-20 bg-[var(--ui-bg-elevated)]">
+    <section ref="pipelineRef" class="py-20 bg-[var(--ui-bg-elevated)] relative z-10">
       <div class="mx-auto max-w-5xl px-6">
         <div class="section-header text-center mb-12" style="visibility: hidden">
           <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">From idea to npm package</h2>
@@ -776,6 +928,13 @@ useSeoMeta({
         </div>
       </div>
     </section>
+
+    <!-- Divider: Pipeline → Tiers -->
+    <div ref="divider4" class="relative -mt-1 z-10">
+      <svg class="divider-wave w-full h-16 sm:h-24 rotate-180" viewBox="0 0 1440 96" preserveAspectRatio="none" fill="var(--ui-bg-elevated)">
+        <path d="M0,64 C120,32 360,96 600,48 C840,0 1080,80 1320,48 C1380,40 1420,56 1440,64 L1440,96 L0,96 Z" />
+      </svg>
+    </div>
 
     <!-- Membership Tiers -->
     <section ref="tiersRef" class="py-20" style="perspective: 1000px">
