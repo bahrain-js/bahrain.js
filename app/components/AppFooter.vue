@@ -50,6 +50,15 @@
           size="sm"
         />
         <UButton
+          to="https://discord.gg/EZrDeaErBV"
+          target="_blank"
+          icon="i-simple-icons-discord"
+          aria-label="Discord"
+          color="neutral"
+          variant="ghost"
+          size="sm"
+        />
+        <UButton
           to="https://www.npmjs.com/org/bahrainjs"
           target="_blank"
           icon="i-simple-icons-npm"
