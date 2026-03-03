@@ -21,6 +21,7 @@ const form = ref({
   format: 'in-person',
   type: 'meetup',
   location: '',
+  speakers: '',
   status: 'pending'
 })
 
@@ -85,6 +86,7 @@ async function fetchEvent() {
       format: event.format || 'in-person',
       type: event.type || 'meetup',
       location: event.location || '',
+      speakers: Array.isArray(event.speakers) ? event.speakers.join(', ') : '',
       status: event.status
     }
   } catch (err: any) {
@@ -117,6 +119,7 @@ async function saveEvent() {
         format: form.value.format,
         type: form.value.type,
         location: form.value.location || null,
+        speakers: form.value.speakers ? form.value.speakers.split(',').map((s: string) => s.trim()).filter(Boolean) : [],
         updated_at: new Date().toISOString()
       })
       .eq('id', eventId)
@@ -331,6 +334,14 @@ useSeoMeta({
             <UInput
               v-model="form.location"
               placeholder="e.g. WeWork, Bahrain Bay"
+              class="w-full"
+            />
+          </UFormField>
+
+          <UFormField label="Speakers (comma separated)">
+            <UInput
+              v-model="form.speakers"
+              placeholder="e.g. John Doe, Jane Smith"
               class="w-full"
             />
           </UFormField>

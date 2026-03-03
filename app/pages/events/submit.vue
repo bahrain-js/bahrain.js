@@ -15,7 +15,8 @@ const form = ref({
   time: new Time(18, 0) as any,
   format: 'in-person',
   type: 'meetup',
-  location: ''
+  location: '',
+  speakers: ''
 })
 
 const types = [
@@ -62,6 +63,7 @@ async function submitEvent() {
         format: form.value.format,
         type: form.value.type,
         location: form.value.location || null,
+        speakers: form.value.speakers ? form.value.speakers.split(',').map((s: string) => s.trim()).filter(Boolean) : [],
         status: 'pending',
         submitted_by: user.value.id
       })
@@ -272,6 +274,14 @@ useSeoMeta({
           <UInput
             v-model="form.location"
             placeholder="e.g. WeWork, Bahrain Bay"
+            class="w-full"
+          />
+        </UFormField>
+
+        <UFormField label="Speakers (comma separated)">
+          <UInput
+            v-model="form.speakers"
+            placeholder="e.g. John Doe, Jane Smith"
             class="w-full"
           />
         </UFormField>
