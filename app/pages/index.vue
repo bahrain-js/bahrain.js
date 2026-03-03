@@ -1078,6 +1078,13 @@ useSeoMeta({
       </div>
     </section>
 
+    <!-- Newsletter -->
+    <section class="py-16">
+      <UContainer>
+        <NewsletterSignup />
+      </UContainer>
+    </section>
+
     <!-- CTA -->
     <section
       ref="ctaRef"
