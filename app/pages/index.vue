@@ -70,7 +70,7 @@ onUnmounted(() => clearInterval(countdownInterval))
 // ─── Static Data ───
 const heroWords = [
   { text: 'Where', highlight: false },
-  { text: "Bahrain's", highlight: false },
+  { text: 'Bahrain\'s', highlight: false },
   { text: 'JavaScript', highlight: false },
   { text: 'community', highlight: false }
 ]
@@ -669,26 +669,39 @@ useSeoMeta({
 <template>
   <div>
     <!-- Hero -->
-    <section ref="heroRef" class="relative overflow-hidden py-24 sm:py-32">
+    <section
+      ref="heroRef"
+      class="relative overflow-hidden py-24 sm:py-32"
+    >
       <!-- Animated gradient orbs -->
       <div class="hero-orb absolute -top-32 -left-32 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
       <div class="hero-orb absolute -bottom-32 -right-32 w-96 h-96 bg-yellow-400/10 rounded-full blur-3xl" />
       <div class="hero-orb absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-primary/5 rounded-full blur-3xl" />
 
       <!-- Floating particles -->
-      <div ref="particleContainer" class="absolute inset-0 pointer-events-none">
-        <div v-for="i in 20" :key="i" class="particle absolute rounded-full bg-primary/30 opacity-0" />
+      <div
+        ref="particleContainer"
+        class="absolute inset-0 pointer-events-none"
+      >
+        <div
+          v-for="i in 20"
+          :key="i"
+          class="particle absolute rounded-full bg-primary/30 opacity-0"
+        />
       </div>
 
       <div class="mx-auto max-w-4xl px-6 text-center relative z-10">
-        <h1 class="text-5xl sm:text-7xl font-extrabold tracking-tight leading-[1.1]" style="perspective: 800px">
+        <h1
+          class="text-5xl sm:text-7xl font-extrabold tracking-tight leading-[1.1]"
+          style="perspective: 800px"
+        >
           <span
             v-for="(word, i) in heroWords"
             :key="'w' + i"
             class="hero-word inline-block mr-[0.3em]"
             style="visibility: hidden"
           >{{ word.text }}</span>
-          <br class="hidden sm:block" />
+          <br class="hidden sm:block">
           <span
             v-for="(action, i) in heroActions"
             :key="'a' + i"
@@ -743,14 +756,25 @@ useSeoMeta({
     </section>
 
     <!-- Divider: Hero → Stats -->
-    <div ref="divider1" class="relative -mt-1 z-10">
-      <svg class="divider-wave w-full h-16 sm:h-24" viewBox="0 0 1440 96" preserveAspectRatio="none" fill="var(--ui-bg-elevated)">
+    <div
+      ref="divider1"
+      class="relative -mt-1 z-10"
+    >
+      <svg
+        class="divider-wave w-full h-16 sm:h-24"
+        viewBox="0 0 1440 96"
+        preserveAspectRatio="none"
+        fill="var(--ui-bg-elevated)"
+      >
         <path d="M0,64 C240,96 480,32 720,64 C960,96 1200,32 1440,64 L1440,96 L0,96 Z" />
       </svg>
     </div>
 
     <!-- Community Stats -->
-    <section ref="statsRef" class="py-16 bg-[var(--ui-bg-elevated)] relative z-10">
+    <section
+      ref="statsRef"
+      class="py-16 bg-[var(--ui-bg-elevated)] relative z-10"
+    >
       <div class="mx-auto max-w-5xl px-6">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
           <div
@@ -759,7 +783,10 @@ useSeoMeta({
             class="stat-item flex flex-col items-center gap-2"
             style="visibility: hidden"
           >
-            <UIcon :name="stat.icon" class="stat-icon size-6 text-primary opacity-60" />
+            <UIcon
+              :name="stat.icon"
+              class="stat-icon size-6 text-primary opacity-60"
+            />
             <p class="stat-number text-4xl font-extrabold text-primary tabular-nums">
               {{ displayStats[i] }}
             </p>
@@ -772,8 +799,16 @@ useSeoMeta({
     </section>
 
     <!-- Divider: Stats → Events/Features -->
-    <div ref="divider2" class="relative -mt-1 z-10">
-      <svg class="divider-wave w-full h-16 sm:h-24 rotate-180" viewBox="0 0 1440 96" preserveAspectRatio="none" fill="var(--ui-bg-elevated)">
+    <div
+      ref="divider2"
+      class="relative -mt-1 z-10"
+    >
+      <svg
+        class="divider-wave w-full h-16 sm:h-24 rotate-180"
+        viewBox="0 0 1440 96"
+        preserveAspectRatio="none"
+        fill="var(--ui-bg-elevated)"
+      >
         <path d="M0,32 C360,96 720,0 1080,64 C1260,96 1380,48 1440,32 L1440,96 L0,96 Z" />
       </svg>
     </div>
@@ -788,8 +823,13 @@ useSeoMeta({
         <UCard class="overflow-hidden">
           <div class="flex flex-col sm:flex-row sm:items-center gap-6">
             <div class="flex-1">
-              <p class="text-xs font-semibold uppercase tracking-wider text-primary mb-2">Next Event</p>
-              <NuxtLink :to="`/events/${nextEvent.id}`" class="group">
+              <p class="text-xs font-semibold uppercase tracking-wider text-primary mb-2">
+                Next Event
+              </p>
+              <NuxtLink
+                :to="`/events/${nextEvent.id}`"
+                class="group"
+              >
                 <h3 class="text-2xl font-bold group-hover:text-primary transition-colors">
                   {{ nextEvent.title }}
                 </h3>
@@ -797,8 +837,14 @@ useSeoMeta({
               <p class="text-sm text-muted mt-1">
                 {{ new Date(nextEvent.date).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' }) }}
               </p>
-              <p v-if="nextEvent.location" class="text-sm text-muted flex items-center gap-1 mt-1">
-                <UIcon name="i-lucide-map-pin" class="size-3.5" />
+              <p
+                v-if="nextEvent.location"
+                class="text-sm text-muted flex items-center gap-1 mt-1"
+              >
+                <UIcon
+                  name="i-lucide-map-pin"
+                  class="size-3.5"
+                />
                 {{ nextEvent.location }}
               </p>
             </div>
@@ -835,10 +881,18 @@ useSeoMeta({
     </section>
 
     <!-- What We're About -->
-    <section ref="featuresRef" class="py-20">
+    <section
+      ref="featuresRef"
+      class="py-20"
+    >
       <div class="mx-auto max-w-5xl px-6">
-        <div class="section-header text-center mb-12" style="visibility: hidden">
-          <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">More than meetups</h2>
+        <div
+          class="section-header text-center mb-12"
+          style="visibility: hidden"
+        >
+          <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">
+            More than meetups
+          </h2>
           <p class="mt-4 text-lg text-muted max-w-2xl mx-auto">
             A signal hub, a builder community, and an on-ramp for JavaScript developers at every level.
           </p>
@@ -852,10 +906,17 @@ useSeoMeta({
           >
             <div class="flex flex-col gap-3">
               <div class="feature-icon flex items-center justify-center w-12 h-12 rounded-xl bg-primary/10">
-                <UIcon :name="feature.icon" class="size-6 text-primary" />
+                <UIcon
+                  :name="feature.icon"
+                  class="size-6 text-primary"
+                />
               </div>
-              <h3 class="font-semibold">{{ feature.title }}</h3>
-              <p class="text-sm text-muted">{{ feature.description }}</p>
+              <h3 class="font-semibold">
+                {{ feature.title }}
+              </h3>
+              <p class="text-sm text-muted">
+                {{ feature.description }}
+              </p>
             </div>
           </UCard>
         </div>
@@ -863,17 +924,33 @@ useSeoMeta({
     </section>
 
     <!-- Divider: Features → Pipeline -->
-    <div ref="divider3" class="relative -mt-1 z-10">
-      <svg class="divider-wave w-full h-16 sm:h-24" viewBox="0 0 1440 96" preserveAspectRatio="none" fill="var(--ui-bg-elevated)">
+    <div
+      ref="divider3"
+      class="relative -mt-1 z-10"
+    >
+      <svg
+        class="divider-wave w-full h-16 sm:h-24"
+        viewBox="0 0 1440 96"
+        preserveAspectRatio="none"
+        fill="var(--ui-bg-elevated)"
+      >
         <path d="M0,96 C180,32 360,80 540,48 C720,16 900,64 1080,32 C1260,0 1380,48 1440,32 L1440,96 L0,96 Z" />
       </svg>
     </div>
 
     <!-- Pipeline -->
-    <section ref="pipelineRef" class="py-20 bg-[var(--ui-bg-elevated)] relative z-10">
+    <section
+      ref="pipelineRef"
+      class="py-20 bg-[var(--ui-bg-elevated)] relative z-10"
+    >
       <div class="mx-auto max-w-5xl px-6">
-        <div class="section-header text-center mb-12" style="visibility: hidden">
-          <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">From idea to npm package</h2>
+        <div
+          class="section-header text-center mb-12"
+          style="visibility: hidden"
+        >
+          <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">
+            From idea to npm package
+          </h2>
           <p class="mt-4 text-lg text-muted max-w-2xl mx-auto">
             Bahrain.js isn't just events. It's a factory for open source output.
           </p>
@@ -884,7 +961,10 @@ useSeoMeta({
           <!-- Background track line -->
           <div class="hidden sm:block absolute top-1/2 left-0 right-0 h-0.5 bg-zinc-200 dark:bg-zinc-800 -translate-y-1/2 mx-16" />
           <!-- Animated progress line -->
-          <div class="pipeline-progress hidden sm:block absolute top-1/2 left-0 right-0 h-0.5 bg-primary -translate-y-1/2 mx-16 origin-left" style="transform: scaleX(0)" />
+          <div
+            class="pipeline-progress hidden sm:block absolute top-1/2 left-0 right-0 h-0.5 bg-primary -translate-y-1/2 mx-16 origin-left"
+            style="transform: scaleX(0)"
+          />
 
           <div class="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-0 relative">
             <div
@@ -897,10 +977,17 @@ useSeoMeta({
                 style="visibility: hidden"
               >
                 <div class="flex items-center justify-center w-12 h-12 rounded-full bg-primary/10">
-                  <UIcon :name="step.icon" class="size-5 text-primary" />
+                  <UIcon
+                    :name="step.icon"
+                    class="size-5 text-primary"
+                  />
                 </div>
-                <p class="text-sm font-semibold">{{ step.title }}</p>
-                <p class="text-xs text-muted">{{ step.description }}</p>
+                <p class="text-sm font-semibold">
+                  {{ step.title }}
+                </p>
+                <p class="text-xs text-muted">
+                  {{ step.description }}
+                </p>
               </div>
               <UIcon
                 v-if="i < pipeline.length - 1"
@@ -921,22 +1008,42 @@ useSeoMeta({
     </section>
 
     <!-- Divider: Pipeline → Tiers -->
-    <div ref="divider4" class="relative -mt-1 z-10">
-      <svg class="divider-wave w-full h-16 sm:h-24 rotate-180" viewBox="0 0 1440 96" preserveAspectRatio="none" fill="var(--ui-bg-elevated)">
+    <div
+      ref="divider4"
+      class="relative -mt-1 z-10"
+    >
+      <svg
+        class="divider-wave w-full h-16 sm:h-24 rotate-180"
+        viewBox="0 0 1440 96"
+        preserveAspectRatio="none"
+        fill="var(--ui-bg-elevated)"
+      >
         <path d="M0,64 C120,32 360,96 600,48 C840,0 1080,80 1320,48 C1380,40 1420,56 1440,64 L1440,96 L0,96 Z" />
       </svg>
     </div>
 
     <!-- Membership Tiers -->
-    <section ref="tiersRef" class="py-20" style="perspective: 1000px">
+    <section
+      ref="tiersRef"
+      class="py-20"
+      style="perspective: 1000px"
+    >
       <div class="mx-auto max-w-5xl px-6">
-        <div class="section-header text-center mb-12" style="visibility: hidden">
-          <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Level up</h2>
+        <div
+          class="section-header text-center mb-12"
+          style="visibility: hidden"
+        >
+          <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">
+            Level up
+          </h2>
           <p class="mt-4 text-lg text-muted max-w-2xl mx-auto">
             Transparent progression from attendee to maintainer.
           </p>
         </div>
-        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6" style="perspective: 1000px">
+        <div
+          class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6"
+          style="perspective: 1000px"
+        >
           <UCard
             v-for="(tier, i) in tiers"
             :key="tier.title"
@@ -951,11 +1058,20 @@ useSeoMeta({
             />
             <div class="flex flex-col gap-2 relative z-10">
               <div class="flex items-center gap-2">
-                <UIcon :name="tier.icon" class="size-5 text-primary" />
-                <p class="font-semibold">{{ tier.title }}</p>
+                <UIcon
+                  :name="tier.icon"
+                  class="size-5 text-primary"
+                />
+                <p class="font-semibold">
+                  {{ tier.title }}
+                </p>
               </div>
-              <p class="text-sm text-muted">{{ tier.description }}</p>
-              <p class="text-xs text-muted italic mt-1">{{ tier.how }}</p>
+              <p class="text-sm text-muted">
+                {{ tier.description }}
+              </p>
+              <p class="text-xs text-muted italic mt-1">
+                {{ tier.how }}
+              </p>
             </div>
           </UCard>
         </div>
@@ -963,14 +1079,25 @@ useSeoMeta({
     </section>
 
     <!-- CTA -->
-    <section ref="ctaRef" class="py-20 bg-[var(--ui-bg-elevated)] relative overflow-hidden">
+    <section
+      ref="ctaRef"
+      class="py-20 bg-[var(--ui-bg-elevated)] relative overflow-hidden"
+    >
       <!-- Parallax orbs -->
       <div class="cta-orb-1 absolute -top-20 -right-20 w-72 h-72 bg-primary/8 rounded-full blur-3xl" />
       <div class="cta-orb-2 absolute -bottom-20 -left-20 w-72 h-72 bg-yellow-400/8 rounded-full blur-3xl" />
 
       <div class="mx-auto max-w-3xl px-6 text-center relative z-10">
-        <h2 class="cta-title text-3xl sm:text-4xl font-extrabold tracking-tight" style="visibility: hidden">Ready to build?</h2>
-        <p class="cta-desc mt-4 text-lg text-muted max-w-xl mx-auto" style="visibility: hidden">
+        <h2
+          class="cta-title text-3xl sm:text-4xl font-extrabold tracking-tight"
+          style="visibility: hidden"
+        >
+          Ready to build?
+        </h2>
+        <p
+          class="cta-desc mt-4 text-lg text-muted max-w-xl mx-auto"
+          style="visibility: hidden"
+        >
           Join Bahrain's JavaScript community. Whether you're just learning or shipping production code, there's a place for you.
         </p>
         <div class="mt-8 flex flex-wrap justify-center gap-4">

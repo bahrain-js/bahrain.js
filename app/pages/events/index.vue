@@ -108,15 +108,28 @@ useSeoMeta({
     </div>
 
     <!-- Loading -->
-    <div v-if="loading" class="space-y-4">
-      <USkeleton v-for="i in 3" :key="i" class="h-32 rounded-lg" />
+    <div
+      v-if="loading"
+      class="space-y-4"
+    >
+      <USkeleton
+        v-for="i in 3"
+        :key="i"
+        class="h-32 rounded-lg"
+      />
     </div>
 
     <template v-else>
       <!-- Upcoming events -->
-      <section v-if="upcoming.length" class="mb-16">
+      <section
+        v-if="upcoming.length"
+        class="mb-16"
+      >
         <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
-          <UIcon name="i-lucide-calendar" class="text-yellow-500" />
+          <UIcon
+            name="i-lucide-calendar"
+            class="text-yellow-500"
+          />
           Upcoming
         </h2>
         <div class="grid gap-6">
@@ -144,19 +157,28 @@ useSeoMeta({
                     class="inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full bg-zinc-100 dark:bg-zinc-800"
                     :class="eventTypeConfig[event.type].color"
                   >
-                    <UIcon :name="eventTypeConfig[event.type].icon" class="size-3" />
+                    <UIcon
+                      :name="eventTypeConfig[event.type].icon"
+                      class="size-3"
+                    />
                     {{ eventTypeConfig[event.type].label }}
                   </span>
                   <span
                     v-if="formatConfig[event.format]"
                     class="inline-flex items-center gap-1 text-xs text-zinc-500 dark:text-zinc-400"
                   >
-                    <UIcon :name="formatConfig[event.format].icon" class="size-3" />
+                    <UIcon
+                      :name="formatConfig[event.format].icon"
+                      class="size-3"
+                    />
                     {{ formatConfig[event.format].label }}
                   </span>
                 </div>
 
-                <NuxtLink :to="`/events/${event.id}`" class="group">
+                <NuxtLink
+                  :to="`/events/${event.id}`"
+                  class="group"
+                >
                   <h3 class="text-lg font-semibold group-hover:text-yellow-500 transition-colors">
                     {{ event.title }}
                   </h3>
@@ -168,15 +190,30 @@ useSeoMeta({
 
                 <div class="flex items-center gap-4 mt-3 text-sm text-zinc-500 dark:text-zinc-400">
                   <span class="flex items-center gap-1">
-                    <UIcon name="i-lucide-clock" class="size-3.5" />
+                    <UIcon
+                      name="i-lucide-clock"
+                      class="size-3.5"
+                    />
                     {{ formatDate(event.date) }} · {{ formatTime(event.date) }}
                   </span>
-                  <span v-if="event.location" class="flex items-center gap-1">
-                    <UIcon name="i-lucide-map-pin" class="size-3.5" />
+                  <span
+                    v-if="event.location"
+                    class="flex items-center gap-1"
+                  >
+                    <UIcon
+                      name="i-lucide-map-pin"
+                      class="size-3.5"
+                    />
                     {{ event.location }}
                   </span>
-                  <span v-if="getRsvpCount(event)" class="flex items-center gap-1">
-                    <UIcon name="i-lucide-users" class="size-3.5" />
+                  <span
+                    v-if="getRsvpCount(event)"
+                    class="flex items-center gap-1"
+                  >
+                    <UIcon
+                      name="i-lucide-users"
+                      class="size-3.5"
+                    />
                     {{ getRsvpCount(event) }} attending
                   </span>
                 </div>
@@ -198,17 +235,29 @@ useSeoMeta({
       </section>
 
       <!-- No upcoming events -->
-      <section v-else class="mb-16 text-center py-12">
-        <UIcon name="i-lucide-calendar-x" class="size-12 text-zinc-300 dark:text-zinc-600 mx-auto mb-4" />
+      <section
+        v-else
+        class="mb-16 text-center py-12"
+      >
+        <UIcon
+          name="i-lucide-calendar-x"
+          class="size-12 text-zinc-300 dark:text-zinc-600 mx-auto mb-4"
+        />
         <p class="text-zinc-500 dark:text-zinc-400">
           No upcoming events right now. Check back soon!
         </p>
       </section>
 
       <!-- Past events -->
-      <section v-if="past.length" class="opacity-60">
+      <section
+        v-if="past.length"
+        class="opacity-60"
+      >
         <h2 class="text-2xl font-bold mb-6 flex items-center gap-2 text-zinc-400 dark:text-zinc-500">
-          <UIcon name="i-lucide-archive" class="text-zinc-400" />
+          <UIcon
+            name="i-lucide-archive"
+            class="text-zinc-400"
+          />
           Past Events
         </h2>
         <div class="grid gap-4">
@@ -237,15 +286,24 @@ useSeoMeta({
                     {{ eventTypeConfig[event.type].label }}
                   </span>
                 </div>
-                <NuxtLink :to="`/events/${event.id}`" class="group">
+                <NuxtLink
+                  :to="`/events/${event.id}`"
+                  class="group"
+                >
                   <h3 class="font-medium group-hover:text-yellow-500 transition-colors">
                     {{ event.title }}
                   </h3>
                 </NuxtLink>
               </div>
 
-              <div v-if="getRsvpCount(event)" class="text-sm text-zinc-400 flex items-center gap-1">
-                <UIcon name="i-lucide-users" class="size-3.5" />
+              <div
+                v-if="getRsvpCount(event)"
+                class="text-sm text-zinc-400 flex items-center gap-1"
+              >
+                <UIcon
+                  name="i-lucide-users"
+                  class="size-3.5"
+                />
                 {{ getRsvpCount(event) }}
               </div>
             </div>

@@ -153,7 +153,10 @@ watchEffect(() => {
 <template>
   <UContainer class="py-16 max-w-3xl">
     <!-- Loading -->
-    <div v-if="loading" class="space-y-4">
+    <div
+      v-if="loading"
+      class="space-y-4"
+    >
       <USkeleton class="h-8 w-48" />
       <USkeleton class="h-12 w-full" />
       <USkeleton class="h-6 w-3/4" />
@@ -165,8 +168,14 @@ watchEffect(() => {
 
     <template v-else-if="event">
       <!-- Back link -->
-      <NuxtLink to="/events" class="inline-flex items-center gap-1 text-sm text-zinc-500 hover:text-yellow-500 transition-colors mb-8">
-        <UIcon name="i-lucide-arrow-left" class="size-4" />
+      <NuxtLink
+        to="/events"
+        class="inline-flex items-center gap-1 text-sm text-zinc-500 hover:text-yellow-500 transition-colors mb-8"
+      >
+        <UIcon
+          name="i-lucide-arrow-left"
+          class="size-4"
+        />
         All events
       </NuxtLink>
 
@@ -178,14 +187,20 @@ watchEffect(() => {
             class="inline-flex items-center gap-1 text-sm font-medium px-3 py-1 rounded-full bg-zinc-100 dark:bg-zinc-800"
             :class="eventTypeConfig[event.type].color"
           >
-            <UIcon :name="eventTypeConfig[event.type].icon" class="size-4" />
+            <UIcon
+              :name="eventTypeConfig[event.type].icon"
+              class="size-4"
+            />
             {{ eventTypeConfig[event.type].label }}
           </span>
           <span
             v-if="formatConfigMap[event.format]"
             class="inline-flex items-center gap-1 text-sm text-zinc-500 dark:text-zinc-400"
           >
-            <UIcon :name="formatConfigMap[event.format].icon" class="size-4" />
+            <UIcon
+              :name="formatConfigMap[event.format].icon"
+              class="size-4"
+            />
             {{ formatConfigMap[event.format].label }}
           </span>
           <span
@@ -226,33 +241,58 @@ watchEffect(() => {
       <div class="grid sm:grid-cols-2 gap-4 mb-10">
         <UCard>
           <div class="flex items-center gap-3">
-            <UIcon name="i-lucide-calendar" class="size-5 text-yellow-500" />
+            <UIcon
+              name="i-lucide-calendar"
+              class="size-5 text-yellow-500"
+            />
             <div>
-              <div class="text-sm font-medium">{{ formatDate(event.date) }}</div>
-              <div class="text-xs text-zinc-500 dark:text-zinc-400">{{ formatTime(event.date) }}</div>
+              <div class="text-sm font-medium">
+                {{ formatDate(event.date) }}
+              </div>
+              <div class="text-xs text-zinc-500 dark:text-zinc-400">
+                {{ formatTime(event.date) }}
+              </div>
             </div>
           </div>
         </UCard>
 
         <UCard v-if="event.location">
           <div class="flex items-center gap-3">
-            <UIcon name="i-lucide-map-pin" class="size-5 text-yellow-500" />
+            <UIcon
+              name="i-lucide-map-pin"
+              class="size-5 text-yellow-500"
+            />
             <div>
-              <div class="text-sm font-medium">{{ event.location }}</div>
+              <div class="text-sm font-medium">
+                {{ event.location }}
+              </div>
             </div>
           </div>
         </UCard>
       </div>
 
       <!-- RSVP section for upcoming events -->
-      <div v-if="isUpcoming" class="mb-10">
+      <div
+        v-if="isUpcoming"
+        class="mb-10"
+      >
         <UCard>
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-3">
-              <UIcon name="i-lucide-users" class="size-5 text-yellow-500" />
+              <UIcon
+                name="i-lucide-users"
+                class="size-5 text-yellow-500"
+              />
               <div>
-                <div class="font-medium">{{ rsvps.length }} {{ rsvps.length === 1 ? 'person' : 'people' }} attending</div>
-                <div v-if="hasRsvped" class="text-xs text-green-500">You're going!</div>
+                <div class="font-medium">
+                  {{ rsvps.length }} {{ rsvps.length === 1 ? 'person' : 'people' }} attending
+                </div>
+                <div
+                  v-if="hasRsvped"
+                  class="text-xs text-green-500"
+                >
+                  You're going!
+                </div>
               </div>
             </div>
 
@@ -276,7 +316,10 @@ watchEffect(() => {
           </div>
 
           <!-- Attendee avatars -->
-          <div v-if="rsvps.length" class="mt-4 flex flex-wrap gap-2">
+          <div
+            v-if="rsvps.length"
+            class="mt-4 flex flex-wrap gap-2"
+          >
             <div
               v-for="rsvp in rsvps"
               :key="rsvp.id"
@@ -294,15 +337,29 @@ watchEffect(() => {
       </div>
 
       <!-- Event details body -->
-      <div v-if="event.details" class="prose dark:prose-invert max-w-none whitespace-pre-line">
+      <div
+        v-if="event.details"
+        class="prose dark:prose-invert max-w-none whitespace-pre-line"
+      >
         {{ event.details }}
       </div>
 
       <!-- Speakers section -->
-      <div v-if="event.speakers?.length" class="mt-10">
-        <h2 class="text-xl font-bold mb-4">Speakers</h2>
+      <div
+        v-if="event.speakers?.length"
+        class="mt-10"
+      >
+        <h2 class="text-xl font-bold mb-4">
+          Speakers
+        </h2>
         <div class="flex flex-wrap gap-2">
-          <UBadge v-for="speaker in event.speakers" :key="speaker" variant="subtle" color="neutral" size="lg">
+          <UBadge
+            v-for="speaker in event.speakers"
+            :key="speaker"
+            variant="subtle"
+            color="neutral"
+            size="lg"
+          >
             {{ speaker }}
           </UBadge>
         </div>

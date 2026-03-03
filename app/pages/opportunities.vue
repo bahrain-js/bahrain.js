@@ -48,47 +48,79 @@ const difficultyColor: Record<string, string> = {
   <UContainer class="py-16 space-y-16">
     <!-- Header -->
     <div class="text-center">
-      <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl">Opportunities</h1>
+      <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl">
+        Opportunities
+      </h1>
       <p class="mt-4 text-lg text-zinc-500 dark:text-zinc-400 max-w-2xl mx-auto">
         JavaScript and web development opportunities in Bahrain. Jobs, contributions, and ways to level up.
       </p>
     </div>
 
     <!-- Loading -->
-    <div v-if="loading" class="flex justify-center py-12">
-      <UIcon name="i-lucide-loader-2" class="size-8 text-muted animate-spin" />
+    <div
+      v-if="loading"
+      class="flex justify-center py-12"
+    >
+      <UIcon
+        name="i-lucide-loader-2"
+        class="size-8 text-muted animate-spin"
+      />
     </div>
 
     <template v-else>
       <!-- Open Source Contributions -->
       <section>
         <h2 class="text-2xl font-bold mb-2 flex items-center gap-2">
-          <UIcon name="i-lucide-git-pull-request" class="text-green-500" />
+          <UIcon
+            name="i-lucide-git-pull-request"
+            class="text-green-500"
+          />
           Contribute to Open Source
         </h2>
         <p class="text-zinc-500 dark:text-zinc-400 mb-6">
           The best way to build your portfolio and skills. Real projects, real impact.
         </p>
-        <div v-if="ossOpportunities.length" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          <UCard v-for="opp in ossOpportunities" :key="opp.id" class="hover:ring-2 hover:ring-green-400/30 transition-all">
+        <div
+          v-if="ossOpportunities.length"
+          class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4"
+        >
+          <UCard
+            v-for="opp in ossOpportunities"
+            :key="opp.id"
+            class="hover:ring-2 hover:ring-green-400/30 transition-all"
+          >
             <div class="flex flex-col gap-3">
               <div class="flex items-center justify-between">
-                <a :href="opp.url" target="_blank" class="group">
+                <a
+                  :href="opp.url"
+                  target="_blank"
+                  class="group"
+                >
                   <h3 class="font-semibold group-hover:text-primary transition-colors">
                     {{ opp.project_name }}
                   </h3>
                 </a>
-                <UBadge :color="(difficultyColor[opp.difficulty] || 'neutral') as any" variant="subtle" size="xs">
+                <UBadge
+                  :color="(difficultyColor[opp.difficulty] || 'neutral') as any"
+                  variant="subtle"
+                  size="xs"
+                >
                   {{ opp.difficulty }}
                 </UBadge>
               </div>
               <p class="text-sm text-zinc-500 dark:text-zinc-400">
                 {{ opp.description }}
               </p>
-              <p v-if="opp.issues_label" class="text-xs text-primary">
+              <p
+                v-if="opp.issues_label"
+                class="text-xs text-primary"
+              >
                 {{ opp.issues_label }}
               </p>
-              <div v-if="opp.tags?.length" class="flex flex-wrap gap-1.5">
+              <div
+                v-if="opp.tags?.length"
+                class="flex flex-wrap gap-1.5"
+              >
                 <span
                   v-for="tag in opp.tags"
                   :key="tag"
@@ -110,41 +142,73 @@ const difficultyColor: Record<string, string> = {
             </div>
           </UCard>
         </div>
-        <div v-else class="text-center py-8 rounded-xl bg-zinc-50 dark:bg-zinc-800/30">
-          <p class="text-zinc-500 dark:text-zinc-400">No open source opportunities yet.</p>
+        <div
+          v-else
+          class="text-center py-8 rounded-xl bg-zinc-50 dark:bg-zinc-800/30"
+        >
+          <p class="text-zinc-500 dark:text-zinc-400">
+            No open source opportunities yet.
+          </p>
         </div>
       </section>
 
       <!-- Startup Ideas -->
       <section>
         <h2 class="text-2xl font-bold mb-2 flex items-center gap-2">
-          <UIcon name="i-lucide-lightbulb" class="text-orange-500" />
+          <UIcon
+            name="i-lucide-lightbulb"
+            class="text-orange-500"
+          />
           Startup Ideas Looking for Founders
         </h2>
         <p class="text-zinc-500 dark:text-zinc-400 mb-6">
           Bahrain-focused startup ideas that need technical co-founders or founding team members.
         </p>
-        <div v-if="startupIdeas.length" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          <UCard v-for="idea in startupIdeas" :key="idea.id" class="hover:ring-2 hover:ring-orange-400/30 transition-all">
+        <div
+          v-if="startupIdeas.length"
+          class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4"
+        >
+          <UCard
+            v-for="idea in startupIdeas"
+            :key="idea.id"
+            class="hover:ring-2 hover:ring-orange-400/30 transition-all"
+          >
             <div class="flex flex-col gap-3">
               <div class="flex items-center justify-between">
-                <h3 class="font-semibold">{{ idea.title }}</h3>
-                <UBadge color="warning" variant="subtle" size="xs">
+                <h3 class="font-semibold">
+                  {{ idea.title }}
+                </h3>
+                <UBadge
+                  color="warning"
+                  variant="subtle"
+                  size="xs"
+                >
                   {{ idea.looking_for }}
                 </UBadge>
               </div>
-              <p v-if="idea.problem" class="text-sm text-orange-600 dark:text-orange-400 font-medium">
+              <p
+                v-if="idea.problem"
+                class="text-sm text-orange-600 dark:text-orange-400 font-medium"
+              >
                 ⚡ {{ idea.problem }}
               </p>
               <p class="text-sm text-zinc-500 dark:text-zinc-400">
                 {{ idea.description }}
               </p>
               <div class="flex items-center gap-2">
-                <UBadge v-if="idea.sector" color="neutral" variant="outline" size="xs">
+                <UBadge
+                  v-if="idea.sector"
+                  color="neutral"
+                  variant="outline"
+                  size="xs"
+                >
                   {{ idea.sector }}
                 </UBadge>
               </div>
-              <div v-if="idea.tags?.length" class="flex flex-wrap gap-1.5">
+              <div
+                v-if="idea.tags?.length"
+                class="flex flex-wrap gap-1.5"
+              >
                 <span
                   v-for="tag in idea.tags"
                   :key="tag"
@@ -166,43 +230,84 @@ const difficultyColor: Record<string, string> = {
             </div>
           </UCard>
         </div>
-        <div v-else class="text-center py-8 rounded-xl bg-zinc-50 dark:bg-zinc-800/30">
-          <p class="text-zinc-500 dark:text-zinc-400">No startup ideas posted yet.</p>
+        <div
+          v-else
+          class="text-center py-8 rounded-xl bg-zinc-50 dark:bg-zinc-800/30"
+        >
+          <p class="text-zinc-500 dark:text-zinc-400">
+            No startup ideas posted yet.
+          </p>
         </div>
       </section>
 
       <!-- Job Listings -->
       <section>
         <h2 class="text-2xl font-bold mb-2 flex items-center gap-2">
-          <UIcon name="i-lucide-briefcase" class="text-yellow-500" />
+          <UIcon
+            name="i-lucide-briefcase"
+            class="text-yellow-500"
+          />
           Job Listings
         </h2>
         <p class="text-zinc-500 dark:text-zinc-400 mb-6">
           JavaScript and web development positions in Bahrain.
         </p>
 
-        <div v-if="jobs.length" class="grid gap-4">
-          <UCard v-for="job in jobs" :key="job.id" class="hover:ring-2 hover:ring-yellow-400/20 transition-all">
+        <div
+          v-if="jobs.length"
+          class="grid gap-4"
+        >
+          <UCard
+            v-for="job in jobs"
+            :key="job.id"
+            class="hover:ring-2 hover:ring-yellow-400/20 transition-all"
+          >
             <div class="flex items-start gap-4">
               <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-primary/10 flex-shrink-0">
-                <UIcon name="i-lucide-briefcase" class="size-6 text-primary" />
+                <UIcon
+                  name="i-lucide-briefcase"
+                  class="size-6 text-primary"
+                />
               </div>
               <div class="flex-1 min-w-0">
                 <div class="flex items-center gap-2 mb-1">
-                  <h3 class="font-semibold">{{ job.title }}</h3>
-                  <UBadge v-if="job.is_remote" color="info" variant="subtle" size="xs">Remote</UBadge>
+                  <h3 class="font-semibold">
+                    {{ job.title }}
+                  </h3>
+                  <UBadge
+                    v-if="job.is_remote"
+                    color="info"
+                    variant="subtle"
+                    size="xs"
+                  >
+                    Remote
+                  </UBadge>
                 </div>
-                <p v-if="job.company" class="text-sm font-medium text-primary">{{ job.company }}</p>
+                <p
+                  v-if="job.company"
+                  class="text-sm font-medium text-primary"
+                >
+                  {{ job.company }}
+                </p>
                 <p class="text-sm text-zinc-500 dark:text-zinc-400 mt-1">
                   {{ job.description }}
                 </p>
                 <div class="flex items-center gap-3 mt-2 text-xs text-muted">
-                  <span v-if="job.location" class="flex items-center gap-1">
-                    <UIcon name="i-lucide-map-pin" class="size-3" /> {{ job.location }}
+                  <span
+                    v-if="job.location"
+                    class="flex items-center gap-1"
+                  >
+                    <UIcon
+                      name="i-lucide-map-pin"
+                      class="size-3"
+                    /> {{ job.location }}
                   </span>
                   <span v-if="job.salary_range">{{ job.salary_range }}</span>
                 </div>
-                <div v-if="job.tags?.length" class="flex flex-wrap gap-1.5 mt-2">
+                <div
+                  v-if="job.tags?.length"
+                  class="flex flex-wrap gap-1.5 mt-2"
+                >
                   <span
                     v-for="tag in job.tags"
                     :key="tag"
@@ -226,14 +331,24 @@ const difficultyColor: Record<string, string> = {
         </div>
 
         <!-- Empty state -->
-        <div v-else class="mt-2 text-center py-8 rounded-xl bg-zinc-50 dark:bg-zinc-800/30">
-          <UIcon name="i-lucide-search" class="size-10 text-zinc-300 dark:text-zinc-600 mx-auto mb-3" />
+        <div
+          v-else
+          class="mt-2 text-center py-8 rounded-xl bg-zinc-50 dark:bg-zinc-800/30"
+        >
+          <UIcon
+            name="i-lucide-search"
+            class="size-10 text-zinc-300 dark:text-zinc-600 mx-auto mb-3"
+          />
           <p class="text-zinc-500 dark:text-zinc-400 font-medium">
             More job listings coming soon
           </p>
           <p class="text-sm text-zinc-400 dark:text-zinc-500 mt-1">
             Know of a JavaScript role in Bahrain?
-            <a href="https://github.com/bahrain-js" target="_blank" class="text-primary hover:underline">Let us know</a>
+            <a
+              href="https://github.com/bahrain-js"
+              target="_blank"
+              class="text-primary hover:underline"
+            >Let us know</a>
           </p>
         </div>
       </section>
@@ -241,18 +356,35 @@ const difficultyColor: Record<string, string> = {
       <!-- Resources -->
       <section>
         <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
-          <UIcon name="i-lucide-compass" class="text-blue-500" />
+          <UIcon
+            name="i-lucide-compass"
+            class="text-blue-500"
+          />
           Job Resources
         </h2>
         <div class="grid sm:grid-cols-3 gap-4">
-          <UCard v-for="resource in resources" :key="resource.title" class="hover:ring-2 hover:ring-blue-400/20 transition-all">
-            <a :href="resource.url" target="_blank" class="flex items-center gap-3 group">
-              <UIcon :name="resource.icon" class="size-5 text-blue-500 flex-shrink-0" />
+          <UCard
+            v-for="resource in resources"
+            :key="resource.title"
+            class="hover:ring-2 hover:ring-blue-400/20 transition-all"
+          >
+            <a
+              :href="resource.url"
+              target="_blank"
+              class="flex items-center gap-3 group"
+            >
+              <UIcon
+                :name="resource.icon"
+                class="size-5 text-blue-500 flex-shrink-0"
+              />
               <div>
                 <p class="font-medium group-hover:text-primary transition-colors">{{ resource.title }}</p>
                 <p class="text-xs text-muted">{{ resource.description }}</p>
               </div>
-              <UIcon name="i-lucide-external-link" class="size-4 text-zinc-400 ml-auto flex-shrink-0" />
+              <UIcon
+                name="i-lucide-external-link"
+                class="size-4 text-zinc-400 ml-auto flex-shrink-0"
+              />
             </a>
           </UCard>
         </div>
@@ -260,13 +392,26 @@ const difficultyColor: Record<string, string> = {
 
       <!-- CTA -->
       <section class="text-center py-12 rounded-2xl bg-zinc-50 dark:bg-zinc-800/30">
-        <h2 class="text-2xl font-bold mb-2">Want to level up?</h2>
+        <h2 class="text-2xl font-bold mb-2">
+          Want to level up?
+        </h2>
         <p class="text-zinc-500 dark:text-zinc-400 mb-6 max-w-md mx-auto">
           Join Bahrain.js events, contribute to projects, and connect with developers who are building.
         </p>
         <div class="flex justify-center gap-3">
-          <UButton to="/events" label="Upcoming Events" icon="i-lucide-calendar" size="lg" />
-          <UButton to="/projects" label="View Projects" icon="i-lucide-folder-git-2" variant="outline" size="lg" />
+          <UButton
+            to="/events"
+            label="Upcoming Events"
+            icon="i-lucide-calendar"
+            size="lg"
+          />
+          <UButton
+            to="/projects"
+            label="View Projects"
+            icon="i-lucide-folder-git-2"
+            variant="outline"
+            size="lg"
+          />
         </div>
       </section>
     </template>

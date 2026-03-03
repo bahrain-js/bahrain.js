@@ -4,7 +4,7 @@ const client = useNeonClient()
 
 const searchQuery = ref('')
 const selectedSkill = ref('')
-const members = ref<any[]>([])  // eslint-disable-line @typescript-eslint/no-explicit-any
+const members = ref<any[]>([]) // eslint-disable-line @typescript-eslint/no-explicit-any
 const loading = ref(true)
 
 const roleBadgeColor = {
@@ -27,7 +27,7 @@ const skillColors = [
   'text-emerald-600 bg-emerald-50 ring-emerald-200 dark:text-emerald-400 dark:bg-emerald-900/30 dark:ring-emerald-800',
   'text-violet-600 bg-violet-50 ring-violet-200 dark:text-violet-400 dark:bg-violet-900/30 dark:ring-violet-800',
   'text-rose-600 bg-rose-50 ring-rose-200 dark:text-rose-400 dark:bg-rose-900/30 dark:ring-rose-800',
-  'text-amber-600 bg-amber-50 ring-amber-200 dark:text-amber-400 dark:bg-amber-900/30 dark:ring-amber-800',
+  'text-amber-600 bg-amber-50 ring-amber-200 dark:text-amber-400 dark:bg-amber-900/30 dark:ring-amber-800'
 ]
 
 function getSkillColor(skill: string): string {
@@ -106,21 +106,32 @@ useSeoMeta({
     <UContainer class="py-12 space-y-10">
       <!-- Hero Header -->
       <div class="text-center max-w-2xl mx-auto">
-        <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl">People</h1>
+        <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl">
+          People
+        </h1>
         <p class="mt-4 text-lg text-zinc-500 dark:text-zinc-400">
           The developers building Bahrain's JavaScript community.
         </p>
       </div>
 
       <!-- Stats Bar -->
-      <div v-if="!loading && members.length" class="flex items-center justify-center gap-6 text-sm text-zinc-500 dark:text-zinc-400">
+      <div
+        v-if="!loading && members.length"
+        class="flex items-center justify-center gap-6 text-sm text-zinc-500 dark:text-zinc-400"
+      >
         <div class="flex items-center gap-1.5">
-          <UIcon name="i-lucide-users" class="text-primary-500" />
+          <UIcon
+            name="i-lucide-users"
+            class="text-primary-500"
+          />
           <span><strong class="text-zinc-900 dark:text-white">{{ members.length }}</strong> {{ members.length === 1 ? 'member' : 'members' }}</span>
         </div>
         <span class="text-zinc-300 dark:text-zinc-600">·</span>
         <div class="flex items-center gap-1.5">
-          <UIcon name="i-lucide-code-2" class="text-primary-500" />
+          <UIcon
+            name="i-lucide-code-2"
+            class="text-primary-500"
+          />
           <span><strong class="text-zinc-900 dark:text-white">{{ allSkills.length }}</strong> {{ allSkills.length === 1 ? 'skill' : 'skills' }} represented</span>
         </div>
       </div>
@@ -169,8 +180,15 @@ useSeoMeta({
       </div>
 
       <!-- Loading skeleton -->
-      <div v-if="loading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <USkeleton v-for="i in 6" :key="i" class="h-56 rounded-xl" />
+      <div
+        v-if="loading"
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+      >
+        <USkeleton
+          v-for="i in 6"
+          :key="i"
+          class="h-56 rounded-xl"
+        />
       </div>
 
       <!-- Empty state -->
@@ -195,7 +213,10 @@ useSeoMeta({
         <!-- Core Team Spotlight -->
         <section v-if="coreTeam.length">
           <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
-            <UIcon name="i-lucide-crown" class="text-yellow-500" />
+            <UIcon
+              name="i-lucide-crown"
+              class="text-yellow-500"
+            />
             Core Team
           </h2>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -208,7 +229,11 @@ useSeoMeta({
               <div class="absolute top-0 left-6 right-6 h-0.5 bg-gradient-to-r from-transparent via-yellow-400 to-transparent" />
 
               <div class="flex items-start gap-5">
-                <a :href="`https://github.com/${member.github_username}`" target="_blank" class="shrink-0">
+                <a
+                  :href="`https://github.com/${member.github_username}`"
+                  target="_blank"
+                  class="shrink-0"
+                >
                   <UAvatar
                     :src="member.avatar_url"
                     :alt="member.display_name"
@@ -218,8 +243,14 @@ useSeoMeta({
                 </a>
                 <div class="flex-1 min-w-0">
                   <div class="flex items-center gap-2 flex-wrap">
-                    <h3 class="text-lg font-bold">{{ member.display_name }}</h3>
-                    <UBadge color="primary" variant="subtle" size="xs">
+                    <h3 class="text-lg font-bold">
+                      {{ member.display_name }}
+                    </h3>
+                    <UBadge
+                      color="primary"
+                      variant="subtle"
+                      size="xs"
+                    >
                       {{ roleBadgeLabel[member.role] }}
                     </UBadge>
                   </div>
@@ -231,7 +262,10 @@ useSeoMeta({
                       target="_blank"
                       class="inline-flex items-center gap-1 text-sm text-zinc-500 hover:text-zinc-900 dark:hover:text-white transition-colors"
                     >
-                      <UIcon name="i-simple-icons-github" class="size-3.5" />
+                      <UIcon
+                        name="i-simple-icons-github"
+                        class="size-3.5"
+                      />
                       {{ member.github_username }}
                     </a>
                     <a
@@ -240,7 +274,10 @@ useSeoMeta({
                       target="_blank"
                       class="inline-flex items-center gap-1 text-sm text-zinc-500 hover:text-zinc-900 dark:hover:text-white transition-colors"
                     >
-                      <UIcon name="i-lucide-globe" class="size-3.5" />
+                      <UIcon
+                        name="i-lucide-globe"
+                        class="size-3.5"
+                      />
                       Website
                     </a>
                     <a
@@ -249,16 +286,30 @@ useSeoMeta({
                       target="_blank"
                       class="inline-flex items-center gap-1 text-sm text-zinc-500 hover:text-zinc-900 dark:hover:text-white transition-colors"
                     >
-                      <UIcon name="i-simple-icons-x" class="size-3.5" />
+                      <UIcon
+                        name="i-simple-icons-x"
+                        class="size-3.5"
+                      />
                       {{ member.twitter_handle }}
                     </a>
                   </div>
 
-                  <p v-if="member.bio" class="text-sm text-zinc-600 dark:text-zinc-400 mt-3 line-clamp-3">{{ member.bio }}</p>
+                  <p
+                    v-if="member.bio"
+                    class="text-sm text-zinc-600 dark:text-zinc-400 mt-3 line-clamp-3"
+                  >
+                    {{ member.bio }}
+                  </p>
 
                   <!-- Currently building -->
-                  <div v-if="member.currently_building" class="mt-3 flex items-center gap-1.5 text-sm">
-                    <UIcon name="i-lucide-rocket" class="text-yellow-500 size-4" />
+                  <div
+                    v-if="member.currently_building"
+                    class="mt-3 flex items-center gap-1.5 text-sm"
+                  >
+                    <UIcon
+                      name="i-lucide-rocket"
+                      class="text-yellow-500 size-4"
+                    />
                     <span class="text-zinc-500 dark:text-zinc-400">Building</span>
                     <span class="font-medium">{{ member.currently_building }}</span>
                   </div>
@@ -266,7 +317,10 @@ useSeoMeta({
               </div>
 
               <!-- Skills -->
-              <div v-if="member.skills?.length" class="mt-5 flex flex-wrap gap-1.5">
+              <div
+                v-if="member.skills?.length"
+                class="mt-5 flex flex-wrap gap-1.5"
+              >
                 <span
                   v-for="skill in member.skills"
                   :key="skill"
@@ -293,7 +347,11 @@ useSeoMeta({
               class="group rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-5 transition-all duration-300 hover:shadow-md hover:border-primary-300 dark:hover:border-primary-700 hover:-translate-y-0.5"
             >
               <div class="flex items-start gap-4">
-                <a :href="`https://github.com/${member.github_username}`" target="_blank" class="shrink-0">
+                <a
+                  :href="`https://github.com/${member.github_username}`"
+                  target="_blank"
+                  class="shrink-0"
+                >
                   <UAvatar
                     :src="member.avatar_url"
                     :alt="member.display_name"
@@ -303,8 +361,14 @@ useSeoMeta({
                 </a>
                 <div class="flex-1 min-w-0">
                   <div class="flex items-center gap-2">
-                    <h3 class="font-semibold truncate">{{ member.display_name }}</h3>
-                    <UBadge :color="roleBadgeColor[member.role]" variant="subtle" size="xs">
+                    <h3 class="font-semibold truncate">
+                      {{ member.display_name }}
+                    </h3>
+                    <UBadge
+                      :color="roleBadgeColor[member.role]"
+                      variant="subtle"
+                      size="xs"
+                    >
                       {{ roleBadgeLabel[member.role] }}
                     </UBadge>
                   </div>
@@ -316,7 +380,10 @@ useSeoMeta({
                       target="_blank"
                       class="inline-flex items-center gap-1 text-xs text-zinc-500 hover:text-zinc-900 dark:hover:text-white transition-colors"
                     >
-                      <UIcon name="i-simple-icons-github" class="size-3" />
+                      <UIcon
+                        name="i-simple-icons-github"
+                        class="size-3"
+                      />
                       {{ member.github_username }}
                     </a>
                     <a
@@ -325,23 +392,40 @@ useSeoMeta({
                       target="_blank"
                       class="text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors"
                     >
-                      <UIcon name="i-lucide-globe" class="size-3.5" />
+                      <UIcon
+                        name="i-lucide-globe"
+                        class="size-3.5"
+                      />
                     </a>
                   </div>
 
-                  <p v-if="member.bio" class="text-sm text-zinc-500 dark:text-zinc-400 mt-2 line-clamp-2">{{ member.bio }}</p>
+                  <p
+                    v-if="member.bio"
+                    class="text-sm text-zinc-500 dark:text-zinc-400 mt-2 line-clamp-2"
+                  >
+                    {{ member.bio }}
+                  </p>
                 </div>
               </div>
 
               <!-- Currently building -->
-              <div v-if="member.currently_building" class="mt-3 flex items-center gap-1.5 text-sm">
-                <UIcon name="i-lucide-rocket" class="text-primary-500 size-3.5" />
+              <div
+                v-if="member.currently_building"
+                class="mt-3 flex items-center gap-1.5 text-sm"
+              >
+                <UIcon
+                  name="i-lucide-rocket"
+                  class="text-primary-500 size-3.5"
+                />
                 <span class="text-zinc-500 dark:text-zinc-400">Building</span>
                 <span class="font-medium truncate">{{ member.currently_building }}</span>
               </div>
 
               <!-- Skills -->
-              <div v-if="member.skills?.length" class="mt-3 flex flex-wrap gap-1.5">
+              <div
+                v-if="member.skills?.length"
+                class="mt-3 flex flex-wrap gap-1.5"
+              >
                 <span
                   v-for="skill in member.skills"
                   :key="skill"
@@ -372,7 +456,9 @@ useSeoMeta({
           <div class="absolute -bottom-12 -left-12 size-48 rounded-full bg-primary-200/30 dark:bg-primary-800/10 blur-3xl" />
 
           <div class="relative">
-            <h2 class="text-2xl font-bold">Join the Community</h2>
+            <h2 class="text-2xl font-bold">
+              Join the Community
+            </h2>
             <p class="mt-2 text-zinc-500 dark:text-zinc-400 max-w-md mx-auto">
               Sign in with GitHub, create your profile, and connect with JavaScript developers in Bahrain.
             </p>

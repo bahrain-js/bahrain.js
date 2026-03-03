@@ -56,7 +56,10 @@ useSeoMeta({
     </div>
 
     <!-- Tag filter -->
-    <div v-if="allTags.length" class="flex flex-wrap gap-2 justify-center mb-10">
+    <div
+      v-if="allTags.length"
+      class="flex flex-wrap gap-2 justify-center mb-10"
+    >
       <UButton
         v-for="tag in allTags"
         :key="tag"
@@ -76,14 +79,29 @@ useSeoMeta({
     </div>
 
     <!-- Posts grid -->
-    <div v-if="filteredPosts.length" class="grid gap-8 max-w-3xl mx-auto">
-      <article v-for="post in filteredPosts" :key="post.path">
-        <NuxtLink :to="post.path" class="group block">
+    <div
+      v-if="filteredPosts.length"
+      class="grid gap-8 max-w-3xl mx-auto"
+    >
+      <article
+        v-for="post in filteredPosts"
+        :key="post.path"
+      >
+        <NuxtLink
+          :to="post.path"
+          class="group block"
+        >
           <UCard class="hover:ring-2 hover:ring-yellow-400/50 transition-all">
             <div class="flex flex-col gap-3">
               <!-- Featured badge -->
-              <div v-if="post.featured" class="flex items-center gap-1 text-xs font-medium text-yellow-600 dark:text-yellow-400">
-                <UIcon name="i-lucide-star" class="size-3.5" />
+              <div
+                v-if="post.featured"
+                class="flex items-center gap-1 text-xs font-medium text-yellow-600 dark:text-yellow-400"
+              >
+                <UIcon
+                  name="i-lucide-star"
+                  class="size-3.5"
+                />
                 Featured
               </div>
 
@@ -100,17 +118,26 @@ useSeoMeta({
               <!-- Meta -->
               <div class="flex items-center gap-4 text-sm text-zinc-400 dark:text-zinc-500">
                 <span class="flex items-center gap-1">
-                  <UIcon name="i-lucide-user" class="size-3.5" />
+                  <UIcon
+                    name="i-lucide-user"
+                    class="size-3.5"
+                  />
                   {{ post.author }}
                 </span>
                 <span class="flex items-center gap-1">
-                  <UIcon name="i-lucide-calendar" class="size-3.5" />
+                  <UIcon
+                    name="i-lucide-calendar"
+                    class="size-3.5"
+                  />
                   {{ formatDate(post.date) }}
                 </span>
               </div>
 
               <!-- Tags -->
-              <div v-if="post.tags?.length" class="flex flex-wrap gap-1.5">
+              <div
+                v-if="post.tags?.length"
+                class="flex flex-wrap gap-1.5"
+              >
                 <span
                   v-for="tag in post.tags"
                   :key="tag"
@@ -126,8 +153,14 @@ useSeoMeta({
     </div>
 
     <!-- Empty state -->
-    <div v-else class="text-center py-12">
-      <UIcon name="i-lucide-file-text" class="size-12 text-zinc-300 dark:text-zinc-600 mx-auto mb-4" />
+    <div
+      v-else
+      class="text-center py-12"
+    >
+      <UIcon
+        name="i-lucide-file-text"
+        class="size-12 text-zinc-300 dark:text-zinc-600 mx-auto mb-4"
+      />
       <p class="text-zinc-500 dark:text-zinc-400">
         No posts found{{ selectedTag ? ` for tag "${selectedTag}"` : '' }}.
       </p>

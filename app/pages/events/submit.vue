@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Time, CalendarDate } from '@internationalized/date'
+import { Time } from '@internationalized/date'
 
 const { user, isAuthenticated, loading: authLoading } = useAuth()
 const client = useNeonClient()
@@ -95,32 +95,59 @@ useSeoMeta({
 
 <template>
   <UContainer class="py-16 max-w-2xl mx-auto">
-    <NuxtLink to="/events" class="inline-flex items-center gap-1 text-sm text-zinc-500 hover:text-yellow-500 transition-colors mb-8">
-      <UIcon name="i-lucide-arrow-left" class="size-4" />
+    <NuxtLink
+      to="/events"
+      class="inline-flex items-center gap-1 text-sm text-zinc-500 hover:text-yellow-500 transition-colors mb-8"
+    >
+      <UIcon
+        name="i-lucide-arrow-left"
+        class="size-4"
+      />
       Back to events
     </NuxtLink>
 
-    <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl">Submit an Event</h1>
+    <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl">
+      Submit an Event
+    </h1>
     <p class="mt-4 text-lg text-zinc-500 dark:text-zinc-400 mb-8">
       Propose an event for the Bahrain.js community. Core team members will review your submission.
     </p>
 
     <!-- Success state -->
-    <UCard v-if="saved" class="text-center">
+    <UCard
+      v-if="saved"
+      class="text-center"
+    >
       <div class="space-y-4 py-8">
-        <UIcon name="i-lucide-check-circle" class="size-16 text-green-500 mx-auto" />
-        <h2 class="text-xl font-semibold">Event Submitted!</h2>
+        <UIcon
+          name="i-lucide-check-circle"
+          class="size-16 text-green-500 mx-auto"
+        />
+        <h2 class="text-xl font-semibold">
+          Event Submitted!
+        </h2>
         <p class="text-zinc-500 dark:text-zinc-400">
           Your event has been submitted for review. The core team will approve it shortly.
         </p>
-        <UButton to="/events" label="Back to Events" icon="i-lucide-arrow-left" variant="outline" />
+        <UButton
+          to="/events"
+          label="Back to Events"
+          icon="i-lucide-arrow-left"
+          variant="outline"
+        />
       </div>
     </UCard>
 
     <!-- Form -->
     <UCard v-else>
-      <form class="space-y-6" @submit.prevent="submitEvent">
-        <UFormField label="Event Title" required>
+      <form
+        class="space-y-6"
+        @submit.prevent="submitEvent"
+      >
+        <UFormField
+          label="Event Title"
+          required
+        >
           <UInput
             v-model="form.title"
             placeholder="e.g. Bahrain.js March Meetup"
@@ -129,7 +156,10 @@ useSeoMeta({
           />
         </UFormField>
 
-        <UFormField label="Short Description" required>
+        <UFormField
+          label="Short Description"
+          required
+        >
           <UTextarea
             v-model="form.description"
             placeholder="One-line summary of the event"
@@ -139,7 +169,10 @@ useSeoMeta({
           />
         </UFormField>
 
-        <UFormField label="Event Type" required>
+        <UFormField
+          label="Event Type"
+          required
+        >
           <USelect
             v-model="form.type"
             :items="types"
@@ -148,10 +181,13 @@ useSeoMeta({
         </UFormField>
 
         <div class="grid sm:grid-cols-2 gap-4">
-          <UFormField label="Date" required>
+          <UFormField
+            label="Date"
+            required
+          >
             <UInputDate
-              locale="en-GB"
               v-model="form.date"
+              locale="en-GB"
               required
             >
               <template #leading>
@@ -206,7 +242,10 @@ useSeoMeta({
           </UFormField>
         </div>
 
-        <UFormField label="Format" required>
+        <UFormField
+          label="Format"
+          required
+        >
           <USelect
             v-model="form.format"
             :items="formats"

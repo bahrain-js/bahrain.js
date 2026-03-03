@@ -163,7 +163,9 @@ async function saveProfile() {
     }
 
     successMessage.value = 'Profile saved!'
-    setTimeout(() => { successMessage.value = '' }, 3000)
+    setTimeout(() => {
+      successMessage.value = ''
+    }, 3000)
   } catch (err: any) {
     console.error('Failed to save profile:', err)
     alert('Failed to save profile. Please try again.')
@@ -182,7 +184,9 @@ useSeoMeta({
   <UContainer class="py-16 space-y-8">
     <!-- Header -->
     <div>
-      <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl">Your Profile</h1>
+      <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl">
+        Your Profile
+      </h1>
       <p class="mt-4 text-lg text-zinc-500 dark:text-zinc-400">
         Edit your community profile. It's visible on the People page.
       </p>
@@ -190,11 +194,21 @@ useSeoMeta({
 
     <div class="max-w-2xl mx-auto">
       <!-- Not authenticated -->
-      <UCard v-if="!authLoading && !isAuthenticated" class="text-center">
+      <UCard
+        v-if="!authLoading && !isAuthenticated"
+        class="text-center"
+      >
         <div class="space-y-4">
-          <UIcon name="i-lucide-lock" class="text-4xl text-muted" />
-          <h2 class="text-lg font-semibold">Sign in to edit your profile</h2>
-          <p class="text-muted">You need a GitHub account to join the community.</p>
+          <UIcon
+            name="i-lucide-lock"
+            class="text-4xl text-muted"
+          />
+          <h2 class="text-lg font-semibold">
+            Sign in to edit your profile
+          </h2>
+          <p class="text-muted">
+            You need a GitHub account to join the community.
+          </p>
           <UButton
             icon="i-simple-icons-github"
             label="Sign in with GitHub"
@@ -206,7 +220,10 @@ useSeoMeta({
       </UCard>
 
       <!-- Loading -->
-      <div v-else-if="authLoading || loadingProfile" class="space-y-6">
+      <div
+        v-else-if="authLoading || loadingProfile"
+        class="space-y-6"
+      >
         <USkeleton class="h-12 w-full rounded-lg" />
         <USkeleton class="h-12 w-full rounded-lg" />
         <USkeleton class="h-32 w-full rounded-lg" />
@@ -214,7 +231,10 @@ useSeoMeta({
 
       <!-- Profile form -->
       <UCard v-else>
-        <form class="space-y-6" @submit.prevent="saveProfile">
+        <form
+          class="space-y-6"
+          @submit.prevent="saveProfile"
+        >
           <!-- Avatar preview -->
           <div class="flex items-center gap-4">
             <UAvatar
@@ -223,14 +243,26 @@ useSeoMeta({
               size="xl"
             />
             <div>
-              <p class="font-semibold">{{ form.display_name || 'Your Name' }}</p>
-              <p v-if="form.github_username" class="text-sm text-muted">@{{ form.github_username }}</p>
-              <p class="text-xs text-muted">Avatar from GitHub</p>
+              <p class="font-semibold">
+                {{ form.display_name || 'Your Name' }}
+              </p>
+              <p
+                v-if="form.github_username"
+                class="text-sm text-muted"
+              >
+                @{{ form.github_username }}
+              </p>
+              <p class="text-xs text-muted">
+                Avatar from GitHub
+              </p>
             </div>
           </div>
 
           <!-- Display Name -->
-          <UFormField label="Display Name" required>
+          <UFormField
+            label="Display Name"
+            required
+          >
             <UInput
               v-model="form.display_name"
               placeholder="Your name"
@@ -239,7 +271,10 @@ useSeoMeta({
           </UFormField>
 
           <!-- GitHub Username (read-only when profile exists) -->
-          <UFormField label="GitHub Username" required>
+          <UFormField
+            label="GitHub Username"
+            required
+          >
             <UInput
               v-model="form.github_username"
               placeholder="your-username"
@@ -278,7 +313,10 @@ useSeoMeta({
                   @click="addSkill"
                 />
               </div>
-              <div v-if="form.skills.length" class="flex flex-wrap gap-1.5">
+              <div
+                v-if="form.skills.length"
+                class="flex flex-wrap gap-1.5"
+              >
                 <UBadge
                   v-for="skill in form.skills"
                   :key="skill"
@@ -288,7 +326,10 @@ useSeoMeta({
                   @click="removeSkill(skill)"
                 >
                   {{ skill }}
-                  <UIcon name="i-lucide-x" class="ml-1 w-3 h-3" />
+                  <UIcon
+                    name="i-lucide-x"
+                    class="ml-1 w-3 h-3"
+                  />
                 </UBadge>
               </div>
             </div>
@@ -311,7 +352,10 @@ useSeoMeta({
                   @click="addFramework"
                 />
               </div>
-              <div v-if="form.favorite_frameworks.length" class="flex flex-wrap gap-1.5">
+              <div
+                v-if="form.favorite_frameworks.length"
+                class="flex flex-wrap gap-1.5"
+              >
                 <UBadge
                   v-for="fw in form.favorite_frameworks"
                   :key="fw"
@@ -321,7 +365,10 @@ useSeoMeta({
                   @click="removeFramework(fw)"
                 >
                   {{ fw }}
-                  <UIcon name="i-lucide-x" class="ml-1 w-3 h-3" />
+                  <UIcon
+                    name="i-lucide-x"
+                    class="ml-1 w-3 h-3"
+                  />
                 </UBadge>
               </div>
             </div>
@@ -345,10 +392,16 @@ useSeoMeta({
               :loading="saving"
               size="lg"
             />
-            <NuxtLink to="/people" class="text-sm text-muted hover:text-default transition-colors">
+            <NuxtLink
+              to="/people"
+              class="text-sm text-muted hover:text-default transition-colors"
+            >
               ← Back to People
             </NuxtLink>
-            <p v-if="successMessage" class="text-sm text-green-500 flex items-center gap-1">
+            <p
+              v-if="successMessage"
+              class="text-sm text-green-500 flex items-center gap-1"
+            >
               <UIcon name="i-lucide-check" />
               {{ successMessage }}
             </p>

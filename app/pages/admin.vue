@@ -411,24 +411,47 @@ useSeoMeta({
   <UContainer class="py-8 space-y-8">
     <!-- Header -->
     <div>
-      <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl">Admin</h1>
+      <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl">
+        Admin
+      </h1>
       <p class="mt-4 text-lg text-zinc-500 dark:text-zinc-400">
         Manage community members, events, opportunities, and roles.
       </p>
     </div>
 
     <!-- Loading -->
-    <div v-if="authLoading || !adminChecked || loading" class="space-y-4">
-      <USkeleton v-for="i in 5" :key="i" class="h-16 rounded-lg" />
+    <div
+      v-if="authLoading || !adminChecked || loading"
+      class="space-y-4"
+    >
+      <USkeleton
+        v-for="i in 5"
+        :key="i"
+        class="h-16 rounded-lg"
+      />
     </div>
 
     <!-- Not authorized -->
-    <UCard v-else-if="!isAdmin" class="text-center">
+    <UCard
+      v-else-if="!isAdmin"
+      class="text-center"
+    >
       <div class="space-y-4">
-        <UIcon name="i-lucide-shield-x" class="text-4xl text-red-400" />
-        <h2 class="text-lg font-semibold">Access Denied</h2>
-        <p class="text-muted">Only Core Team members can access admin features.</p>
-        <UButton to="/people" label="Back to People" variant="outline" />
+        <UIcon
+          name="i-lucide-shield-x"
+          class="text-4xl text-red-400"
+        />
+        <h2 class="text-lg font-semibold">
+          Access Denied
+        </h2>
+        <p class="text-muted">
+          Only Core Team members can access admin features.
+        </p>
+        <UButton
+          to="/people"
+          label="Back to People"
+          variant="outline"
+        />
       </div>
     </UCard>
 
@@ -438,26 +461,42 @@ useSeoMeta({
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
         <UCard>
           <div class="text-center">
-            <p class="text-2xl font-bold">{{ members.length }}</p>
-            <p class="text-sm text-muted">Total Members</p>
+            <p class="text-2xl font-bold">
+              {{ members.length }}
+            </p>
+            <p class="text-sm text-muted">
+              Total Members
+            </p>
           </div>
         </UCard>
         <UCard>
           <div class="text-center">
-            <p class="text-2xl font-bold">{{ members.filter(m => m.role === 'core').length }}</p>
-            <p class="text-sm text-muted">Core Team</p>
+            <p class="text-2xl font-bold">
+              {{ members.filter(m => m.role === 'core').length }}
+            </p>
+            <p class="text-sm text-muted">
+              Core Team
+            </p>
           </div>
         </UCard>
         <UCard>
           <div class="text-center">
-            <p class="text-2xl font-bold">{{ pendingEvents.filter(e => e.status === 'approved').length }}</p>
-            <p class="text-sm text-muted">Events</p>
+            <p class="text-2xl font-bold">
+              {{ pendingEvents.filter(e => e.status === 'approved').length }}
+            </p>
+            <p class="text-sm text-muted">
+              Events
+            </p>
           </div>
         </UCard>
         <UCard>
           <div class="text-center">
-            <p class="text-2xl font-bold text-yellow-500">{{ pendingEvents.filter(e => e.status === 'pending').length }}</p>
-            <p class="text-sm text-muted">Pending Review</p>
+            <p class="text-2xl font-bold text-yellow-500">
+              {{ pendingEvents.filter(e => e.status === 'pending').length }}
+            </p>
+            <p class="text-sm text-muted">
+              Pending Review
+            </p>
           </div>
         </UCard>
       </div>
@@ -476,7 +515,10 @@ useSeoMeta({
           :variant="activeTab === 'events' ? 'soft' : 'ghost'"
           @click="activeTab = 'events'"
         >
-          <template v-if="pendingEvents.filter(e => e.status === 'pending').length" #trailing>
+          <template
+            v-if="pendingEvents.filter(e => e.status === 'pending').length"
+            #trailing
+          >
             <UBadge
               :label="String(pendingEvents.filter(e => e.status === 'pending').length)"
               color="warning"
@@ -497,7 +539,9 @@ useSeoMeta({
       <!-- Members Tab -->
       <UCard v-if="activeTab === 'members'">
         <div class="space-y-4">
-          <h2 class="text-lg font-semibold">Members</h2>
+          <h2 class="text-lg font-semibold">
+            Members
+          </h2>
 
           <div class="divide-y divide-zinc-200 dark:divide-zinc-800">
             <div
@@ -512,7 +556,9 @@ useSeoMeta({
                 size="md"
               />
               <div class="flex-1 min-w-0">
-                <p class="font-medium truncate">{{ member.display_name }}</p>
+                <p class="font-medium truncate">
+                  {{ member.display_name }}
+                </p>
                 <a
                   :href="`https://github.com/${member.github_username}`"
                   target="_blank"
@@ -566,7 +612,9 @@ useSeoMeta({
       <!-- Events Tab -->
       <UCard v-if="activeTab === 'events'">
         <div class="space-y-4">
-          <h2 class="text-lg font-semibold">Events</h2>
+          <h2 class="text-lg font-semibold">
+            Events
+          </h2>
 
           <div class="divide-y divide-zinc-200 dark:divide-zinc-800">
             <div
@@ -577,7 +625,10 @@ useSeoMeta({
               <!-- Event info -->
               <div class="flex-1 min-w-0">
                 <div class="flex items-center gap-2 mb-1">
-                  <NuxtLink :to="`/events/${event.id}`" class="font-medium hover:text-yellow-500 transition-colors truncate">
+                  <NuxtLink
+                    :to="`/events/${event.id}`"
+                    class="font-medium hover:text-yellow-500 transition-colors truncate"
+                  >
                     {{ event.title }}
                   </NuxtLink>
                   <UBadge
@@ -588,18 +639,32 @@ useSeoMeta({
                     {{ event.status }}
                   </UBadge>
                 </div>
-                <p class="text-sm text-muted truncate">{{ event.description }}</p>
+                <p class="text-sm text-muted truncate">
+                  {{ event.description }}
+                </p>
                 <div class="flex items-center gap-3 mt-1 text-xs text-muted">
                   <span class="flex items-center gap-1">
-                    <UIcon name="i-lucide-calendar" class="size-3" />
+                    <UIcon
+                      name="i-lucide-calendar"
+                      class="size-3"
+                    />
                     {{ formatEventDate(event.date) }}
                   </span>
-                  <span v-if="event.submitter" class="flex items-center gap-1">
-                    <UIcon name="i-lucide-user" class="size-3" />
+                  <span
+                    v-if="event.submitter"
+                    class="flex items-center gap-1"
+                  >
+                    <UIcon
+                      name="i-lucide-user"
+                      class="size-3"
+                    />
                     {{ event.submitter.display_name || event.submitter.github_username }}
                   </span>
                   <span class="flex items-center gap-1">
-                    <UIcon name="i-lucide-tag" class="size-3" />
+                    <UIcon
+                      name="i-lucide-tag"
+                      class="size-3"
+                    />
                     {{ event.type }}
                   </span>
                 </div>
@@ -667,36 +732,73 @@ useSeoMeta({
       </UCard>
 
       <!-- Opportunities Tab -->
-      <div v-if="activeTab === 'opportunities'" class="space-y-6">
+      <div
+        v-if="activeTab === 'opportunities'"
+        class="space-y-6"
+      >
         <!-- Jobs Section -->
         <UCard>
           <div class="space-y-4">
             <div class="flex items-center justify-between">
-              <h2 class="text-lg font-semibold">Job Listings</h2>
-              <UButton label="Add Job" icon="i-lucide-plus" size="xs" @click="showJobForm = true" />
+              <h2 class="text-lg font-semibold">
+                Job Listings
+              </h2>
+              <UButton
+                label="Add Job"
+                icon="i-lucide-plus"
+                size="xs"
+                @click="showJobForm = true"
+              />
             </div>
 
             <div class="divide-y divide-zinc-200 dark:divide-zinc-800">
-              <div v-for="job in jobListings" :key="job.id" class="flex items-center gap-4 py-3 first:pt-0 last:pb-0">
+              <div
+                v-for="job in jobListings"
+                :key="job.id"
+                class="flex items-center gap-4 py-3 first:pt-0 last:pb-0"
+              >
                 <div class="flex-1 min-w-0">
                   <div class="flex items-center gap-2">
-                    <p class="font-medium truncate">{{ job.title }}</p>
-                    <UBadge :color="statusBadgeColor[job.status] || 'neutral'" variant="subtle" size="xs">
+                    <p class="font-medium truncate">
+                      {{ job.title }}
+                    </p>
+                    <UBadge
+                      :color="statusBadgeColor[job.status] || 'neutral'"
+                      variant="subtle"
+                      size="xs"
+                    >
                       {{ job.status }}
                     </UBadge>
-                    <UBadge v-if="job.is_remote" color="info" variant="subtle" size="xs">Remote</UBadge>
+                    <UBadge
+                      v-if="job.is_remote"
+                      color="info"
+                      variant="subtle"
+                      size="xs"
+                    >
+                      Remote
+                    </UBadge>
                   </div>
-                  <p v-if="job.company" class="text-sm text-muted">{{ job.company }} <span v-if="job.location">· {{ job.location }}</span></p>
+                  <p
+                    v-if="job.company"
+                    class="text-sm text-muted"
+                  >
+                    {{ job.company }} <span v-if="job.location">· {{ job.location }}</span>
+                  </p>
                 </div>
                 <div class="flex items-center gap-1">
                   <UButton
                     :icon="job.status === 'approved' ? 'i-lucide-eye-off' : 'i-lucide-eye'"
-                    color="neutral" variant="ghost" size="xs"
+                    color="neutral"
+                    variant="ghost"
+                    size="xs"
                     :loading="oppActionId === job.id"
                     @click="toggleJobStatus(job)"
                   />
                   <UButton
-                    icon="i-lucide-trash-2" color="error" variant="ghost" size="xs"
+                    icon="i-lucide-trash-2"
+                    color="error"
+                    variant="ghost"
+                    size="xs"
                     :loading="oppActionId === job.id"
                     @click="deleteJob(job)"
                   />
@@ -704,7 +806,12 @@ useSeoMeta({
               </div>
             </div>
 
-            <UEmpty v-if="!jobListings.length" icon="i-lucide-briefcase" title="No job listings" description="Add the first job listing." />
+            <UEmpty
+              v-if="!jobListings.length"
+              icon="i-lucide-briefcase"
+              title="No job listings"
+              description="Add the first job listing."
+            />
           </div>
         </UCard>
 
@@ -712,33 +819,61 @@ useSeoMeta({
         <UCard>
           <div class="space-y-4">
             <div class="flex items-center justify-between">
-              <h2 class="text-lg font-semibold">Open Source</h2>
-              <UButton label="Add Project" icon="i-lucide-plus" size="xs" @click="showOssForm = true" />
+              <h2 class="text-lg font-semibold">
+                Open Source
+              </h2>
+              <UButton
+                label="Add Project"
+                icon="i-lucide-plus"
+                size="xs"
+                @click="showOssForm = true"
+              />
             </div>
 
             <div class="divide-y divide-zinc-200 dark:divide-zinc-800">
-              <div v-for="opp in ossListings" :key="opp.id" class="flex items-center gap-4 py-3 first:pt-0 last:pb-0">
+              <div
+                v-for="opp in ossListings"
+                :key="opp.id"
+                class="flex items-center gap-4 py-3 first:pt-0 last:pb-0"
+              >
                 <div class="flex-1 min-w-0">
                   <div class="flex items-center gap-2">
-                    <p class="font-medium truncate">{{ opp.project_name }}</p>
-                    <UBadge :color="opp.status === 'active' ? 'success' : 'neutral'" variant="subtle" size="xs">
+                    <p class="font-medium truncate">
+                      {{ opp.project_name }}
+                    </p>
+                    <UBadge
+                      :color="opp.status === 'active' ? 'success' : 'neutral'"
+                      variant="subtle"
+                      size="xs"
+                    >
                       {{ opp.status }}
                     </UBadge>
-                    <UBadge :color="opp.difficulty === 'beginner' ? 'success' : opp.difficulty === 'intermediate' ? 'info' : 'warning'" variant="subtle" size="xs">
+                    <UBadge
+                      :color="opp.difficulty === 'beginner' ? 'success' : opp.difficulty === 'intermediate' ? 'info' : 'warning'"
+                      variant="subtle"
+                      size="xs"
+                    >
                       {{ opp.difficulty }}
                     </UBadge>
                   </div>
-                  <p class="text-sm text-muted truncate">{{ opp.description }}</p>
+                  <p class="text-sm text-muted truncate">
+                    {{ opp.description }}
+                  </p>
                 </div>
                 <div class="flex items-center gap-1">
                   <UButton
                     :icon="opp.status === 'active' ? 'i-lucide-eye-off' : 'i-lucide-eye'"
-                    color="neutral" variant="ghost" size="xs"
+                    color="neutral"
+                    variant="ghost"
+                    size="xs"
                     :loading="oppActionId === opp.id"
                     @click="toggleOssStatus(opp)"
                   />
                   <UButton
-                    icon="i-lucide-trash-2" color="error" variant="ghost" size="xs"
+                    icon="i-lucide-trash-2"
+                    color="error"
+                    variant="ghost"
+                    size="xs"
                     :loading="oppActionId === opp.id"
                     @click="deleteOss(opp)"
                   />
@@ -746,7 +881,12 @@ useSeoMeta({
               </div>
             </div>
 
-            <UEmpty v-if="!ossListings.length" icon="i-lucide-git-pull-request" title="No projects" description="Add an open source project." />
+            <UEmpty
+              v-if="!ossListings.length"
+              icon="i-lucide-git-pull-request"
+              title="No projects"
+              description="Add an open source project."
+            />
           </div>
         </UCard>
 
@@ -754,33 +894,61 @@ useSeoMeta({
         <UCard>
           <div class="space-y-4">
             <div class="flex items-center justify-between">
-              <h2 class="text-lg font-semibold">Startup Ideas</h2>
-              <UButton label="Add Idea" icon="i-lucide-plus" size="xs" @click="showIdeaForm = true" />
+              <h2 class="text-lg font-semibold">
+                Startup Ideas
+              </h2>
+              <UButton
+                label="Add Idea"
+                icon="i-lucide-plus"
+                size="xs"
+                @click="showIdeaForm = true"
+              />
             </div>
 
             <div class="divide-y divide-zinc-200 dark:divide-zinc-800">
-              <div v-for="idea in startupIdeas" :key="idea.id" class="flex items-center gap-4 py-3 first:pt-0 last:pb-0">
+              <div
+                v-for="idea in startupIdeas"
+                :key="idea.id"
+                class="flex items-center gap-4 py-3 first:pt-0 last:pb-0"
+              >
                 <div class="flex-1 min-w-0">
                   <div class="flex items-center gap-2">
-                    <p class="font-medium truncate">{{ idea.title }}</p>
-                    <UBadge :color="statusBadgeColor[idea.status] || 'neutral'" variant="subtle" size="xs">
+                    <p class="font-medium truncate">
+                      {{ idea.title }}
+                    </p>
+                    <UBadge
+                      :color="statusBadgeColor[idea.status] || 'neutral'"
+                      variant="subtle"
+                      size="xs"
+                    >
                       {{ idea.status }}
                     </UBadge>
-                    <UBadge color="warning" variant="subtle" size="xs">
+                    <UBadge
+                      color="warning"
+                      variant="subtle"
+                      size="xs"
+                    >
                       {{ idea.looking_for }}
                     </UBadge>
                   </div>
-                  <p class="text-sm text-muted truncate">{{ idea.sector ? `${idea.sector} · ` : '' }}{{ idea.problem || idea.description }}</p>
+                  <p class="text-sm text-muted truncate">
+                    {{ idea.sector ? `${idea.sector} · ` : '' }}{{ idea.problem || idea.description }}
+                  </p>
                 </div>
                 <div class="flex items-center gap-1">
                   <UButton
                     :icon="idea.status === 'approved' ? 'i-lucide-eye-off' : 'i-lucide-eye'"
-                    color="neutral" variant="ghost" size="xs"
+                    color="neutral"
+                    variant="ghost"
+                    size="xs"
                     :loading="oppActionId === idea.id"
                     @click="toggleIdeaStatus(idea)"
                   />
                   <UButton
-                    icon="i-lucide-trash-2" color="error" variant="ghost" size="xs"
+                    icon="i-lucide-trash-2"
+                    color="error"
+                    variant="ghost"
+                    size="xs"
                     :loading="oppActionId === idea.id"
                     @click="deleteIdea(idea)"
                   />
@@ -788,7 +956,12 @@ useSeoMeta({
               </div>
             </div>
 
-            <UEmpty v-if="!startupIdeas.length" icon="i-lucide-lightbulb" title="No startup ideas" description="Add a startup idea." />
+            <UEmpty
+              v-if="!startupIdeas.length"
+              icon="i-lucide-lightbulb"
+              title="No startup ideas"
+              description="Add a startup idea."
+            />
           </div>
         </UCard>
       </div>
@@ -797,34 +970,75 @@ useSeoMeta({
       <UModal v-model:open="showJobForm">
         <template #content>
           <div class="p-6 space-y-4">
-            <h3 class="text-lg font-semibold">Add Job Listing</h3>
+            <h3 class="text-lg font-semibold">
+              Add Job Listing
+            </h3>
             <UFormField label="Job Title">
-              <UInput v-model="jobForm.title" placeholder="e.g. Senior Frontend Developer" class="w-full" />
+              <UInput
+                v-model="jobForm.title"
+                placeholder="e.g. Senior Frontend Developer"
+                class="w-full"
+              />
             </UFormField>
             <UFormField label="Company">
-              <UInput v-model="jobForm.company" placeholder="e.g. Acme Corp" class="w-full" />
+              <UInput
+                v-model="jobForm.company"
+                placeholder="e.g. Acme Corp"
+                class="w-full"
+              />
             </UFormField>
             <UFormField label="Description">
-              <UTextarea v-model="jobForm.description" placeholder="Job description..." class="w-full" />
+              <UTextarea
+                v-model="jobForm.description"
+                placeholder="Job description..."
+                class="w-full"
+              />
             </UFormField>
             <div class="grid grid-cols-2 gap-4">
               <UFormField label="Location">
-                <UInput v-model="jobForm.location" placeholder="e.g. Manama, Bahrain" class="w-full" />
+                <UInput
+                  v-model="jobForm.location"
+                  placeholder="e.g. Manama, Bahrain"
+                  class="w-full"
+                />
               </UFormField>
               <UFormField label="Salary Range">
-                <UInput v-model="jobForm.salary_range" placeholder="e.g. $60k-$80k" class="w-full" />
+                <UInput
+                  v-model="jobForm.salary_range"
+                  placeholder="e.g. $60k-$80k"
+                  class="w-full"
+                />
               </UFormField>
             </div>
             <UFormField label="Apply URL">
-              <UInput v-model="jobForm.url" placeholder="https://..." class="w-full" />
+              <UInput
+                v-model="jobForm.url"
+                placeholder="https://..."
+                class="w-full"
+              />
             </UFormField>
             <UFormField label="Tags (comma separated)">
-              <UInput v-model="jobForm.tags" placeholder="Vue, TypeScript, Node.js" class="w-full" />
+              <UInput
+                v-model="jobForm.tags"
+                placeholder="Vue, TypeScript, Node.js"
+                class="w-full"
+              />
             </UFormField>
-            <UCheckbox v-model="jobForm.is_remote" label="Remote position" />
+            <UCheckbox
+              v-model="jobForm.is_remote"
+              label="Remote position"
+            />
             <div class="flex justify-end gap-2 pt-2">
-              <UButton label="Cancel" variant="outline" @click="showJobForm = false" />
-              <UButton label="Create" :disabled="!jobForm.title" @click="createJob" />
+              <UButton
+                label="Cancel"
+                variant="outline"
+                @click="showJobForm = false"
+              />
+              <UButton
+                label="Create"
+                :disabled="!jobForm.title"
+                @click="createJob"
+              />
             </div>
           </div>
         </template>
@@ -834,30 +1048,64 @@ useSeoMeta({
       <UModal v-model:open="showOssForm">
         <template #content>
           <div class="p-6 space-y-4">
-            <h3 class="text-lg font-semibold">Add Open Source Project</h3>
+            <h3 class="text-lg font-semibold">
+              Add Open Source Project
+            </h3>
             <UFormField label="Project Name">
-              <UInput v-model="ossForm.project_name" placeholder="e.g. @bahrainjs/toolkit" class="w-full" />
+              <UInput
+                v-model="ossForm.project_name"
+                placeholder="e.g. @bahrainjs/toolkit"
+                class="w-full"
+              />
             </UFormField>
             <UFormField label="Description">
-              <UTextarea v-model="ossForm.description" placeholder="What the project does..." class="w-full" />
+              <UTextarea
+                v-model="ossForm.description"
+                placeholder="What the project does..."
+                class="w-full"
+              />
             </UFormField>
             <div class="grid grid-cols-2 gap-4">
               <UFormField label="Difficulty">
-                <USelect v-model="ossForm.difficulty" :items="['beginner', 'intermediate', 'advanced']" class="w-full" />
+                <USelect
+                  v-model="ossForm.difficulty"
+                  :items="['beginner', 'intermediate', 'advanced']"
+                  class="w-full"
+                />
               </UFormField>
               <UFormField label="Issues Label">
-                <UInput v-model="ossForm.issues_label" placeholder="e.g. Good first issues" class="w-full" />
+                <UInput
+                  v-model="ossForm.issues_label"
+                  placeholder="e.g. Good first issues"
+                  class="w-full"
+                />
               </UFormField>
             </div>
             <UFormField label="GitHub URL">
-              <UInput v-model="ossForm.url" placeholder="https://github.com/..." class="w-full" />
+              <UInput
+                v-model="ossForm.url"
+                placeholder="https://github.com/..."
+                class="w-full"
+              />
             </UFormField>
             <UFormField label="Tags (comma separated)">
-              <UInput v-model="ossForm.tags" placeholder="Vue, TypeScript" class="w-full" />
+              <UInput
+                v-model="ossForm.tags"
+                placeholder="Vue, TypeScript"
+                class="w-full"
+              />
             </UFormField>
             <div class="flex justify-end gap-2 pt-2">
-              <UButton label="Cancel" variant="outline" @click="showOssForm = false" />
-              <UButton label="Create" :disabled="!ossForm.project_name" @click="createOss" />
+              <UButton
+                label="Cancel"
+                variant="outline"
+                @click="showOssForm = false"
+              />
+              <UButton
+                label="Create"
+                :disabled="!ossForm.project_name"
+                @click="createOss"
+              />
             </div>
           </div>
         </template>
@@ -867,33 +1115,71 @@ useSeoMeta({
       <UModal v-model:open="showIdeaForm">
         <template #content>
           <div class="p-6 space-y-4">
-            <h3 class="text-lg font-semibold">Add Startup Idea</h3>
+            <h3 class="text-lg font-semibold">
+              Add Startup Idea
+            </h3>
             <UFormField label="Title">
-              <UInput v-model="ideaForm.title" placeholder="e.g. Local Delivery Platform" class="w-full" />
+              <UInput
+                v-model="ideaForm.title"
+                placeholder="e.g. Local Delivery Platform"
+                class="w-full"
+              />
             </UFormField>
             <UFormField label="Problem Statement">
-              <UTextarea v-model="ideaForm.problem" placeholder="What problem does this solve in Bahrain?" class="w-full" />
+              <UTextarea
+                v-model="ideaForm.problem"
+                placeholder="What problem does this solve in Bahrain?"
+                class="w-full"
+              />
             </UFormField>
             <UFormField label="Description">
-              <UTextarea v-model="ideaForm.description" placeholder="Describe the idea..." class="w-full" />
+              <UTextarea
+                v-model="ideaForm.description"
+                placeholder="Describe the idea..."
+                class="w-full"
+              />
             </UFormField>
             <div class="grid grid-cols-2 gap-4">
               <UFormField label="Looking For">
-                <USelect v-model="ideaForm.looking_for" :items="['co-founder', 'technical co-founder', 'business co-founder', 'founding engineer']" class="w-full" />
+                <USelect
+                  v-model="ideaForm.looking_for"
+                  :items="['co-founder', 'technical co-founder', 'business co-founder', 'founding engineer']"
+                  class="w-full"
+                />
               </UFormField>
               <UFormField label="Sector">
-                <UInput v-model="ideaForm.sector" placeholder="e.g. Fintech, EdTech" class="w-full" />
+                <UInput
+                  v-model="ideaForm.sector"
+                  placeholder="e.g. Fintech, EdTech"
+                  class="w-full"
+                />
               </UFormField>
             </div>
             <UFormField label="Contact URL">
-              <UInput v-model="ideaForm.contact_url" placeholder="https://..." class="w-full" />
+              <UInput
+                v-model="ideaForm.contact_url"
+                placeholder="https://..."
+                class="w-full"
+              />
             </UFormField>
             <UFormField label="Tags (comma separated)">
-              <UInput v-model="ideaForm.tags" placeholder="Node.js, API, Mobile" class="w-full" />
+              <UInput
+                v-model="ideaForm.tags"
+                placeholder="Node.js, API, Mobile"
+                class="w-full"
+              />
             </UFormField>
             <div class="flex justify-end gap-2 pt-2">
-              <UButton label="Cancel" variant="outline" @click="showIdeaForm = false" />
-              <UButton label="Create" :disabled="!ideaForm.title" @click="createIdea" />
+              <UButton
+                label="Cancel"
+                variant="outline"
+                @click="showIdeaForm = false"
+              />
+              <UButton
+                label="Create"
+                :disabled="!ideaForm.title"
+                @click="createIdea"
+              />
             </div>
           </div>
         </template>

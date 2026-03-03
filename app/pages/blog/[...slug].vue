@@ -35,17 +35,29 @@ useSeoMeta({
 </script>
 
 <template>
-  <UContainer v-if="post" class="py-16 max-w-3xl">
+  <UContainer
+    v-if="post"
+    class="py-16 max-w-3xl"
+  >
     <!-- Back link -->
-    <NuxtLink to="/blog" class="inline-flex items-center gap-1 text-sm text-zinc-500 hover:text-yellow-500 transition-colors mb-8">
-      <UIcon name="i-lucide-arrow-left" class="size-4" />
+    <NuxtLink
+      to="/blog"
+      class="inline-flex items-center gap-1 text-sm text-zinc-500 hover:text-yellow-500 transition-colors mb-8"
+    >
+      <UIcon
+        name="i-lucide-arrow-left"
+        class="size-4"
+      />
       All posts
     </NuxtLink>
 
     <!-- Header -->
     <header class="mb-10">
       <!-- Tags -->
-      <div v-if="post.tags?.length" class="flex flex-wrap gap-1.5 mb-4">
+      <div
+        v-if="post.tags?.length"
+        class="flex flex-wrap gap-1.5 mb-4"
+      >
         <NuxtLink
           v-for="tag in post.tags"
           :key="tag"
@@ -74,8 +86,14 @@ useSeoMeta({
             :alt="post.author"
             class="size-10 rounded-full"
           >
-          <div v-else class="size-10 rounded-full bg-zinc-200 dark:bg-zinc-700 flex items-center justify-center">
-            <UIcon name="i-lucide-user" class="size-5 text-zinc-400" />
+          <div
+            v-else
+            class="size-10 rounded-full bg-zinc-200 dark:bg-zinc-700 flex items-center justify-center"
+          >
+            <UIcon
+              name="i-lucide-user"
+              class="size-5 text-zinc-400"
+            />
           </div>
           <div>
             <div class="text-sm font-medium">

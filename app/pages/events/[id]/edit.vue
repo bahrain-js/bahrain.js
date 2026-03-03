@@ -157,23 +157,40 @@ useSeoMeta({
 
 <template>
   <UContainer class="py-16 max-w-2xl mx-auto">
-    <NuxtLink :to="`/events/${eventId}`" class="inline-flex items-center gap-1 text-sm text-zinc-500 hover:text-yellow-500 transition-colors mb-8">
-      <UIcon name="i-lucide-arrow-left" class="size-4" />
+    <NuxtLink
+      :to="`/events/${eventId}`"
+      class="inline-flex items-center gap-1 text-sm text-zinc-500 hover:text-yellow-500 transition-colors mb-8"
+    >
+      <UIcon
+        name="i-lucide-arrow-left"
+        class="size-4"
+      />
       Back to event
     </NuxtLink>
 
     <!-- Loading -->
-    <div v-if="loading" class="space-y-4">
+    <div
+      v-if="loading"
+      class="space-y-4"
+    >
       <USkeleton class="h-12 w-64" />
       <USkeleton class="h-8 w-full" />
       <USkeleton class="h-8 w-3/4" />
     </div>
 
     <!-- Success state -->
-    <UCard v-else-if="saved" class="text-center">
+    <UCard
+      v-else-if="saved"
+      class="text-center"
+    >
       <div class="space-y-4 py-8">
-        <UIcon name="i-lucide-check-circle" class="size-16 text-green-500 mx-auto" />
-        <h2 class="text-xl font-semibold">Changes Saved!</h2>
+        <UIcon
+          name="i-lucide-check-circle"
+          class="size-16 text-green-500 mx-auto"
+        />
+        <h2 class="text-xl font-semibold">
+          Changes Saved!
+        </h2>
         <p class="text-zinc-500 dark:text-zinc-400">
           Redirecting back to the event...
         </p>
@@ -183,7 +200,9 @@ useSeoMeta({
     <!-- Edit form -->
     <template v-else-if="canEdit">
       <div class="flex items-center justify-between mb-6">
-        <h1 class="text-3xl font-extrabold tracking-tight">Edit Event</h1>
+        <h1 class="text-3xl font-extrabold tracking-tight">
+          Edit Event
+        </h1>
         <UBadge
           v-if="form.status"
           :color="form.status === 'approved' ? 'success' : form.status === 'pending' ? 'warning' : 'neutral'"
@@ -195,8 +214,14 @@ useSeoMeta({
       </div>
 
       <UCard>
-        <form class="space-y-6" @submit.prevent="saveEvent">
-          <UFormField label="Event Title" required>
+        <form
+          class="space-y-6"
+          @submit.prevent="saveEvent"
+        >
+          <UFormField
+            label="Event Title"
+            required
+          >
             <UInput
               v-model="form.title"
               placeholder="e.g. Bahrain.js March Meetup"
@@ -205,7 +230,10 @@ useSeoMeta({
             />
           </UFormField>
 
-          <UFormField label="Short Description" required>
+          <UFormField
+            label="Short Description"
+            required
+          >
             <UTextarea
               v-model="form.description"
               placeholder="One-line summary of the event"
@@ -215,7 +243,10 @@ useSeoMeta({
             />
           </UFormField>
 
-          <UFormField label="Event Type" required>
+          <UFormField
+            label="Event Type"
+            required
+          >
             <USelect
               v-model="form.type"
               :items="types"
@@ -224,27 +255,30 @@ useSeoMeta({
           </UFormField>
 
           <div class="grid sm:grid-cols-2 gap-4">
-            <UFormField label="Date" required>
+            <UFormField
+              label="Date"
+              required
+            >
               <UInputDate
-                locale="en-GB"
                 v-model="form.date"
+                locale="en-GB"
                 required
               >
-              <template #leading>
-                <UPopover>
-                  <UButton
-                    color="primary"
-                    variant="link"
-                    size="sm"
-                    icon="i-lucide-calendar"
-                    aria-label="Select a date"
-                    class="px-0"
-                  />
-                  <template #content>
-                    <UCalendar v-model="form.date" />
-                  </template>
-                </UPopover>
-              </template>
+                <template #leading>
+                  <UPopover>
+                    <UButton
+                      color="primary"
+                      variant="link"
+                      size="sm"
+                      icon="i-lucide-calendar"
+                      aria-label="Select a date"
+                      class="px-0"
+                    />
+                    <template #content>
+                      <UCalendar v-model="form.date" />
+                    </template>
+                  </UPopover>
+                </template>
               </UInputDate>
             </UFormField>
 
@@ -282,7 +316,10 @@ useSeoMeta({
             </UFormField>
           </div>
 
-          <UFormField label="Format" required>
+          <UFormField
+            label="Format"
+            required
+          >
             <USelect
               v-model="form.format"
               :items="formats"

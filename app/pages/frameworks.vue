@@ -86,20 +86,31 @@ useSeoMeta({
   <UContainer class="py-16 space-y-12">
     <!-- Header -->
     <div class="text-center">
-      <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl">Frameworks</h1>
+      <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl">
+        Frameworks
+      </h1>
       <p class="mt-4 text-lg text-zinc-500 dark:text-zinc-400 max-w-2xl mx-auto">
         Explore the JavaScript ecosystem and discover what our community loves building with.
       </p>
     </div>
 
     <!-- Community Favorites -->
-    <section v-if="topFrameworks.length" class="space-y-4">
+    <section
+      v-if="topFrameworks.length"
+      class="space-y-4"
+    >
       <h2 class="text-xl font-bold flex items-center gap-2">
-        <UIcon name="i-lucide-heart" class="text-red-400" />
+        <UIcon
+          name="i-lucide-heart"
+          class="text-red-400"
+        />
         Community Favorites
       </h2>
       <p class="text-sm text-zinc-500 dark:text-zinc-400">
-        Based on member profiles — add your favorites on your <NuxtLink to="/profile" class="underline hover:text-white transition-colors">profile page</NuxtLink>.
+        Based on member profiles — add your favorites on your <NuxtLink
+          to="/profile"
+          class="underline hover:text-white transition-colors"
+        >profile page</NuxtLink>.
       </p>
       <div class="flex flex-wrap gap-3">
         <UCard
@@ -108,7 +119,11 @@ useSeoMeta({
           class="inline-flex items-center gap-2 px-4 py-2"
         >
           <span class="font-semibold">{{ name }}</span>
-          <UBadge color="primary" variant="subtle" size="xs">
+          <UBadge
+            color="primary"
+            variant="subtle"
+            size="xs"
+          >
             {{ count }} {{ count === 1 ? 'member' : 'members' }}
           </UBadge>
         </UCard>
@@ -145,7 +160,10 @@ useSeoMeta({
       >
         <UCard class="text-center hover:ring-2 hover:ring-primary-500/50 transition-all h-full">
           <div class="flex flex-col items-center gap-3 py-2">
-            <UIcon :name="fw.icon" :class="['text-3xl transition-transform group-hover:scale-110', fw.color]" />
+            <UIcon
+              :name="fw.icon"
+              :class="['text-3xl transition-transform group-hover:scale-110', fw.color]"
+            />
             <div>
               <p class="font-semibold text-sm">{{ fw.name }}</p>
               <p class="text-xs text-zinc-500 dark:text-zinc-400">{{ fw.category }}</p>
@@ -165,13 +183,25 @@ useSeoMeta({
 
     <!-- CTA -->
     <div class="text-center space-y-4 py-8">
-      <h2 class="text-xl font-bold">Which frameworks do you love?</h2>
+      <h2 class="text-xl font-bold">
+        Which frameworks do you love?
+      </h2>
       <p class="text-zinc-500 dark:text-zinc-400">
         Sign in and add your favorite frameworks to your profile.
       </p>
       <div class="flex gap-3 justify-center">
-        <UButton to="/profile" icon="i-lucide-user" label="Edit Profile" color="primary" />
-        <UButton to="/people" icon="i-lucide-users" label="See People" variant="outline" />
+        <UButton
+          to="/profile"
+          icon="i-lucide-user"
+          label="Edit Profile"
+          color="primary"
+        />
+        <UButton
+          to="/people"
+          icon="i-lucide-users"
+          label="See People"
+          variant="outline"
+        />
       </div>
     </div>
   </UContainer>
