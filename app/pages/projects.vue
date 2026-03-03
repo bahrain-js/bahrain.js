@@ -78,7 +78,7 @@ const staticProjects: Project[] = [
 ]
 
 // Fetch live data from GitHub API
-const { data: githubRepos } = await useFetch<any[]>('/api/github')
+const { data: githubRepos } = await useGitHubRepos()
 
 // Merge GitHub stars into static projects
 const projects = computed(() => {

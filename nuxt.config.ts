@@ -34,6 +34,10 @@ export default defineNuxtConfig({
     '/admin': { ssr: false }
   },
 
+  nitro: {
+    preset: 'github-pages'
+  },
+
   compatibilityDate: '2025-01-15',
 
   eslint: {

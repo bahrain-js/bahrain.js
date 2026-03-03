@@ -6,7 +6,7 @@ const { isAuthenticated, signInWithGitHub } = useAuth()
 const memberCount = ref(0)
 const eventCount = ref(0)
 const nextEvent = ref<any>(null)
-const githubRepos = ref<any[]>([])
+const { data: githubRepos } = await useGitHubRepos()
 
 async function fetchStats() {
   try {
@@ -32,18 +32,9 @@ async function fetchNextEvent() {
   } catch { /* silent */ }
 }
 
-async function fetchGithubData() {
-  try {
-    const { data } = await useFetch<any[]>('/api/github')
-    if (data.value) {
-      githubRepos.value = data.value
-    }
-  } catch { /* silent */ }
-}
-
 // Computed stats
-const totalStars = computed(() => githubRepos.value.reduce((sum, r) => sum + (r.stars || 0), 0))
-const repoCount = computed(() => githubRepos.value.length)
+const totalStars = computed(() => (githubRepos.value ?? []).reduce((sum: number, r: any) => sum + (r.stars || 0), 0))
+const repoCount = computed(() => (githubRepos.value ?? []).length)
 
 const stats = computed(() => [
   { value: memberCount.value, label: 'Members', icon: 'i-lucide-users' },
@@ -130,7 +121,7 @@ const divider4 = ref<HTMLElement>()
 
 // ─── GSAP Animations ───
 onMounted(async () => {
-  await Promise.all([fetchStats(), fetchNextEvent(), fetchGithubData()])
+  await Promise.all([fetchStats(), fetchNextEvent()])
   await nextTick()
 
   // Start countdown timer
