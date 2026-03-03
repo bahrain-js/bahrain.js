@@ -132,7 +132,7 @@ const stageOptions = [
 ]
 
 const filteredProjects = computed(() => {
-  return allProjects.value.filter(p => {
+  return allProjects.value.filter((p) => {
     const q = searchQuery.value.toLowerCase()
     const matchesSearch = !q
       || p.name.toLowerCase().includes(q)

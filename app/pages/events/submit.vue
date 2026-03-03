@@ -40,8 +40,6 @@ const timeSlots = Array.from({ length: 48 }, (_, i) => {
   return { hour, minute, label }
 })
 
-
-
 async function submitEvent() {
   if (!user.value || !form.value.title || !form.value.date) return
 
