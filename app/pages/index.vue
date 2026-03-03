@@ -580,11 +580,12 @@ onMounted(async () => {
     })
   }
 
-  // Wave divider 2: Stats → Features — slide from right
+  // Wave divider 2: Stats → Features — reveal from right
   if (divider2.value) {
-    gsap.from(divider2.value, {
-      xPercent: 50,
-      autoAlpha: 0,
+    gsap.fromTo(divider2.value.querySelector('.divider-wave')!, {
+      clipPath: 'inset(0 0 0 100%)'
+    }, {
+      clipPath: 'inset(0 0 0 0%)',
       ease: 'power3.out',
       scrollTrigger: {
         trigger: divider2.value,
