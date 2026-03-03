@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Time } from '@internationalized/date'
 
-const { user, isAuthenticated, loading: authLoading } = useAuth()
+const { user, isAuthenticated, loading: authLoading, signInWithGitHub } = useAuth()
 const client = useNeonClient()
 
 const saving = ref(false)
@@ -40,16 +40,7 @@ const timeSlots = Array.from({ length: 48 }, (_, i) => {
   return { hour, minute, label }
 })
 
-// Redirect unauthenticated users
-watch(
-  () => authLoading.value,
-  (isLoading) => {
-    if (!isLoading && !isAuthenticated.value) {
-      navigateTo('/events')
-    }
-  },
-  { immediate: true }
-)
+
 
 async function submitEvent() {
   if (!user.value || !form.value.title || !form.value.date) return
@@ -113,9 +104,35 @@ useSeoMeta({
       Propose an event for the Bahrain.js community. Core team members will review your submission.
     </p>
 
+    <!-- Auth required -->
+    <UCard
+      v-if="!authLoading && !isAuthenticated"
+      class="text-center"
+    >
+      <div class="space-y-4 py-8">
+        <UIcon
+          name="i-lucide-lock"
+          class="size-12 text-zinc-400 mx-auto"
+        />
+        <h2 class="text-xl font-semibold">
+          Sign in to submit an event
+        </h2>
+        <p class="text-zinc-500 dark:text-zinc-400 max-w-sm mx-auto">
+          You need a GitHub account to propose events for the community.
+        </p>
+        <UButton
+          icon="i-simple-icons-github"
+          label="Sign in with GitHub"
+          color="neutral"
+          size="lg"
+          @click="signInWithGitHub"
+        />
+      </div>
+    </UCard>
+
     <!-- Success state -->
     <UCard
-      v-if="saved"
+      v-else-if="saved"
       class="text-center"
     >
       <div class="space-y-4 py-8">
