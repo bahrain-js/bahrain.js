@@ -72,6 +72,15 @@ const userMenuItems = computed(() => {
         variant="ghost"
       />
 
+      <UButton
+        to="https://discord.gg/EZrDeaErBV"
+        target="_blank"
+        icon="i-simple-icons-discord"
+        aria-label="Discord"
+        color="neutral"
+        variant="ghost"
+      />
+
       <template v-if="isAuthenticated && authUser">
         <UDropdownMenu
           :items="userMenuItems"

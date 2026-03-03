@@ -741,10 +741,10 @@ useSeoMeta({
             @click="signInWithGitHub"
           />
           <UButton
-            to="https://github.com/bahrain-js"
+            to="https://discord.gg/EZrDeaErBV"
             target="_blank"
-            label="GitHub Org"
-            icon="i-simple-icons-github"
+            label="Join Discord"
+            icon="i-simple-icons-discord"
             size="xl"
             color="neutral"
             variant="subtle"
@@ -1121,10 +1121,10 @@ useSeoMeta({
             style="visibility: hidden"
           />
           <UButton
-            to="https://github.com/bahrain-js"
+            to="https://discord.gg/EZrDeaErBV"
             target="_blank"
-            label="Explore projects"
-            icon="i-simple-icons-github"
+            label="Join Discord"
+            icon="i-simple-icons-discord"
             color="neutral"
             variant="outline"
             size="xl"
