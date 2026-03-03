@@ -26,11 +26,9 @@ export function useAuth() {
   }
 
   async function signInWithGitHub() {
-    const config = useRuntimeConfig()
-    const baseURL = config.app.baseURL || '/'
     await client.auth.signIn.social({
       provider: 'github',
-      callbackURL: window.location.origin + baseURL + 'people'
+      callbackURL: window.location.href
     })
   }
 
