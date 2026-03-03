@@ -272,8 +272,8 @@ async function deleteJob(job: any) {
   }
 }
 
-async function toggleJobStatus(job: any) {
-  const newStatus = job.status === 'approved' ? 'pending' : 'approved'
+async function updateJobStatus(job: any, newStatus: string) {
+  if (job.status === newStatus) return
   oppActionId.value = job.id
   try {
     const { error } = await client.from('opportunities').update({ status: newStatus }).eq('id', job.id)
@@ -324,8 +324,8 @@ async function deleteOss(opp: any) {
   }
 }
 
-async function toggleOssStatus(opp: any) {
-  const newStatus = opp.status === 'active' ? 'inactive' : 'active'
+async function updateOssStatus(opp: any, newStatus: string) {
+  if (opp.status === newStatus) return
   oppActionId.value = opp.id
   try {
     const { error } = await client.from('open_source_opportunities').update({ status: newStatus }).eq('id', opp.id)
@@ -377,8 +377,8 @@ async function deleteIdea(idea: any) {
   }
 }
 
-async function toggleIdeaStatus(idea: any) {
-  const newStatus = idea.status === 'approved' ? 'pending' : 'approved'
+async function updateIdeaStatus(idea: any, newStatus: string) {
+  if (idea.status === newStatus) return
   oppActionId.value = idea.id
   try {
     const { error } = await client.from('startup_ideas').update({ status: newStatus }).eq('id', idea.id)
@@ -785,14 +785,18 @@ useSeoMeta({
                     {{ job.company }} <span v-if="job.location">· {{ job.location }}</span>
                   </p>
                 </div>
-                <div class="flex items-center gap-1">
-                  <UButton
-                    :icon="job.status === 'approved' ? 'i-lucide-eye-off' : 'i-lucide-eye'"
-                    color="neutral"
-                    variant="ghost"
+                <div class="flex items-center gap-2">
+                  <USelect
+                    :model-value="job.status"
+                    :items="[
+                      { label: 'Pending', value: 'pending' },
+                      { label: 'Approved', value: 'approved' },
+                      { label: 'Rejected', value: 'rejected' }
+                    ]"
                     size="xs"
+                    class="w-28"
                     :loading="oppActionId === job.id"
-                    @click="toggleJobStatus(job)"
+                    @update:model-value="(val: string) => updateJobStatus(job, val)"
                   />
                   <UButton
                     icon="i-lucide-trash-2"
@@ -860,14 +864,17 @@ useSeoMeta({
                     {{ opp.description }}
                   </p>
                 </div>
-                <div class="flex items-center gap-1">
-                  <UButton
-                    :icon="opp.status === 'active' ? 'i-lucide-eye-off' : 'i-lucide-eye'"
-                    color="neutral"
-                    variant="ghost"
+                <div class="flex items-center gap-2">
+                  <USelect
+                    :model-value="opp.status"
+                    :items="[
+                      { label: 'Active', value: 'active' },
+                      { label: 'Inactive', value: 'inactive' }
+                    ]"
                     size="xs"
+                    class="w-28"
                     :loading="oppActionId === opp.id"
-                    @click="toggleOssStatus(opp)"
+                    @update:model-value="(val: string) => updateOssStatus(opp, val)"
                   />
                   <UButton
                     icon="i-lucide-trash-2"
@@ -935,14 +942,18 @@ useSeoMeta({
                     {{ idea.sector ? `${idea.sector} · ` : '' }}{{ idea.problem || idea.description }}
                   </p>
                 </div>
-                <div class="flex items-center gap-1">
-                  <UButton
-                    :icon="idea.status === 'approved' ? 'i-lucide-eye-off' : 'i-lucide-eye'"
-                    color="neutral"
-                    variant="ghost"
+                <div class="flex items-center gap-2">
+                  <USelect
+                    :model-value="idea.status"
+                    :items="[
+                      { label: 'Pending', value: 'pending' },
+                      { label: 'Approved', value: 'approved' },
+                      { label: 'Rejected', value: 'rejected' }
+                    ]"
                     size="xs"
+                    class="w-28"
                     :loading="oppActionId === idea.id"
-                    @click="toggleIdeaStatus(idea)"
+                    @update:model-value="(val: string) => updateIdeaStatus(idea, val)"
                   />
                   <UButton
                     icon="i-lucide-trash-2"
