@@ -194,14 +194,14 @@ useSeoMeta({
               <div class="flex-1">
                 <div class="flex items-center gap-2 mb-2">
                   <span
-                    :class="stageConfig[project.stage].color"
+                    :class="stageConfig[project.stage]?.color"
                     class="inline-flex items-center gap-1 text-xs font-medium"
                   >
                     <UIcon
-                      :name="stageConfig[project.stage].icon"
+                      :name="stageConfig[project.stage]?.icon"
                       class="size-3.5"
                     />
-                    {{ stageConfig[project.stage].label }}
+                    {{ stageConfig[project.stage]?.label }}
                   </span>
                 </div>
                 <a
@@ -286,14 +286,14 @@ useSeoMeta({
           <div class="flex flex-col gap-3">
             <div class="flex items-center gap-2">
               <span
-                :class="stageConfig[project.stage].color"
+                :class="stageConfig[project.stage]?.color"
                 class="inline-flex items-center gap-1 text-xs font-medium"
               >
                 <UIcon
-                  :name="stageConfig[project.stage].icon"
+                  :name="stageConfig[project.stage]?.icon"
                   class="size-3"
                 />
-                {{ stageConfig[project.stage].label }}
+                {{ stageConfig[project.stage]?.label }}
               </span>
             </div>
             <a
@@ -349,14 +349,14 @@ useSeoMeta({
             <div class="flex-1 min-w-0">
               <div class="flex items-center gap-2 mb-0.5">
                 <span
-                  :class="stageConfig[project.stage].color"
+                  :class="stageConfig[project.stage]?.color"
                   class="inline-flex items-center gap-1 text-xs font-medium"
                 >
                   <UIcon
-                    :name="stageConfig[project.stage].icon"
+                    :name="stageConfig[project.stage]?.icon"
                     class="size-3"
                   />
-                  {{ stageConfig[project.stage].label }}
+                  {{ stageConfig[project.stage]?.label }}
                 </span>
                 <span
                   v-if="project.npmPackage"

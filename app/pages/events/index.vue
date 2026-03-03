@@ -155,23 +155,23 @@ useSeoMeta({
                   <span
                     v-if="eventTypeConfig[event.type]"
                     class="inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full bg-zinc-100 dark:bg-zinc-800"
-                    :class="eventTypeConfig[event.type].color"
+                    :class="eventTypeConfig[event.type]?.color"
                   >
                     <UIcon
-                      :name="eventTypeConfig[event.type].icon"
+                      :name="eventTypeConfig[event.type]?.icon"
                       class="size-3"
                     />
-                    {{ eventTypeConfig[event.type].label }}
+                    {{ eventTypeConfig[event.type]?.label }}
                   </span>
                   <span
                     v-if="formatConfig[event.format]"
                     class="inline-flex items-center gap-1 text-xs text-zinc-500 dark:text-zinc-400"
                   >
                     <UIcon
-                      :name="formatConfig[event.format].icon"
+                      :name="formatConfig[event.format]?.icon"
                       class="size-3"
                     />
-                    {{ formatConfig[event.format].label }}
+                    {{ formatConfig[event.format]?.label }}
                   </span>
                 </div>
 
@@ -281,9 +281,9 @@ useSeoMeta({
                   <span
                     v-if="eventTypeConfig[event.type]"
                     class="text-xs font-medium"
-                    :class="eventTypeConfig[event.type].color"
+                    :class="eventTypeConfig[event.type]?.color"
                   >
-                    {{ eventTypeConfig[event.type].label }}
+                    {{ eventTypeConfig[event.type]?.label }}
                   </span>
                 </div>
                 <NuxtLink

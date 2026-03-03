@@ -35,7 +35,7 @@ function getSkillColor(skill: string): string {
   for (let i = 0; i < skill.length; i++) {
     hash = skill.charCodeAt(i) + ((hash << 5) - hash)
   }
-  return skillColors[Math.abs(hash) % skillColors.length]
+  return skillColors[Math.abs(hash) % skillColors.length]!
 }
 
 // Fetch all members
@@ -365,7 +365,7 @@ useSeoMeta({
                       {{ member.display_name }}
                     </h3>
                     <UBadge
-                      :color="roleBadgeColor[member.role]"
+                      :color="(roleBadgeColor as any)[member.role]"
                       variant="subtle"
                       size="xs"
                     >

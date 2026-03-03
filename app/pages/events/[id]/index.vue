@@ -185,23 +185,23 @@ watchEffect(() => {
           <span
             v-if="eventTypeConfig[event.type]"
             class="inline-flex items-center gap-1 text-sm font-medium px-3 py-1 rounded-full bg-zinc-100 dark:bg-zinc-800"
-            :class="eventTypeConfig[event.type].color"
+            :class="eventTypeConfig[event.type]?.color"
           >
             <UIcon
-              :name="eventTypeConfig[event.type].icon"
+              :name="eventTypeConfig[event.type]?.icon"
               class="size-4"
             />
-            {{ eventTypeConfig[event.type].label }}
+            {{ eventTypeConfig[event.type]?.label }}
           </span>
           <span
             v-if="formatConfigMap[event.format]"
             class="inline-flex items-center gap-1 text-sm text-zinc-500 dark:text-zinc-400"
           >
             <UIcon
-              :name="formatConfigMap[event.format].icon"
+              :name="formatConfigMap[event.format]?.icon"
               class="size-4"
             />
-            {{ formatConfigMap[event.format].label }}
+            {{ formatConfigMap[event.format]?.label }}
           </span>
           <span
             v-if="isUpcoming"
