@@ -119,6 +119,32 @@ const featuredProjects = computed(() => projects.value.filter(p => p.featured))
 const startHereProjects = computed(() => projects.value.filter(p => p.startHere))
 const allProjects = computed(() => projects.value)
 
+// ─── Search & Filter ───
+const searchQuery = ref('')
+const selectedStage = ref('')
+
+const stageOptions = [
+  { label: 'All Stages', value: '' },
+  { label: 'Idea', value: 'idea' },
+  { label: 'Prototype', value: 'prototype' },
+  { label: 'Active Repo', value: 'repo' },
+  { label: 'Published', value: 'package' }
+]
+
+const filteredProjects = computed(() => {
+  return allProjects.value.filter(p => {
+    const q = searchQuery.value.toLowerCase()
+    const matchesSearch = !q
+      || p.name.toLowerCase().includes(q)
+      || p.description.toLowerCase().includes(q)
+      || p.stack.some(s => s.toLowerCase().includes(q))
+
+    const matchesStage = !selectedStage.value || p.stage === selectedStage.value
+
+    return matchesSearch && matchesStage
+  })
+})
+
 useSeoMeta({
   title: 'Projects — Bahrain.js',
   description: 'Open source projects from the Bahrain.js community. Explore, contribute, or start your own.'
@@ -340,9 +366,26 @@ useSeoMeta({
         />
         All Projects
       </h2>
+
+      <!-- Search & Filter -->
+      <div class="flex flex-col sm:flex-row gap-3 mb-6">
+        <UInput
+          v-model="searchQuery"
+          icon="i-lucide-search"
+          placeholder="Search projects..."
+          class="flex-1"
+        />
+        <USelect
+          v-model="selectedStage"
+          :items="stageOptions"
+          class="w-full sm:w-48"
+          :ui="{ content: 'min-w-fit' }"
+        />
+      </div>
+
       <div class="grid gap-4">
         <UCard
-          v-for="project in allProjects"
+          v-for="project in filteredProjects"
           :key="project.slug"
         >
           <div class="flex items-center gap-4">

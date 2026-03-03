@@ -71,6 +71,33 @@ function getRsvpCount(_event: any) {
 
 onMounted(fetchEvents)
 
+// ─── Search & Filter ───
+const searchQuery = ref('')
+const selectedType = ref('')
+
+const typeOptions = [
+  { label: 'All Types', value: '' },
+  { label: 'Meetup', value: 'meetup' },
+  { label: 'Builder Session', value: 'builder-session' },
+  { label: 'Hackathon', value: 'hackathon' },
+  { label: 'Coffee & Code', value: 'coffee-and-code' }
+]
+
+function matchesFilters(event: any) {
+  const q = searchQuery.value.toLowerCase()
+  const matchesSearch = !q
+    || event.title?.toLowerCase().includes(q)
+    || event.description?.toLowerCase().includes(q)
+    || event.location?.toLowerCase().includes(q)
+
+  const matchesType = !selectedType.value || event.type === selectedType.value
+
+  return matchesSearch && matchesType
+}
+
+const filteredUpcoming = computed(() => upcoming.value.filter(matchesFilters))
+const filteredPast = computed(() => past.value.filter(matchesFilters))
+
 useSeoMeta({
   title: 'Events — Bahrain.js',
   description: 'Meetups, builder sessions, hackathons, and coffee & code — find your next Bahrain.js event.'
@@ -105,6 +132,22 @@ useSeoMeta({
           @click="signInWithGitHub"
         />
       </div>
+
+      <!-- Search & Filter -->
+      <div class="flex flex-col sm:flex-row gap-3 mt-8">
+        <UInput
+          v-model="searchQuery"
+          icon="i-lucide-search"
+          placeholder="Search events..."
+          class="flex-1"
+        />
+        <USelect
+          v-model="selectedType"
+          :items="typeOptions"
+          class="w-full sm:w-48"
+          :ui="{ content: 'min-w-fit' }"
+        />
+      </div>
     </div>
 
     <!-- Loading -->
@@ -122,7 +165,7 @@ useSeoMeta({
     <template v-else>
       <!-- Upcoming events -->
       <section
-        v-if="upcoming.length"
+        v-if="filteredUpcoming.length"
         class="mb-16"
       >
         <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
@@ -134,7 +177,7 @@ useSeoMeta({
         </h2>
         <div class="grid gap-6">
           <UCard
-            v-for="event in upcoming"
+            v-for="event in filteredUpcoming"
             :key="event.id"
             class="hover:ring-2 hover:ring-yellow-400/50 transition-all"
           >
@@ -250,7 +293,7 @@ useSeoMeta({
 
       <!-- Past events -->
       <section
-        v-if="past.length"
+        v-if="filteredPast.length"
         class="opacity-60"
       >
         <h2 class="text-2xl font-bold mb-6 flex items-center gap-2 text-zinc-400 dark:text-zinc-500">
@@ -262,7 +305,7 @@ useSeoMeta({
         </h2>
         <div class="grid gap-4">
           <UCard
-            v-for="event in past"
+            v-for="event in filteredPast"
             :key="event.id"
             class="opacity-75 hover:opacity-100 transition-opacity"
           >
