@@ -84,9 +84,9 @@ const { data: githubRepos } = await useGitHubRepos()
 const projects = computed(() => {
   if (!githubRepos.value?.length) return staticProjects
 
-  return staticProjects.map(project => {
+  return staticProjects.map((project) => {
     const repoName = project.url.split('/').pop()
-    const ghRepo = (githubRepos.value as any[]).find(r => r.name === repoName)
+    const ghRepo = (githubRepos.value ?? []).find(r => r.name === repoName)
     if (ghRepo) {
       return { ...project, stars: ghRepo.stars }
     }
@@ -102,10 +102,10 @@ const additionalRepos = computed(() => {
 })
 
 const stageConfig: Record<string, { icon: string, label: string, color: string }> = {
-  'idea': { icon: 'i-lucide-lightbulb', label: 'Idea', color: 'text-zinc-400' },
-  'prototype': { icon: 'i-lucide-flask-conical', label: 'Prototype', color: 'text-blue-500' },
-  'repo': { icon: 'i-lucide-git-branch', label: 'Active Repo', color: 'text-green-500' },
-  'package': { icon: 'i-lucide-package', label: 'Published', color: 'text-yellow-500' }
+  idea: { icon: 'i-lucide-lightbulb', label: 'Idea', color: 'text-zinc-400' },
+  prototype: { icon: 'i-lucide-flask-conical', label: 'Prototype', color: 'text-blue-500' },
+  repo: { icon: 'i-lucide-git-branch', label: 'Active Repo', color: 'text-green-500' },
+  package: { icon: 'i-lucide-package', label: 'Published', color: 'text-yellow-500' }
 }
 
 const pipelineStages = [
@@ -149,7 +149,10 @@ useSeoMeta({
         >
           <div class="flex flex-col items-center text-center gap-1.5 px-4 py-3 rounded-xl bg-zinc-50 dark:bg-zinc-800/50 min-w-[120px]">
             <div class="flex items-center justify-center w-10 h-10 rounded-full bg-yellow-50 dark:bg-yellow-950/30">
-              <UIcon :name="stage.icon" class="size-5 text-yellow-600 dark:text-yellow-400" />
+              <UIcon
+                :name="stage.icon"
+                class="size-5 text-yellow-600 dark:text-yellow-400"
+              />
             </div>
             <span class="text-sm font-semibold">{{ stage.label }}</span>
             <span class="text-xs text-zinc-400 dark:text-zinc-500">{{ stage.description }}</span>
@@ -169,9 +172,15 @@ useSeoMeta({
     </section>
 
     <!-- Featured Projects -->
-    <section v-if="featuredProjects.length" class="mb-16">
+    <section
+      v-if="featuredProjects.length"
+      class="mb-16"
+    >
       <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
-        <UIcon name="i-lucide-star" class="text-yellow-500" />
+        <UIcon
+          name="i-lucide-star"
+          class="text-yellow-500"
+        />
         Featured
       </h2>
       <div class="grid gap-6">
@@ -188,7 +197,10 @@ useSeoMeta({
                     :class="stageConfig[project.stage].color"
                     class="inline-flex items-center gap-1 text-xs font-medium"
                   >
-                    <UIcon :name="stageConfig[project.stage].icon" class="size-3.5" />
+                    <UIcon
+                      :name="stageConfig[project.stage].icon"
+                      class="size-3.5"
+                    />
                     {{ stageConfig[project.stage].label }}
                   </span>
                 </div>
@@ -206,7 +218,10 @@ useSeoMeta({
                 </p>
               </div>
               <div class="flex items-center gap-1 text-sm text-zinc-400 flex-shrink-0">
-                <UIcon name="i-lucide-star" class="size-4" />
+                <UIcon
+                  name="i-lucide-star"
+                  class="size-4"
+                />
                 {{ project.stars }}
               </div>
             </div>
@@ -248,9 +263,15 @@ useSeoMeta({
     </section>
 
     <!-- Start Here -->
-    <section v-if="startHereProjects.length" class="mb-16">
+    <section
+      v-if="startHereProjects.length"
+      class="mb-16"
+    >
       <h2 class="text-2xl font-bold mb-2 flex items-center gap-2">
-        <UIcon name="i-lucide-rocket" class="text-green-500" />
+        <UIcon
+          name="i-lucide-rocket"
+          class="text-green-500"
+        />
         Start Here
       </h2>
       <p class="text-zinc-500 dark:text-zinc-400 mb-6">
@@ -268,7 +289,10 @@ useSeoMeta({
                 :class="stageConfig[project.stage].color"
                 class="inline-flex items-center gap-1 text-xs font-medium"
               >
-                <UIcon :name="stageConfig[project.stage].icon" class="size-3" />
+                <UIcon
+                  :name="stageConfig[project.stage].icon"
+                  class="size-3"
+                />
                 {{ stageConfig[project.stage].label }}
               </span>
             </div>
@@ -310,7 +334,10 @@ useSeoMeta({
     <!-- All Projects -->
     <section>
       <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
-        <UIcon name="i-lucide-folder-git-2" class="text-zinc-400" />
+        <UIcon
+          name="i-lucide-folder-git-2"
+          class="text-zinc-400"
+        />
         All Projects
       </h2>
       <div class="grid gap-4">
@@ -325,10 +352,16 @@ useSeoMeta({
                   :class="stageConfig[project.stage].color"
                   class="inline-flex items-center gap-1 text-xs font-medium"
                 >
-                  <UIcon :name="stageConfig[project.stage].icon" class="size-3" />
+                  <UIcon
+                    :name="stageConfig[project.stage].icon"
+                    class="size-3"
+                  />
                   {{ stageConfig[project.stage].label }}
                 </span>
-                <span v-if="project.npmPackage" class="text-xs text-zinc-400">
+                <span
+                  v-if="project.npmPackage"
+                  class="text-xs text-zinc-400"
+                >
                   · {{ project.npmPackage }}
                 </span>
               </div>
@@ -356,7 +389,10 @@ useSeoMeta({
                 >
               </div>
               <span class="flex items-center gap-1 text-sm text-zinc-400">
-                <UIcon name="i-lucide-star" class="size-3.5" />
+                <UIcon
+                  name="i-lucide-star"
+                  class="size-3.5"
+                />
                 {{ project.stars }}
               </span>
             </div>
@@ -372,10 +408,16 @@ useSeoMeta({
             <div class="flex-1 min-w-0">
               <div class="flex items-center gap-2 mb-0.5">
                 <span class="inline-flex items-center gap-1 text-xs font-medium text-green-500">
-                  <UIcon name="i-lucide-git-branch" class="size-3" />
+                  <UIcon
+                    name="i-lucide-git-branch"
+                    class="size-3"
+                  />
                   Active Repo
                 </span>
-                <span v-if="repo.language" class="text-xs text-zinc-400">
+                <span
+                  v-if="repo.language"
+                  class="text-xs text-zinc-400"
+                >
                   · {{ repo.language }}
                 </span>
               </div>
@@ -394,7 +436,10 @@ useSeoMeta({
             </div>
             <div class="flex items-center gap-3 flex-shrink-0">
               <span class="flex items-center gap-1 text-sm text-zinc-400">
-                <UIcon name="i-lucide-star" class="size-3.5" />
+                <UIcon
+                  name="i-lucide-star"
+                  class="size-3.5"
+                />
                 {{ repo.stars }}
               </span>
             </div>

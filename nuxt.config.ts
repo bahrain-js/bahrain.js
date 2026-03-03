@@ -8,12 +8,6 @@ export default defineNuxtConfig({
 
   css: ['~/assets/css/main.css'],
 
-  fonts: {
-    families: [
-      { name: 'Inter', provider: 'google', weights: [400, 500, 600, 700, 800] }
-    ]
-  },
-
   runtimeConfig: {
     public: {
       neonAuthUrl: '',
@@ -34,11 +28,11 @@ export default defineNuxtConfig({
     '/admin': { ssr: false }
   },
 
+  compatibilityDate: '2025-01-15',
+
   nitro: {
     preset: 'github-pages'
   },
-
-  compatibilityDate: '2025-01-15',
 
   eslint: {
     config: {
@@ -47,5 +41,11 @@ export default defineNuxtConfig({
         braceStyle: '1tbs'
       }
     }
+  },
+
+  fonts: {
+    families: [
+      { name: 'Inter', provider: 'google', weights: [400, 500, 600, 700, 800] }
+    ]
   }
 })
