@@ -77,6 +77,22 @@ function updateCountdown() {
 onUnmounted(() => clearInterval(countdownInterval))
 
 // ─── Static Data ───
+const heroWords = [
+  { text: 'Where', highlight: false },
+  { text: "Bahrain's", highlight: false },
+  { text: 'JavaScript', highlight: false },
+  { text: 'community', highlight: false }
+]
+
+const heroActions = [
+  { text: 'builds', highlight: true },
+  { text: ', ', highlight: false },
+  { text: 'ships', highlight: true },
+  { text: ', and ', highlight: false },
+  { text: 'connects', highlight: true },
+  { text: '.', highlight: false }
+]
+
 const features = [
   { icon: 'i-lucide-radio', title: 'Signal Hub', description: 'One place for events, projects, jobs, and people in Bahrain\'s JS scene.' },
   { icon: 'i-lucide-hammer', title: 'Builder Community', description: 'Ship code, present work, and collaborate on open source under @bahrainjs.' },
@@ -99,37 +115,425 @@ const tiers = [
   { icon: 'i-lucide-crown', title: 'Core Team', description: 'Stewards of the org', how: 'Sustained community impact' }
 ]
 
-// ─── GSAP Counter Animation ───
+// ─── Template Refs for GSAP ───
+const heroRef = ref<HTMLElement>()
 const statsRef = ref<HTMLElement>()
+const featuresRef = ref<HTMLElement>()
+const pipelineRef = ref<HTMLElement>()
+const tiersRef = ref<HTMLElement>()
+const ctaRef = ref<HTMLElement>()
+const particleContainer = ref<HTMLElement>()
 
+// ─── GSAP Animations ───
 onMounted(async () => {
   await Promise.all([fetchStats(), fetchNextEvent(), fetchGithubData()])
   await nextTick()
 
-  // Start countdown timer (client-only)
+  // Start countdown timer
   if (nextEvent.value) {
     updateCountdown()
     countdownInterval = setInterval(updateCountdown, 1000)
   }
 
-  // Animate stat counters using useGSAP composable
-  if (import.meta.client && statsRef.value) {
-    const gsap = useGSAP()
+  if (!import.meta.client) return
+  const gsap = useGSAP()
+
+  // ═══ HERO: Cinematic entrance timeline ═══
+  if (heroRef.value) {
+    const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } })
+
+    // Gradient orbs fade in
+    heroTl.from('.hero-orb', {
+      scale: 0,
+      autoAlpha: 0,
+      duration: 1.2,
+      stagger: 0.2,
+      ease: 'power2.out'
+    })
+
+    // Title words: 3D flip + blur clear
+    heroTl.from('.hero-word', {
+      rotationX: 90,
+      autoAlpha: 0,
+      filter: 'blur(8px)',
+      y: 40,
+      duration: 0.7,
+      stagger: 0.1,
+      transformOrigin: 'bottom center',
+      ease: 'back.out(1.4)'
+    }, 0.2)
+
+    // Action words: typed-cursor effect (sequential highlight)
+    heroTl.from('.hero-action', {
+      autoAlpha: 0,
+      y: 20,
+      filter: 'blur(4px)',
+      duration: 0.5,
+      stagger: 0.08,
+      ease: 'power2.out'
+    }, '-=0.3')
+
+    // Highlight pulse on action words
+    heroTl.fromTo('.hero-action-highlight', {
+      textShadow: '0 0 0px var(--ui-primary)'
+    }, {
+      textShadow: '0 0 20px var(--ui-primary)',
+      duration: 0.6,
+      stagger: 0.15,
+      ease: 'power2.out'
+    }, '-=0.5')
+
+    // Subtitle slide up
+    heroTl.from('.hero-subtitle', {
+      y: 30,
+      autoAlpha: 0,
+      filter: 'blur(4px)',
+      duration: 0.7,
+      ease: 'power2.out'
+    }, '-=0.4')
+
+    // CTA buttons: bouncy entrance
+    heroTl.from('.hero-cta', {
+      y: 30,
+      autoAlpha: 0,
+      scale: 0.9,
+      duration: 0.5,
+      stagger: 0.12,
+      ease: 'back.out(1.7)'
+    }, '-=0.3')
+
+    // Floating particles
+    if (particleContainer.value) {
+      const particles = particleContainer.value.querySelectorAll('.particle')
+      particles.forEach((p) => {
+        const startX = Math.random() * 100
+        const startY = Math.random() * 100
+        const size = 2 + Math.random() * 4
+        const el = p as HTMLElement
+        el.style.left = `${startX}%`
+        el.style.top = `${startY}%`
+        el.style.width = `${size}px`
+        el.style.height = `${size}px`
+
+        gsap.to(p, {
+          y: `random(-60, 60)`,
+          x: `random(-40, 40)`,
+          duration: `random(3, 6)`,
+          autoAlpha: `random(0.2, 0.7)`,
+          repeat: -1,
+          yoyo: true,
+          ease: 'sine.inOut',
+          delay: Math.random() * 3
+        })
+      })
+    }
+  }
+
+  // ═══ STATS: Counter + icon spin + scale pulse ═══
+  if (statsRef.value) {
+    const statItems = statsRef.value.querySelectorAll('.stat-item')
+    const statIcons = statsRef.value.querySelectorAll('.stat-icon')
+
+    // Stagger reveal
+    gsap.from(statItems, {
+      y: 40,
+      autoAlpha: 0,
+      duration: 0.6,
+      stagger: 0.15,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: statsRef.value,
+        start: 'top 85%',
+        toggleActions: 'play none none none'
+      }
+    })
+
+    // Icon spin
+    gsap.from(statIcons, {
+      rotation: -180,
+      scale: 0,
+      duration: 0.8,
+      stagger: 0.15,
+      ease: 'back.out(1.7)',
+      scrollTrigger: {
+        trigger: statsRef.value,
+        start: 'top 85%',
+        toggleActions: 'play none none none'
+      }
+    })
+
+    // Counter animation with pulse
     stats.value.forEach((stat, i) => {
       const obj = { val: 0 }
       gsap.to(obj, {
         val: stat.value,
-        duration: 1.5,
+        duration: 1.8,
         ease: 'power2.out',
         scrollTrigger: {
           trigger: statsRef.value,
           start: 'top 85%',
           toggleActions: 'play none none none'
         },
+        delay: i * 0.15,
         onUpdate: () => {
           displayStats.value[i] = Math.round(obj.val)
+        },
+        onComplete: () => {
+          // Scale pulse when counter finishes
+          const numEl = statsRef.value?.querySelectorAll('.stat-number')[i]
+          if (numEl) {
+            gsap.fromTo(numEl, { scale: 1 }, {
+              scale: 1.15,
+              duration: 0.2,
+              yoyo: true,
+              repeat: 1,
+              ease: 'power2.out'
+            })
+          }
         }
       })
+    })
+  }
+
+  // ═══ FEATURES: Cascading cards from alternating sides ═══
+  if (featuresRef.value) {
+    const featureCards = featuresRef.value.querySelectorAll('.feature-card')
+    const featureIcons = featuresRef.value.querySelectorAll('.feature-icon')
+
+    // Section header
+    gsap.from(featuresRef.value.querySelector('.section-header')!, {
+      y: 30,
+      autoAlpha: 0,
+      duration: 0.7,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: featuresRef.value,
+        start: 'top 80%',
+        toggleActions: 'play none none none'
+      }
+    })
+
+    // Cards from alternating directions with rotation
+    featureCards.forEach((card, i) => {
+      const fromLeft = i % 2 === 0
+      gsap.from(card, {
+        x: fromLeft ? -60 : 60,
+        y: 40,
+        autoAlpha: 0,
+        rotation: fromLeft ? -3 : 3,
+        duration: 0.7,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: card,
+          start: 'top 85%',
+          toggleActions: 'play none none none'
+        }
+      })
+    })
+
+    // Icon pop-in after card appears
+    featureIcons.forEach((icon) => {
+      gsap.from(icon, {
+        scale: 0,
+        rotation: -90,
+        duration: 0.5,
+        ease: 'back.out(2)',
+        scrollTrigger: {
+          trigger: icon,
+          start: 'top 85%',
+          toggleActions: 'play none none none'
+        }
+      })
+    })
+  }
+
+  // ═══ PIPELINE: Scroll-scrubbed step reveal ═══
+  if (pipelineRef.value) {
+    const pipelineSteps = pipelineRef.value.querySelectorAll('.pipeline-step')
+    const pipelineArrows = pipelineRef.value.querySelectorAll('.pipeline-arrow')
+
+    // Section header
+    gsap.from(pipelineRef.value.querySelector('.section-header')!, {
+      y: 30,
+      autoAlpha: 0,
+      duration: 0.7,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: pipelineRef.value,
+        start: 'top 80%',
+        toggleActions: 'play none none none'
+      }
+    })
+
+    // Steps reveal with scrub
+    const pipelineTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: pipelineRef.value.querySelector('.pipeline-track')!,
+        start: 'top 75%',
+        end: 'bottom 50%',
+        scrub: 0.8
+      }
+    })
+
+    pipelineSteps.forEach((step, i) => {
+      // Step fades in and scales up
+      pipelineTl.fromTo(step, {
+        autoAlpha: 0.2,
+        scale: 0.85,
+        y: 20
+      }, {
+        autoAlpha: 1,
+        scale: 1,
+        y: 0,
+        duration: 1,
+        ease: 'power2.out'
+      }, i * 0.5)
+
+      // Arrow draws in after step
+      if (pipelineArrows[i]) {
+        pipelineTl.fromTo(pipelineArrows[i], {
+          autoAlpha: 0,
+          scaleX: 0
+        }, {
+          autoAlpha: 1,
+          scaleX: 1,
+          duration: 0.5,
+          ease: 'power2.out'
+        }, i * 0.5 + 0.3)
+      }
+    })
+
+    // Progress line
+    const progressLine = pipelineRef.value.querySelector('.pipeline-progress')
+    if (progressLine) {
+      gsap.fromTo(progressLine, { scaleX: 0 }, {
+        scaleX: 1,
+        ease: 'none',
+        transformOrigin: 'left center',
+        scrollTrigger: {
+          trigger: pipelineRef.value.querySelector('.pipeline-track')!,
+          start: 'top 75%',
+          end: 'bottom 50%',
+          scrub: 0.5
+        }
+      })
+    }
+  }
+
+  // ═══ TIERS: 3D card flip reveal ═══
+  if (tiersRef.value) {
+    // Section header
+    gsap.from(tiersRef.value.querySelector('.section-header')!, {
+      y: 30,
+      autoAlpha: 0,
+      duration: 0.7,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: tiersRef.value,
+        start: 'top 80%',
+        toggleActions: 'play none none none'
+      }
+    })
+
+    const tierCards = tiersRef.value.querySelectorAll('.tier-card')
+    tierCards.forEach((card, i) => {
+      gsap.from(card, {
+        rotationY: 90,
+        autoAlpha: 0,
+        scale: 0.8,
+        duration: 0.8,
+        delay: i * 0.12,
+        ease: 'back.out(1.4)',
+        transformOrigin: 'center center',
+        scrollTrigger: {
+          trigger: tiersRef.value,
+          start: 'top 75%',
+          toggleActions: 'play none none none'
+        }
+      })
+    })
+
+    // Gold shimmer on Core Team card (last one)
+    const coreCard = tierCards[tierCards.length - 1]
+    if (coreCard) {
+      gsap.to(coreCard.querySelector('.tier-shimmer'), {
+        backgroundPosition: '200% center',
+        duration: 2,
+        delay: 1.5,
+        ease: 'power2.inOut',
+        scrollTrigger: {
+          trigger: tiersRef.value,
+          start: 'top 75%',
+          toggleActions: 'play none none none'
+        }
+      })
+    }
+  }
+
+  // ═══ CTA: Parallax + elastic entrance ═══
+  if (ctaRef.value) {
+    // Parallax background orbs
+    gsap.to(ctaRef.value.querySelector('.cta-orb-1'), {
+      yPercent: -40,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: ctaRef.value,
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: true
+      }
+    })
+    gsap.to(ctaRef.value.querySelector('.cta-orb-2'), {
+      yPercent: 30,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: ctaRef.value,
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: true
+      }
+    })
+
+    // Text reveal
+    gsap.from(ctaRef.value.querySelector('.cta-title')!, {
+      y: 40,
+      autoAlpha: 0,
+      filter: 'blur(6px)',
+      duration: 0.8,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: ctaRef.value,
+        start: 'top 80%',
+        toggleActions: 'play none none none'
+      }
+    })
+
+    gsap.from(ctaRef.value.querySelector('.cta-desc')!, {
+      y: 20,
+      autoAlpha: 0,
+      duration: 0.6,
+      delay: 0.2,
+      ease: 'power2.out',
+      scrollTrigger: {
+        trigger: ctaRef.value,
+        start: 'top 80%',
+        toggleActions: 'play none none none'
+      }
+    })
+
+    // Buttons: elastic pop
+    gsap.from(ctaRef.value.querySelectorAll('.cta-btn'), {
+      y: 30,
+      autoAlpha: 0,
+      scale: 0.85,
+      duration: 0.6,
+      stagger: 0.1,
+      ease: 'elastic.out(1, 0.5)',
+      scrollTrigger: {
+        trigger: ctaRef.value,
+        start: 'top 75%',
+        toggleActions: 'play none none none'
+      }
     })
   }
 })
@@ -143,47 +547,62 @@ useSeoMeta({
 <template>
   <div>
     <!-- Hero -->
-    <section class="relative overflow-hidden py-24 sm:py-32">
-      <div class="mx-auto max-w-4xl px-6 text-center">
-        <h1 class="text-5xl sm:text-7xl font-extrabold tracking-tight leading-[1.1]">
+    <section ref="heroRef" class="relative overflow-hidden py-24 sm:py-32">
+      <!-- Animated gradient orbs -->
+      <div class="hero-orb absolute -top-32 -left-32 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
+      <div class="hero-orb absolute -bottom-32 -right-32 w-96 h-96 bg-yellow-400/10 rounded-full blur-3xl" />
+      <div class="hero-orb absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-primary/5 rounded-full blur-3xl" />
+
+      <!-- Floating particles -->
+      <div ref="particleContainer" class="absolute inset-0 pointer-events-none">
+        <div v-for="i in 20" :key="i" class="particle absolute rounded-full bg-primary/30 opacity-0" />
+      </div>
+
+      <div class="mx-auto max-w-4xl px-6 text-center relative z-10">
+        <h1 class="text-5xl sm:text-7xl font-extrabold tracking-tight leading-[1.1]" style="perspective: 800px">
           <span
-            v-for="(word, i) in ['Where', 'Bahrain\'s', 'JavaScript', 'community']"
-            :key="word"
-            v-gsap.once.from="{ y: 40, autoAlpha: 0, duration: 0.8, delay: i * 0.12, ease: 'power3.out' }"
-            class="inline-block mr-[0.3em]"
-          >{{ word }}</span>
+            v-for="(word, i) in heroWords"
+            :key="'w' + i"
+            class="hero-word inline-block mr-[0.3em]"
+            style="visibility: hidden"
+          >{{ word.text }}</span>
           <br class="hidden sm:block" />
-          <span v-gsap.once.from="{ y: 40, autoAlpha: 0, duration: 0.8, delay: 0.48, ease: 'power3.out' }" class="inline-block text-primary">builds</span>
-          <span v-gsap.once.from="{ y: 40, autoAlpha: 0, duration: 0.8, delay: 0.56, ease: 'power3.out' }" class="inline-block">, </span>
-          <span v-gsap.once.from="{ y: 40, autoAlpha: 0, duration: 0.8, delay: 0.64, ease: 'power3.out' }" class="inline-block text-primary">ships</span>
-          <span v-gsap.once.from="{ y: 40, autoAlpha: 0, duration: 0.8, delay: 0.72, ease: 'power3.out' }" class="inline-block">, and </span>
-          <span v-gsap.once.from="{ y: 40, autoAlpha: 0, duration: 0.8, delay: 0.80, ease: 'power3.out' }" class="inline-block text-primary">connects</span>
-          <span v-gsap.once.from="{ y: 40, autoAlpha: 0, duration: 0.8, delay: 0.88, ease: 'power3.out' }" class="inline-block">.</span>
+          <span
+            v-for="(action, i) in heroActions"
+            :key="'a' + i"
+            class="inline-block"
+            :class="[
+              'hero-action',
+              action.highlight ? 'hero-action-highlight text-primary' : ''
+            ]"
+            style="visibility: hidden"
+          >{{ action.text }}</span>
         </h1>
 
         <p
-          v-gsap.once.from="{ y: 20, autoAlpha: 0, duration: 0.6, delay: 0.9, ease: 'power2.out' }"
-          class="mt-6 text-lg sm:text-xl text-zinc-500 dark:text-zinc-400 max-w-2xl mx-auto"
+          class="hero-subtitle mt-6 text-lg sm:text-xl text-zinc-500 dark:text-zinc-400 max-w-2xl mx-auto"
+          style="visibility: hidden"
         >
           Find events, ship open source projects under @bahrainjs, and grow from beginner to maintainer.
         </p>
 
-        <div
-          v-gsap.once.from="{ y: 15, autoAlpha: 0, duration: 0.5, delay: 1.1, ease: 'power2.out' }"
-          class="mt-8 flex flex-wrap justify-center gap-4"
-        >
+        <div class="mt-8 flex flex-wrap justify-center gap-4">
           <UButton
             v-if="isAuthenticated"
             to="/events"
             label="Browse Events"
             trailing-icon="i-lucide-arrow-right"
             size="xl"
+            class="hero-cta"
+            style="visibility: hidden"
           />
           <UButton
             v-else
             label="Join the community"
             trailing-icon="i-lucide-arrow-right"
             size="xl"
+            class="hero-cta"
+            style="visibility: hidden"
             @click="signInWithGitHub"
           />
           <UButton
@@ -194,6 +613,8 @@ useSeoMeta({
             size="xl"
             color="neutral"
             variant="subtle"
+            class="hero-cta"
+            style="visibility: hidden"
           />
         </div>
       </div>
@@ -206,11 +627,11 @@ useSeoMeta({
           <div
             v-for="(stat, i) in stats"
             :key="stat.label"
-            v-gsap.whenVisible.once.from="{ y: 20, autoAlpha: 0, duration: 0.5, delay: i * 0.1, ease: 'power2.out' }"
-            class="flex flex-col items-center gap-2"
+            class="stat-item flex flex-col items-center gap-2"
+            style="visibility: hidden"
           >
-            <UIcon :name="stat.icon" class="size-6 text-primary opacity-60" />
-            <p class="text-4xl font-extrabold text-primary tabular-nums">
+            <UIcon :name="stat.icon" class="stat-icon size-6 text-primary opacity-60" />
+            <p class="stat-number text-4xl font-extrabold text-primary tabular-nums">
               {{ displayStats[i] }}
             </p>
             <p class="text-sm text-muted">
@@ -278,12 +699,9 @@ useSeoMeta({
     </section>
 
     <!-- What We're About -->
-    <section class="py-20">
+    <section ref="featuresRef" class="py-20">
       <div class="mx-auto max-w-5xl px-6">
-        <div
-          v-gsap.whenVisible.once.from="{ y: 20, autoAlpha: 0, duration: 0.6, ease: 'power2.out' }"
-          class="text-center mb-12"
-        >
+        <div class="section-header text-center mb-12" style="visibility: hidden">
           <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">More than meetups</h2>
           <p class="mt-4 text-lg text-muted max-w-2xl mx-auto">
             A signal hub, a builder community, and an on-ramp for JavaScript developers at every level.
@@ -291,12 +709,13 @@ useSeoMeta({
         </div>
         <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           <UCard
-            v-for="(feature, i) in features"
+            v-for="feature in features"
             :key="feature.title"
-            v-gsap.whenVisible.once.from="{ y: 40, autoAlpha: 0, duration: 0.6, delay: i * 0.12, ease: 'power2.out' }"
+            class="feature-card"
+            style="visibility: hidden"
           >
             <div class="flex flex-col gap-3">
-              <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-primary/10">
+              <div class="feature-icon flex items-center justify-center w-12 h-12 rounded-xl bg-primary/10">
                 <UIcon :name="feature.icon" class="size-6 text-primary" />
               </div>
               <h3 class="font-semibold">{{ feature.title }}</h3>
@@ -308,65 +727,79 @@ useSeoMeta({
     </section>
 
     <!-- Pipeline -->
-    <section class="py-20 bg-[var(--ui-bg-elevated)]">
+    <section ref="pipelineRef" class="py-20 bg-[var(--ui-bg-elevated)]">
       <div class="mx-auto max-w-5xl px-6">
-        <div
-          v-gsap.whenVisible.once.from="{ y: 20, autoAlpha: 0, duration: 0.6, ease: 'power2.out' }"
-          class="text-center mb-12"
-        >
+        <div class="section-header text-center mb-12" style="visibility: hidden">
           <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">From idea to npm package</h2>
           <p class="mt-4 text-lg text-muted max-w-2xl mx-auto">
             Bahrain.js isn't just events. It's a factory for open source output.
           </p>
         </div>
-        <div class="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-0">
-          <div
-            v-for="(step, i) in pipeline"
-            :key="step.title"
-            v-gsap.whenVisible.once.from="{ x: -30, autoAlpha: 0, duration: 0.5, delay: i * 0.15, ease: 'power2.out' }"
-            class="flex items-center gap-2 sm:gap-0"
-          >
-            <div class="flex flex-col items-center text-center gap-2 px-4 py-4 rounded-xl bg-[var(--ui-bg)] min-w-[110px]">
-              <div class="flex items-center justify-center w-12 h-12 rounded-full bg-primary/10">
-                <UIcon :name="step.icon" class="size-5 text-primary" />
+
+        <!-- Pipeline track with progress line -->
+        <div class="pipeline-track relative">
+          <!-- Background track line -->
+          <div class="hidden sm:block absolute top-1/2 left-0 right-0 h-0.5 bg-zinc-200 dark:bg-zinc-800 -translate-y-1/2 mx-16" />
+          <!-- Animated progress line -->
+          <div class="pipeline-progress hidden sm:block absolute top-1/2 left-0 right-0 h-0.5 bg-primary -translate-y-1/2 mx-16 origin-left" style="transform: scaleX(0)" />
+
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-0 relative">
+            <div
+              v-for="(step, i) in pipeline"
+              :key="step.title"
+              class="flex items-center gap-2 sm:gap-0"
+            >
+              <div
+                class="pipeline-step flex flex-col items-center text-center gap-2 px-4 py-4 rounded-xl bg-[var(--ui-bg)] min-w-[110px] relative z-10 border border-transparent hover:border-primary/30 transition-colors"
+                style="visibility: hidden"
+              >
+                <div class="flex items-center justify-center w-12 h-12 rounded-full bg-primary/10">
+                  <UIcon :name="step.icon" class="size-5 text-primary" />
+                </div>
+                <p class="text-sm font-semibold">{{ step.title }}</p>
+                <p class="text-xs text-muted">{{ step.description }}</p>
               </div>
-              <p class="text-sm font-semibold">{{ step.title }}</p>
-              <p class="text-xs text-muted">{{ step.description }}</p>
+              <UIcon
+                v-if="i < pipeline.length - 1"
+                name="i-lucide-arrow-right"
+                class="pipeline-arrow size-5 text-primary hidden sm:block mx-2 origin-left"
+                style="visibility: hidden"
+              />
+              <UIcon
+                v-if="i < pipeline.length - 1"
+                name="i-lucide-arrow-down"
+                class="pipeline-arrow size-5 text-primary sm:hidden origin-top"
+                style="visibility: hidden"
+              />
             </div>
-            <UIcon
-              v-if="i < pipeline.length - 1"
-              name="i-lucide-arrow-right"
-              class="size-5 text-zinc-300 dark:text-zinc-600 hidden sm:block mx-2"
-            />
-            <UIcon
-              v-if="i < pipeline.length - 1"
-              name="i-lucide-arrow-down"
-              class="size-5 text-zinc-300 dark:text-zinc-600 sm:hidden"
-            />
           </div>
         </div>
       </div>
     </section>
 
     <!-- Membership Tiers -->
-    <section class="py-20">
+    <section ref="tiersRef" class="py-20" style="perspective: 1000px">
       <div class="mx-auto max-w-5xl px-6">
-        <div
-          v-gsap.whenVisible.once.from="{ y: 20, autoAlpha: 0, duration: 0.6, ease: 'power2.out' }"
-          class="text-center mb-12"
-        >
+        <div class="section-header text-center mb-12" style="visibility: hidden">
           <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Level up</h2>
           <p class="mt-4 text-lg text-muted max-w-2xl mx-auto">
             Transparent progression from attendee to maintainer.
           </p>
         </div>
-        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6" style="perspective: 1000px">
           <UCard
             v-for="(tier, i) in tiers"
             :key="tier.title"
-            v-gsap.whenVisible.once.from="{ y: 30, autoAlpha: 0, scale: 0.95, duration: 0.5, delay: i * 0.1, ease: 'back.out(1.4)' }"
+            class="tier-card relative overflow-hidden"
+            style="visibility: hidden; transform-style: preserve-3d; backface-visibility: hidden"
           >
-            <div class="flex flex-col gap-2">
+            <!-- Shimmer overlay for Core Team -->
+            <div
+              v-if="i === tiers.length - 1"
+              class="tier-shimmer absolute inset-0 pointer-events-none"
+              style="background: linear-gradient(90deg, transparent 0%, rgba(234, 179, 8, 0.15) 50%, transparent 100%); background-size: 200% 100%; background-position: -100% center"
+            />
+            <div class="flex flex-col gap-2 relative z-10">
               <div class="flex items-center gap-2">
                 <UIcon :name="tier.icon" class="size-5 text-primary" />
                 <p class="font-semibold">{{ tier.title }}</p>
@@ -380,13 +813,14 @@ useSeoMeta({
     </section>
 
     <!-- CTA -->
-    <section
-      v-gsap.whenVisible.once.from="{ y: 20, autoAlpha: 0, duration: 0.6, ease: 'power2.out' }"
-      class="py-20 bg-[var(--ui-bg-elevated)]"
-    >
-      <div class="mx-auto max-w-3xl px-6 text-center">
-        <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Ready to build?</h2>
-        <p class="mt-4 text-lg text-muted max-w-xl mx-auto">
+    <section ref="ctaRef" class="py-20 bg-[var(--ui-bg-elevated)] relative overflow-hidden">
+      <!-- Parallax orbs -->
+      <div class="cta-orb-1 absolute -top-20 -right-20 w-72 h-72 bg-primary/8 rounded-full blur-3xl" />
+      <div class="cta-orb-2 absolute -bottom-20 -left-20 w-72 h-72 bg-yellow-400/8 rounded-full blur-3xl" />
+
+      <div class="mx-auto max-w-3xl px-6 text-center relative z-10">
+        <h2 class="cta-title text-3xl sm:text-4xl font-extrabold tracking-tight" style="visibility: hidden">Ready to build?</h2>
+        <p class="cta-desc mt-4 text-lg text-muted max-w-xl mx-auto" style="visibility: hidden">
           Join Bahrain's JavaScript community. Whether you're just learning or shipping production code, there's a place for you.
         </p>
         <div class="mt-8 flex flex-wrap justify-center gap-4">
@@ -395,6 +829,8 @@ useSeoMeta({
             label="Join the community"
             trailing-icon="i-lucide-arrow-right"
             size="xl"
+            class="cta-btn"
+            style="visibility: hidden"
             @click="signInWithGitHub"
           />
           <UButton
@@ -404,6 +840,8 @@ useSeoMeta({
             size="xl"
             :variant="isAuthenticated ? 'solid' : 'outline'"
             :color="isAuthenticated ? 'primary' : 'neutral'"
+            class="cta-btn"
+            style="visibility: hidden"
           />
           <UButton
             to="https://github.com/bahrain-js"
@@ -413,6 +851,8 @@ useSeoMeta({
             color="neutral"
             variant="outline"
             size="xl"
+            class="cta-btn"
+            style="visibility: hidden"
           />
         </div>
       </div>
