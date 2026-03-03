@@ -3,7 +3,7 @@ const { user, isAuthenticated, loading: authLoading, signInWithGitHub } = useAut
 const client = useNeonClient()
 
 const searchQuery = ref('')
-const selectedSkill = ref('')
+const selectedSkill = ref('all')
 const members = ref<any[]>([]) // eslint-disable-line @typescript-eslint/no-explicit-any
 const loading = ref(true)
 
@@ -74,7 +74,7 @@ const filteredMembers = computed(() => {
       || m.display_name.toLowerCase().includes(searchQuery.value.toLowerCase())
       || m.github_username.toLowerCase().includes(searchQuery.value.toLowerCase())
 
-    const matchesSkill = !selectedSkill.value
+    const matchesSkill = selectedSkill.value === 'all'
       || (m.skills && m.skills.includes(selectedSkill.value))
 
     return matchesSearch && matchesSkill
@@ -148,7 +148,7 @@ useSeoMeta({
           <USelect
             v-if="allSkills.length"
             v-model="selectedSkill"
-            :items="[{ label: 'All skills', value: '' }, ...allSkills.map(s => ({ label: s, value: s }))]"
+            :items="[{ label: 'All skills', value: 'all' }, ...allSkills.map(s => ({ label: s, value: s }))]"
             placeholder="Filter by skill"
             class="w-48"
           />

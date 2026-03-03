@@ -73,10 +73,10 @@ onMounted(fetchEvents)
 
 // ─── Search & Filter ───
 const searchQuery = ref('')
-const selectedType = ref('')
+const selectedType = ref('all')
 
 const typeOptions = [
-  { label: 'All Types', value: '' },
+  { label: 'All Types', value: 'all' },
   { label: 'Meetup', value: 'meetup' },
   { label: 'Builder Session', value: 'builder-session' },
   { label: 'Hackathon', value: 'hackathon' },
@@ -90,7 +90,7 @@ function matchesFilters(event: any) {
     || event.description?.toLowerCase().includes(q)
     || event.location?.toLowerCase().includes(q)
 
-  const matchesType = !selectedType.value || event.type === selectedType.value
+  const matchesType = selectedType.value === 'all' || event.type === selectedType.value
 
   return matchesSearch && matchesType
 }

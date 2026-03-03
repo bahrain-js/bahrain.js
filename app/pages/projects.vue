@@ -121,10 +121,10 @@ const allProjects = computed(() => projects.value)
 
 // ─── Search & Filter ───
 const searchQuery = ref('')
-const selectedStage = ref('')
+const selectedStage = ref('all')
 
 const stageOptions = [
-  { label: 'All Stages', value: '' },
+  { label: 'All Stages', value: 'all' },
   { label: 'Idea', value: 'idea' },
   { label: 'Prototype', value: 'prototype' },
   { label: 'Active Repo', value: 'repo' },
@@ -139,7 +139,7 @@ const filteredProjects = computed(() => {
       || p.description.toLowerCase().includes(q)
       || p.stack.some(s => s.toLowerCase().includes(q))
 
-    const matchesStage = !selectedStage.value || p.stage === selectedStage.value
+    const matchesStage = selectedStage.value === 'all' || p.stage === selectedStage.value
 
     return matchesSearch && matchesStage
   })
