@@ -1,0 +1,19 @@
+@import "tailwindcss";
+@import "@nuxt/ui";
+
+@theme static {
+  --font-sans: 'Inter', sans-serif;
+
+  /* Bahrain.js Yellow palette — centered on logo #EFDB50 */
+  --color-yellow-50: #FEFCF0;
+  --color-yellow-100: #FDF8D8;
+  --color-yellow-200: #FAEEB1;
+  --color-yellow-300: #F5E47E;
+  --color-yellow-400: #EFDB50;
+  --color-yellow-500: #DECA3A;
+  --color-yellow-600: #BBA72A;
+  --color-yellow-700: #95841F;
+  --color-yellow-800: #6F6317;
+  --color-yellow-900: #4A4210;
+  --color-yellow-950: #282408;
+}
