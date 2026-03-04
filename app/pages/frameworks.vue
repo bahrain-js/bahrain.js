@@ -8,23 +8,30 @@ const frameworks = [
   { name: 'Angular', icon: 'i-simple-icons-angular', color: 'text-red-500', category: 'Frontend', url: 'https://angular.dev' },
   { name: 'Svelte', icon: 'i-simple-icons-svelte', color: 'text-orange-500', category: 'Frontend', url: 'https://svelte.dev' },
   { name: 'Solid', icon: 'i-simple-icons-solid', color: 'text-blue-500', category: 'Frontend', url: 'https://solidjs.com' },
+
   { name: 'Nuxt', icon: 'i-simple-icons-nuxtdotjs', color: 'text-green-400', category: 'Full-Stack', url: 'https://nuxt.com' },
   { name: 'Next.js', icon: 'i-simple-icons-nextdotjs', color: 'text-white', category: 'Full-Stack', url: 'https://nextjs.org' },
-  { name: 'Astro', icon: 'i-simple-icons-astro', color: 'text-orange-400', category: 'Full-Stack', url: 'https://astro.build' },
   { name: 'Remix', icon: 'i-simple-icons-remix', color: 'text-blue-400', category: 'Full-Stack', url: 'https://remix.run' },
   { name: 'SvelteKit', icon: 'i-simple-icons-svelte', color: 'text-orange-400', category: 'Full-Stack', url: 'https://svelte.dev/docs/kit' },
+
+  { name: 'Astro', icon: 'i-simple-icons-astro', color: 'text-orange-400', category: 'Frontend', url: 'https://astro.build' },
+
   { name: 'Express', icon: 'i-simple-icons-express', color: 'text-zinc-400', category: 'Backend', url: 'https://expressjs.com' },
   { name: 'Fastify', icon: 'i-simple-icons-fastify', color: 'text-zinc-300', category: 'Backend', url: 'https://fastify.dev' },
   { name: 'Hono', icon: 'i-simple-icons-hono', color: 'text-orange-500', category: 'Backend', url: 'https://hono.dev' },
   { name: 'Nitro', icon: 'i-simple-icons-nuxtdotjs', color: 'text-green-500', category: 'Backend', url: 'https://nitro.build' },
   { name: 'Elysia', icon: 'i-lucide-zap', color: 'text-purple-400', category: 'Backend', url: 'https://elysiajs.com' },
+
   { name: 'Node.js', icon: 'i-simple-icons-nodedotjs', color: 'text-green-500', category: 'Runtime', url: 'https://nodejs.org' },
   { name: 'Deno', icon: 'i-simple-icons-deno', color: 'text-zinc-300', category: 'Runtime', url: 'https://deno.com' },
   { name: 'Bun', icon: 'i-simple-icons-bun', color: 'text-amber-300', category: 'Runtime', url: 'https://bun.sh' },
+
   { name: 'React Native', icon: 'i-simple-icons-react', color: 'text-sky-400', category: 'Mobile', url: 'https://reactnative.dev' },
   { name: 'Expo', icon: 'i-simple-icons-expo', color: 'text-zinc-300', category: 'Mobile', url: 'https://expo.dev' },
+
   { name: 'Electron', icon: 'i-simple-icons-electron', color: 'text-blue-300', category: 'Desktop', url: 'https://electronjs.org' },
   { name: 'Tauri', icon: 'i-simple-icons-tauri', color: 'text-yellow-400', category: 'Desktop', url: 'https://tauri.app' },
+
   { name: 'TypeScript', icon: 'i-simple-icons-typescript', color: 'text-blue-500', category: 'Language', url: 'https://typescriptlang.org' }
 ]
 
