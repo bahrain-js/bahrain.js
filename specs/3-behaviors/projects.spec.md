@@ -21,7 +21,7 @@ derives-from:
 
 - [!] Project data is sourced from GitHub API with caching.
   - Repo list, stars, description, and contributors fetched from GitHub REST API
-  - npm download counts fetched from npm registry when @bahrainjs package exists
+  - npm download counts fetched from npm registry when @bahrain.js package exists
   - Data refreshed on a schedule (not per-request)
 
 - [!] Open source pipeline is visible on the projects page.

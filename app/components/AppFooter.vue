@@ -1,5 +1,12 @@
 <template>
-  <UFooter>
+  <UFooter
+    :ui="{
+      container: 'py-8 sm:py-4 sm:flex sm:items-center sm:justify-between sm:gap-x-3',
+      left: 'flex items-center justify-center sm:justify-start sm:flex-1 gap-x-1.5 mt-3 sm:mt-0 sm:order-1',
+      center: 'mt-3 sm:mt-0 sm:order-2 flex items-center justify-center',
+      right: 'sm:flex-1 flex items-center justify-center sm:justify-end gap-x-1.5 sm:order-3'
+    }"
+  >
     <template #left>
       <div class="flex items-center gap-3">
         <AppLogo />

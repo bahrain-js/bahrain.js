@@ -1,10 +1,10 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  modules: ['@nuxt/content', '@nuxt/eslint', '@nuxt/fonts', '@nuxt/ui', 'v-gsap-nuxt'],
-
   devtools: {
     enabled: true
   },
+
+  modules: ['@nuxt/content', '@nuxt/eslint', '@nuxt/fonts', '@nuxt/ui', 'v-gsap-nuxt'],
 
   css: ['~/assets/css/main.css'],
 
@@ -28,7 +28,7 @@ export default defineNuxtConfig({
     '/admin': { ssr: false }
   },
 
-  compatibilityDate: '2025-01-15',
+  compatibilityDate: '2026-03-05',
 
   nitro: {
     preset: 'github-pages'

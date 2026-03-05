@@ -14,7 +14,7 @@ derives-from:
   - Visitors discover what's happening in Bahrain's JS scene within 30 seconds
   - Content is current (no stale data older than 30 days on the home page)
 
-- [!] Builder community: Members produce tangible open source output under the @bahrainjs namespace.
+- [!] Builder community: Members produce tangible open source output under the @bahrain.js namespace.
   - Projects page showcases community repos from the bahrain-js GitHub org
   - Open source pipeline is visible: idea → session → prototype → repo → npm package
   - Contributors are credited and visible on project cards

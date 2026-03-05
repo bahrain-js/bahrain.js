@@ -1,6 +1,6 @@
 ---
 title: 'How to Contribute to Bahrain.js'
-description: 'A practical guide to contributing — from fixing a typo to publishing your first npm package under @bahrainjs.'
+description: 'A practical guide to contributing — from fixing a typo to publishing your first npm package under @bahrain.js.'
 date: '2026-03-10'
 author: 'Bahrain.js Team'
 author_github: 'bahrain-js'
@@ -54,7 +54,7 @@ Check our repos at [github.com/bahrain-js](https://github.com/bahrain-js) and lo
 
 1. **Got an idea?** Share it in the community chat or at a meetup
 2. **Build it** at a builder session
-3. **Ship it** — publish under `@bahrainjs` on npm
+3. **Ship it** — publish under `@bahrain.js` on npm
 
 ## Recognition
 

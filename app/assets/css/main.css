@@ -18,3 +18,15 @@
   --color-yellow-900: #473504;
   --color-yellow-950: #281D02;
 }
+
+/* Scroll reveal animation */
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

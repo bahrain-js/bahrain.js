@@ -157,12 +157,14 @@ useSeoMeta({
 
     <!-- Form -->
     <UCard v-else>
-      <form
+      <UForm
+        :state="form"
         class="space-y-6"
-        @submit.prevent="submitEvent"
+        @submit="submitEvent"
       >
         <UFormField
           label="Event Title"
+          name="title"
           required
         >
           <UInput
@@ -175,6 +177,7 @@ useSeoMeta({
 
         <UFormField
           label="Short Description"
+          name="description"
           required
         >
           <UTextarea
@@ -188,6 +191,7 @@ useSeoMeta({
 
         <UFormField
           label="Event Type"
+          name="type"
           required
         >
           <USelect
@@ -307,7 +311,7 @@ useSeoMeta({
             Events are published after core team approval.
           </p>
         </div>
-      </form>
+      </UForm>
     </UCard>
   </UContainer>
 </template>

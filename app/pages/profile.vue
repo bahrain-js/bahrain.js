@@ -192,7 +192,7 @@ useSeoMeta({
       </p>
     </div>
 
-    <div class="max-w-2xl mx-auto">
+    <div class="max-w-3xl mx-auto">
       <!-- Not authenticated -->
       <UCard
         v-if="!authLoading && !isAuthenticated"
@@ -231,9 +231,10 @@ useSeoMeta({
 
       <!-- Profile form -->
       <UCard v-else>
-        <form
-          class="space-y-6"
-          @submit.prevent="saveProfile"
+        <UForm
+          :state="form"
+          class="space-y-6 w-full [&>div]:w-full"
+          @submit="saveProfile"
         >
           <!-- Avatar preview -->
           <div class="flex items-center gap-4">
@@ -261,19 +262,24 @@ useSeoMeta({
           <!-- Display Name -->
           <UFormField
             label="Display Name"
+            name="display_name"
             required
+            class="w-full"
           >
             <UInput
               v-model="form.display_name"
               placeholder="Your name"
               required
+              class="w-full"
             />
           </UFormField>
 
           <!-- GitHub Username (read-only when profile exists) -->
           <UFormField
             label="GitHub Username"
+            name="github_username"
             required
+            class="w-full"
           >
             <UInput
               v-model="form.github_username"
@@ -281,6 +287,7 @@ useSeoMeta({
               icon="i-simple-icons-github"
               :readonly="hasExistingProfile"
               required
+              class="w-full"
             />
             <template #hint>
               <span class="text-xs text-muted">Pulled from your GitHub account</span>
@@ -288,16 +295,17 @@ useSeoMeta({
           </UFormField>
 
           <!-- Bio -->
-          <UFormField label="Bio">
+          <UFormField label="Bio" name="bio" class="w-full">
             <UTextarea
               v-model="form.bio"
               placeholder="Tell the community about yourself..."
               :rows="3"
+              class="w-full"
             />
           </UFormField>
 
           <!-- Skills -->
-          <UFormField label="Skills">
+          <UFormField label="Skills" name="skills">
             <div class="space-y-2">
               <div class="flex gap-2">
                 <UInput
@@ -379,6 +387,7 @@ useSeoMeta({
             <UInput
               v-model="form.currently_building"
               placeholder="What are you working on?"
+              class="w-full"
             />
           </UFormField>
 
@@ -406,7 +415,7 @@ useSeoMeta({
               {{ successMessage }}
             </p>
           </div>
-        </form>
+        </UForm>
       </UCard>
     </div>
   </UContainer>

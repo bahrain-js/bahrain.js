@@ -8,16 +8,16 @@ defineProps<{
 const emit = defineEmits<{
   'update-status': [idea: any, status: string]
   'delete-idea': [idea: any]
-  'create': [form: { title: string, problem: string, description: string, looking_for: string, sector: string, contact_url: string, tags: string }]
+  'create': [form: { title: string, problem: string, description: string, looking_for: string, sector: string, contact_url: string, tags: string[] }]
 }>()
 
 const showForm = ref(false)
-const form = ref({ title: '', problem: '', description: '', looking_for: 'co-founder', sector: '', contact_url: '', tags: '' })
+const form = ref({ title: '', problem: '', description: '', looking_for: 'co-founder', sector: '', contact_url: '', tags: [] })
 
 function submit() {
   emit('create', { ...form.value })
   showForm.value = false
-  form.value = { title: '', problem: '', description: '', looking_for: 'co-founder', sector: '', contact_url: '', tags: '' }
+  form.value = { title: '', problem: '', description: '', looking_for: 'co-founder', sector: '', contact_url: '', tags: [] }
 }
 </script>
 
@@ -152,9 +152,11 @@ function submit() {
           />
         </UFormField>
         <UFormField label="Tags (comma separated)">
-          <UInput
+          <UInputTags
             v-model="form.tags"
-            placeholder="Node.js, API, Mobile"
+            placeholder="Enter tags"
+            :add-on-tab="true"
+            :add-on-blur="true"
             class="w-full"
           />
         </UFormField>

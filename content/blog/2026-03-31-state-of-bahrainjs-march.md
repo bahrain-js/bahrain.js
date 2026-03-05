@@ -33,7 +33,7 @@ Nothing to npm yet — but that's about to change. We're gearing up for our firs
 ## 📅 What's coming
 
 - **April 15**: Inaugural Meetup — lightning talks and hands-on hacking
-- **May 10**: Builder Session — CLI tools with Node.js (our first `@bahrainjs` package!)
+- **May 10**: Builder Session — CLI tools with Node.js (our first `@bahrain.js` package!)
 
 ## 🙌 Shoutouts
 

@@ -10,7 +10,7 @@ const {
   changeRole, deleteMember,
   updateEventStatus, deleteEvent,
   createJob, deleteJob, updateJobStatus,
-  createOss, deleteOss, updateOssStatus,
+  createOss, deleteOss, updateOssStatus, updateOss,
   createIdea, deleteIdea, updateIdeaStatus
 } = useAdminData()
 
@@ -169,6 +169,7 @@ useSeoMeta({
           @update-status="updateOssStatus"
           @delete-oss="deleteOss"
           @create="createOss"
+          @edit="updateOss"
         />
 
         <AdminIdeas

@@ -231,7 +231,7 @@ useSeoMeta({
                   {{ event.description }}
                 </p>
 
-                <div class="flex items-center gap-4 mt-3 text-sm text-zinc-500 dark:text-zinc-400">
+                <div class="flex flex-wrap items-center gap-4 mt-3 text-sm text-zinc-500 dark:text-zinc-400">
                   <span class="flex items-center gap-1">
                     <UIcon
                       name="i-lucide-clock"

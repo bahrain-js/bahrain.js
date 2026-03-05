@@ -12,7 +12,7 @@ const form = ref({
   sector: '',
   looking_for: 'Technical Co-founder',
   contact_url: '',
-  tags: ''
+  tags: []
 })
 
 const sectors = [
@@ -43,9 +43,9 @@ async function submitIdea() {
 
   saving.value = true
   try {
-    const tags = form.value.tags
-      ? form.value.tags.split(',').map((t: string) => t.trim()).filter(Boolean)
-      : []
+    // const tags = form.value.tags
+    //   ? form.value.tags.split(',').map((t: string) => t.trim()).filter(Boolean)
+    //   : []
 
     const { error } = await client
       .from('startup_ideas')
@@ -56,7 +56,7 @@ async function submitIdea() {
         sector: form.value.sector || null,
         looking_for: form.value.looking_for,
         contact_url: form.value.contact_url,
-        tags,
+        tags: form.value.tags,
         status: 'pending',
         submitted_by: user.value.id
       })
@@ -150,7 +150,7 @@ useSeoMeta({
 
     <!-- Form -->
     <UCard v-else>
-      <form
+      <UForm
         class="space-y-6"
         @submit.prevent="submitIdea"
       >
@@ -224,13 +224,15 @@ useSeoMeta({
         </UFormField>
 
         <UFormField label="Tags">
-          <UInput
+          <UInputTags
             v-model="form.tags"
-            placeholder="e.g. Payments, API, Mobile (comma-separated)"
+            placeholder="Enter tags"
+            :add-on-tab="true"
+            :add-on-blur="true"
             class="w-full"
           />
           <template #hint>
-            Comma-separated topics or technologies
+            Enter tags separated by commas
           </template>
         </UFormField>
 
@@ -246,7 +248,7 @@ useSeoMeta({
             Ideas are published after core team approval.
           </p>
         </div>
-      </form>
+      </UForm>
     </UCard>
   </UContainer>
 </template>

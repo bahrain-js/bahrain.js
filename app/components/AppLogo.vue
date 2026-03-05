@@ -1,7 +1,7 @@
 <template>
   <img
-    src="/logo.svg"
+    src="/long-logo.png"
     alt="Bahrain.js"
-    class="h-24 w-24 rounded-md"
+    class="h-12"
   >
 </template>

@@ -66,6 +66,7 @@ useSeoMeta({
         :label="tag"
         :variant="selectedTag === tag ? 'solid' : 'outline'"
         size="xs"
+        class="capitalize"
         @click="toggleTag(tag)"
       />
       <UButton
@@ -74,6 +75,7 @@ useSeoMeta({
         icon="i-lucide-x"
         variant="ghost"
         size="xs"
+        class="capitalize"
         @click="selectedTag = null"
       />
     </div>

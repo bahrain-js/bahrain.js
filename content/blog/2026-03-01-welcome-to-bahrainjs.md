@@ -26,13 +26,13 @@ We're three things:
 
 1. **A signal hub** — one place to find events, projects, people, and opportunities in Bahrain's JS ecosystem
 2. **A builder community** — we ship code, not just attend talks
-3. **An on-ramp** — from "just learned JavaScript" to "publishing packages under `@bahrainjs` on npm"
+3. **An on-ramp** — from "just learned JavaScript" to "publishing packages under `@bahrain.js` on npm"
 
 ## What's coming
 
 - **Monthly meetups** with lightning talks and demos
 - **Builder sessions** where we code together and ship real projects
-- **A growing collection of open source packages** under the `@bahrainjs` npm namespace
+- **A growing collection of open source packages** under the `@bahrain.js` npm namespace
 - **This website** — a living dashboard for the community
 
 ## Get involved

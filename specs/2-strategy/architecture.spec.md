@@ -32,7 +32,7 @@ derives-from:
 
 - [!] External integrations are read-only at the boundary.
   - **GitHub API**: Fetch org repos, contributor lists, commit activity for the bahrain-js org.
-  - **npm Registry API**: Fetch download counts and version info for @bahrainjs packages.
+  - **npm Registry API**: Fetch download counts and version info for @bahrain.js packages.
   - Data is cached and refreshed on a schedule, not on every request.
 
 - [!] Deployment boundary is Cloudflare Pages with edge SSR.

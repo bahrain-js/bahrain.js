@@ -129,12 +129,14 @@ useSeoMeta({
 
     <!-- Form -->
     <UCard v-else>
-      <form
+      <UForm
+        :state="form"
         class="space-y-6"
-        @submit.prevent="submitJob"
+        @submit="submitJob"
       >
         <UFormField
           label="Job Title"
+          name="title"
           required
         >
           <UInput
@@ -147,6 +149,7 @@ useSeoMeta({
 
         <UFormField
           label="Company"
+          name="company"
           required
         >
           <UInput
@@ -159,6 +162,7 @@ useSeoMeta({
 
         <UFormField
           label="Description"
+          name="description"
           required
         >
           <UTextarea
@@ -231,7 +235,7 @@ useSeoMeta({
             Listings are published after core team approval.
           </p>
         </div>
-      </form>
+      </UForm>
     </UCard>
   </UContainer>
 </template>

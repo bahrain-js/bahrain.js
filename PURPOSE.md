@@ -7,6 +7,6 @@ Bahrain has no central hub for its JavaScript community. Events are scattered ac
 ## What Success Looks Like
 
 - Active community with regular meetups and builder sessions
-- Open source packages published under the @bahrainjs npm namespace
+- Open source packages published under the @bahrain.js npm namespace
 - Clear progression path from learner to contributor to maintainer
 - A website at bahrain.js.org that serves as the community's home

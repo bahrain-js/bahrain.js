@@ -26,3 +26,6 @@ logs
 # Agent
 .agent/
 .memory/
+specs/
+.livespec/
+.livespec-repo/

@@ -32,7 +32,7 @@ const staticProjects: Project[] = [
     url: 'https://github.com/bahrain-js/bahrainjs.dev'
   },
   {
-    name: '@bahrainjs/create-app',
+    name: '@bahrain.js/create-app',
     slug: 'create-app',
     description: 'Scaffold a new project with Bahrain.js defaults — ESLint, Prettier, TypeScript, and CI/CD baked in.',
     stack: ['Node.js', 'TypeScript'],
@@ -40,14 +40,14 @@ const staticProjects: Project[] = [
     stage: 'prototype',
     featured: false,
     startHere: false,
-    npmPackage: '@bahrainjs/create-app',
+    npmPackage: '@bahrain.js/create-app',
     contributors: [
       { username: 'bahrain-js', avatar: 'https://github.com/bahrain-js.png?size=64' }
     ],
     url: 'https://github.com/bahrain-js/create-app'
   },
   {
-    name: '@bahrainjs/eslint-config',
+    name: '@bahrain.js/eslint-config',
     slug: 'eslint-config',
     description: 'Shared ESLint config for Bahrain.js projects. One import, zero config.',
     stack: ['ESLint', 'TypeScript'],
@@ -55,7 +55,7 @@ const staticProjects: Project[] = [
     stage: 'idea',
     featured: false,
     startHere: true,
-    npmPackage: '@bahrainjs/eslint-config',
+    npmPackage: '@bahrain.js/eslint-config',
     contributors: [
       { username: 'bahrain-js', avatar: 'https://github.com/bahrain-js.png?size=64' }
     ],
@@ -112,7 +112,7 @@ const pipelineStages = [
   { key: 'idea', icon: 'i-lucide-lightbulb', label: 'Idea', description: 'Discussed at meetups or in chat' },
   { key: 'prototype', icon: 'i-lucide-flask-conical', label: 'Prototype', description: 'Working proof of concept' },
   { key: 'repo', icon: 'i-lucide-git-branch', label: 'Active Repo', description: 'Under bahrain-js org' },
-  { key: 'package', icon: 'i-lucide-package', label: 'Published', description: 'On npm as @bahrainjs/*' }
+  { key: 'package', icon: 'i-lucide-package', label: 'Published', description: 'On npm as @bahrain.js/*' }
 ]
 
 const featuredProjects = computed(() => projects.value.filter(p => p.featured))
@@ -497,7 +497,7 @@ useSeoMeta({
         Got a project idea?
       </h2>
       <p class="text-zinc-500 dark:text-zinc-400 mb-6 max-w-md mx-auto">
-        Pitch it at a meetup or builder session. We'll help you ship it under the @bahrainjs namespace.
+        Pitch it at a meetup or builder session. We'll help you ship it under the @bahrain.js namespace.
       </p>
       <div class="flex justify-center gap-3">
         <UButton

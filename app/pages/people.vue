@@ -136,47 +136,49 @@ useSeoMeta({
         </div>
       </div>
 
-      <!-- Search & Actions Bar -->
-      <div class="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
-        <div class="flex gap-3 flex-1 w-full sm:w-auto">
-          <UInput
-            v-model="searchQuery"
-            placeholder="Search by name or username..."
-            icon="i-lucide-search"
-            class="flex-1"
-          />
-          <USelect
-            v-if="allSkills.length"
-            v-model="selectedSkill"
-            :items="[{ label: 'All skills', value: 'all' }, ...allSkills.map(s => ({ label: s, value: s }))]"
-            placeholder="Filter by skill"
-            class="w-48"
-          />
-        </div>
+      <!-- Profile Action -->
+      <div
+        v-if="!loading"
+        class="flex justify-center"
+      >
+        <UButton
+          v-if="isAuthenticated && !currentUserProfile"
+          to="/profile"
+          icon="i-lucide-user-plus"
+          label="Create Profile"
+          color="primary"
+        />
+        <UButton
+          v-else-if="isAuthenticated && currentUserProfile"
+          to="/profile"
+          icon="i-lucide-pencil"
+          label="Edit Profile"
+          variant="outline"
+        />
+        <UButton
+          v-else-if="!authLoading"
+          icon="i-simple-icons-github"
+          label="Sign in to Join"
+          color="neutral"
+          @click="signInWithGitHub"
+        />
+      </div>
 
-        <div class="flex gap-2">
-          <UButton
-            v-if="isAuthenticated && !currentUserProfile"
-            to="/profile"
-            icon="i-lucide-user-plus"
-            label="Create Profile"
-            color="primary"
-          />
-          <UButton
-            v-else-if="isAuthenticated && currentUserProfile"
-            to="/profile"
-            icon="i-lucide-pencil"
-            label="Edit Profile"
-            variant="outline"
-          />
-          <UButton
-            v-else-if="!authLoading"
-            icon="i-simple-icons-github"
-            label="Sign in to Join"
-            color="neutral"
-            @click="signInWithGitHub"
-          />
-        </div>
+      <!-- Search & Filter Bar -->
+      <div class="flex gap-3 w-full">
+        <UInput
+          v-model="searchQuery"
+          placeholder="Search by name or username..."
+          icon="i-lucide-search"
+          class="flex-1"
+        />
+        <USelect
+          v-if="allSkills.length"
+          v-model="selectedSkill"
+          :items="[{ label: 'All skills', value: 'all' }, ...allSkills.map(s => ({ label: s, value: s }))]"
+          placeholder="Filter by skill"
+          class="w-full sm:w-48"
+        />
       </div>
 
       <!-- Loading skeleton -->

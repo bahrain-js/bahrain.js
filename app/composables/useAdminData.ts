@@ -266,7 +266,7 @@ export function useAdminData() {
   }
 
   // --- OSS CRUD ---
-  async function createOss(formData: { project_name: string, description: string, difficulty: string, issues_label: string, url: string, tags: string }) {
+  async function createOss(formData: { project_name: string, description: string, difficulty: string, issues_label: string, url: string, tags: string[] }) {
     try {
       const { error } = await client
         .from('open_source_opportunities')
@@ -276,7 +276,7 @@ export function useAdminData() {
           difficulty: formData.difficulty,
           issues_label: formData.issues_label || null,
           url: formData.url || null,
-          tags: formData.tags ? formData.tags.split(',').map((t: string) => t.trim()) : [],
+          tags: formData.tags || [],
           status: 'active'
         })
       if (error) throw error
@@ -311,6 +311,42 @@ export function useAdminData() {
       opp.status = newStatus
     } catch (err) {
       console.error('Failed to update OSS status:', err)
+    } finally {
+      oppActionId.value = null
+    }
+  }
+
+  async function updateOss(id: string, formData: { project_name: string, description: string, difficulty: string, issues_label: string, url: string, tags: string[] }) {
+    oppActionId.value = id
+    try {
+      const { error } = await client
+        .from('open_source_opportunities')
+        .update({
+          project_name: formData.project_name,
+          description: formData.description || null,
+          difficulty: formData.difficulty,
+          issues_label: formData.issues_label || null,
+          url: formData.url || null,
+          tags: formData.tags || []
+        })
+        .eq('id', id)
+      if (error) throw error
+      // Update local state
+      const idx = ossListings.value.findIndex((o: any) => o.id === id)
+      if (idx !== -1) {
+        ossListings.value[idx] = {
+          ...ossListings.value[idx],
+          project_name: formData.project_name,
+          description: formData.description || null,
+          difficulty: formData.difficulty,
+          issues_label: formData.issues_label || null,
+          url: formData.url || null,
+          tags: formData.tags || []
+        }
+      }
+    } catch (err) {
+      console.error('Failed to update OSS:', err)
+      alert('Failed to update project.')
     } finally {
       oppActionId.value = null
     }
@@ -404,6 +440,7 @@ export function useAdminData() {
     createOss,
     deleteOss,
     updateOssStatus,
+    updateOss,
     createIdea,
     deleteIdea,
     updateIdeaStatus,
