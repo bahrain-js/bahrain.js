@@ -3,7 +3,7 @@ const { isAuthenticated, user, loading: authLoading } = useAuth()
 const { isAdmin, adminChecked } = useAdmin()
 
 const {
-  members, pendingEvents, jobListings, ossListings, startupIdeas,
+  members, pendingEvents, jobListings, ossListings, startupIdeas, projectListings,
   loading, savingId, eventActionId, oppActionId,
   roles, roleBadgeColor, statusBadgeColor,
   fetchAll,
@@ -11,7 +11,8 @@ const {
   updateEventStatus, deleteEvent,
   createJob, deleteJob, updateJobStatus,
   createOss, deleteOss, updateOssStatus, updateOss,
-  createIdea, deleteIdea, updateIdeaStatus
+  createIdea, deleteIdea, updateIdeaStatus,
+  createProject, deleteProject, updateProjectStatus, updateProject
 } = useAdminData()
 
 const activeTab = ref('members')
@@ -125,6 +126,12 @@ useSeoMeta({
           :variant="activeTab === 'opportunities' ? 'soft' : 'ghost'"
           @click="activeTab = 'opportunities'"
         />
+        <UButton
+          label="Projects"
+          icon="i-lucide-folder-git-2"
+          :variant="activeTab === 'projects' ? 'soft' : 'ghost'"
+          @click="activeTab = 'projects'"
+        />
       </div>
 
       <!-- Members Tab -->
@@ -181,6 +188,17 @@ useSeoMeta({
           @create="createIdea"
         />
       </div>
+
+      <!-- Projects Tab -->
+      <AdminProjects
+        v-if="activeTab === 'projects'"
+        :projects="projectListings"
+        :opp-action-id="oppActionId"
+        @update-status="updateProjectStatus"
+        @delete-project="deleteProject"
+        @create="createProject"
+        @edit="updateProject"
+      />
     </template>
   </UContainer>
 </template>

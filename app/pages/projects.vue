@@ -1,6 +1,9 @@
 <script setup lang="ts">
+const client = useNeonClient()
+
 // Types for project data
 interface Project {
+  id: string
   name: string
   slug: string
   description: string
@@ -8,84 +11,45 @@ interface Project {
   stars: number
   stage: 'idea' | 'prototype' | 'repo' | 'package'
   featured: boolean
-  startHere: boolean
-  npmPackage?: string
-  npmDownloads?: number
-  contributors: { username: string, avatar: string }[]
+  start_here: boolean
+  npm_package?: string
   url: string
+  status: string
 }
 
-// Static project data — enriched with GitHub API data when available
-const staticProjects: Project[] = [
-  {
-    name: 'bahrainjs.dev',
-    slug: 'bahrainjs-dev',
-    description: 'This website — the community hub for Bahrain.js. Built with Nuxt 4, Nuxt UI, and Nuxt Content.',
-    stack: ['Nuxt', 'Vue', 'TypeScript', 'Tailwind CSS'],
-    stars: 3,
-    stage: 'repo',
-    featured: true,
-    startHere: true,
-    contributors: [
-      { username: 'bahrain-js', avatar: 'https://github.com/bahrain-js.png?size=64' }
-    ],
-    url: 'https://github.com/bahrain-js/bahrainjs.dev'
-  },
-  {
-    name: '@bahrain.js/create-app',
-    slug: 'create-app',
-    description: 'Scaffold a new project with Bahrain.js defaults — ESLint, Prettier, TypeScript, and CI/CD baked in.',
-    stack: ['Node.js', 'TypeScript'],
-    stars: 0,
-    stage: 'prototype',
-    featured: false,
-    startHere: false,
-    npmPackage: '@bahrain.js/create-app',
-    contributors: [
-      { username: 'bahrain-js', avatar: 'https://github.com/bahrain-js.png?size=64' }
-    ],
-    url: 'https://github.com/bahrain-js/create-app'
-  },
-  {
-    name: '@bahrain.js/eslint-config',
-    slug: 'eslint-config',
-    description: 'Shared ESLint config for Bahrain.js projects. One import, zero config.',
-    stack: ['ESLint', 'TypeScript'],
-    stars: 1,
-    stage: 'idea',
-    featured: false,
-    startHere: true,
-    npmPackage: '@bahrain.js/eslint-config',
-    contributors: [
-      { username: 'bahrain-js', avatar: 'https://github.com/bahrain-js.png?size=64' }
-    ],
-    url: 'https://github.com/bahrain-js/eslint-config'
-  },
-  {
-    name: 'awesome-bahrain-js',
-    slug: 'awesome-bahrain-js',
-    description: 'A curated list of resources, tools, and projects from the Bahrain JavaScript ecosystem.',
-    stack: ['Markdown'],
-    stars: 2,
-    stage: 'repo',
-    featured: false,
-    startHere: true,
-    contributors: [
-      { username: 'bahrain-js', avatar: 'https://github.com/bahrain-js.png?size=64' }
-    ],
-    url: 'https://github.com/bahrain-js/awesome-bahrain-js'
+// Fetch projects from database
+const dbProjects = ref<Project[]>([])
+const dbLoading = ref(true)
+
+async function fetchProjects() {
+  dbLoading.value = true
+  try {
+    const { data, error } = await client
+      .from('projects')
+      .select('*')
+      .eq('status', 'active')
+      .order('created_at', { ascending: false })
+    if (error) throw error
+    dbProjects.value = data || []
+  } catch (err) {
+    console.error('Failed to load projects:', err)
+    dbProjects.value = []
+  } finally {
+    dbLoading.value = false
   }
-]
+}
+
+onMounted(fetchProjects)
 
 // Fetch live data from GitHub API
 const { data: githubRepos } = await useGitHubRepos()
 
-// Merge GitHub stars into static projects
+// Merge GitHub stars into DB projects
 const projects = computed(() => {
-  if (!githubRepos.value?.length) return staticProjects
+  if (!githubRepos.value?.length) return dbProjects.value
 
-  return staticProjects.map((project) => {
-    const repoName = project.url.split('/').pop()
+  return dbProjects.value.map((project) => {
+    const repoName = project.url?.split('/').pop()
     const ghRepo = (githubRepos.value ?? []).find(r => r.name === repoName)
     if (ghRepo) {
       return { ...project, stars: ghRepo.stars }
@@ -94,11 +58,11 @@ const projects = computed(() => {
   })
 })
 
-// Find additional repos from GitHub not in static list
+// Find additional repos from GitHub not in DB list
 const additionalRepos = computed(() => {
   if (!githubRepos.value?.length) return []
-  const staticNames = staticProjects.map(p => p.url.split('/').pop())
-  return githubRepos.value.filter(r => !staticNames.includes(r.name))
+  const dbNames = dbProjects.value.map(p => p.url?.split('/').pop())
+  return githubRepos.value.filter(r => !dbNames.includes(r.name))
 })
 
 const stageConfig: Record<string, { icon: string, label: string, color: string }> = {
@@ -116,7 +80,7 @@ const pipelineStages = [
 ]
 
 const featuredProjects = computed(() => projects.value.filter(p => p.featured))
-const startHereProjects = computed(() => projects.value.filter(p => p.startHere))
+const startHereProjects = computed(() => projects.value.filter(p => p.start_here))
 const allProjects = computed(() => projects.value)
 
 // ─── Search & Filter ───
@@ -136,8 +100,8 @@ const filteredProjects = computed(() => {
     const q = searchQuery.value.toLowerCase()
     const matchesSearch = !q
       || p.name.toLowerCase().includes(q)
-      || p.description.toLowerCase().includes(q)
-      || p.stack.some(s => s.toLowerCase().includes(q))
+      || (p.description || '').toLowerCase().includes(q)
+      || (p.stack || []).some(s => s.toLowerCase().includes(q))
 
     const matchesStage = selectedStage.value === 'all' || p.stage === selectedStage.value
 
@@ -267,10 +231,8 @@ useSeoMeta({
             <div class="flex items-center justify-between">
               <div class="flex -space-x-2">
                 <img
-                  v-for="contributor in project.contributors"
-                  :key="contributor.username"
-                  :src="contributor.avatar"
-                  :alt="contributor.username"
+                  src="https://github.com/bahrain-js.png?size=64"
+                  alt="bahrain-js"
                   class="size-7 rounded-full ring-2 ring-white dark:ring-zinc-900"
                 >
               </div>
@@ -402,10 +364,10 @@ useSeoMeta({
                   {{ stageConfig[project.stage]?.label }}
                 </span>
                 <span
-                  v-if="project.npmPackage"
+                  v-if="project.npm_package"
                   class="text-xs text-zinc-400"
                 >
-                  · {{ project.npmPackage }}
+                  · {{ project.npm_package }}
                 </span>
               </div>
               <a
@@ -424,10 +386,8 @@ useSeoMeta({
             <div class="flex items-center gap-3 flex-shrink-0">
               <div class="flex -space-x-1.5">
                 <img
-                  v-for="contributor in project.contributors"
-                  :key="contributor.username"
-                  :src="contributor.avatar"
-                  :alt="contributor.username"
+                  src="https://github.com/bahrain-js.png?size=64"
+                  alt="bahrain-js"
                   class="size-6 rounded-full ring-2 ring-white dark:ring-zinc-900"
                 >
               </div>

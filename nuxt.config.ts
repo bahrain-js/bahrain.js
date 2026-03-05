@@ -21,7 +21,7 @@ export default defineNuxtConfig({
     '/events/**': { ssr: false },
     '/blog': { prerender: true },
     '/blog/**': { prerender: true },
-    '/projects': { prerender: true },
+    '/projects': { ssr: false },
     '/frameworks': { ssr: false },
     '/people': { ssr: false },
     '/profile': { ssr: false },

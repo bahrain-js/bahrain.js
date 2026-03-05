@@ -9,6 +9,7 @@ export function useAdminData() {
   const jobListings = ref<any[]>([])
   const ossListings = ref<any[]>([])
   const startupIdeas = ref<any[]>([])
+  const projectListings = ref<any[]>([])
   const loading = ref(true)
   const savingId = ref<string | null>(null)
   const eventActionId = ref<string | null>(null)
@@ -127,9 +128,23 @@ export function useAdminData() {
     }
   }
 
+  async function fetchProjectListings() {
+    try {
+      const { data, error } = await client
+        .from('projects')
+        .select('*')
+        .order('created_at', { ascending: false })
+      if (error) throw error
+      projectListings.value = data || []
+    } catch (err) {
+      console.error('Failed to load projects:', err)
+      projectListings.value = []
+    }
+  }
+
   async function fetchAll() {
     loading.value = true
-    await Promise.all([fetchMembers(), fetchPendingEvents(), fetchJobListings(), fetchOssListings(), fetchStartupIdeas()])
+    await Promise.all([fetchMembers(), fetchPendingEvents(), fetchJobListings(), fetchOssListings(), fetchStartupIdeas(), fetchProjectListings()])
     loading.value = false
   }
 
@@ -404,6 +419,91 @@ export function useAdminData() {
     }
   }
 
+  // --- Projects CRUD ---
+  async function createProject(formData: { name: string, slug: string, description: string, stack: string[], stage: string, featured: boolean, start_here: boolean, npm_package: string, url: string }) {
+    try {
+      const { error } = await client
+        .from('projects')
+        .insert({
+          name: formData.name,
+          slug: formData.slug,
+          description: formData.description || null,
+          stack: formData.stack || [],
+          stage: formData.stage,
+          featured: formData.featured,
+          start_here: formData.start_here,
+          npm_package: formData.npm_package || null,
+          url: formData.url || null,
+          status: 'active'
+        })
+      if (error) throw error
+      await fetchProjectListings()
+    } catch (err) {
+      console.error('Failed to create project:', err)
+      alert('Failed to create project.')
+    }
+  }
+
+  async function deleteProject(project: any) {
+    if (!confirm(`Delete "${project.name}"?`)) return
+    oppActionId.value = project.id
+    try {
+      const { error } = await client.from('projects').delete().eq('id', project.id)
+      if (error) throw error
+      projectListings.value = projectListings.value.filter(p => p.id !== project.id)
+    } catch (err) {
+      console.error('Failed to delete project:', err)
+      alert('Failed to delete.')
+    } finally {
+      oppActionId.value = null
+    }
+  }
+
+  async function updateProjectStatus(project: any, newStatus: string) {
+    if (project.status === newStatus) return
+    oppActionId.value = project.id
+    try {
+      const { error } = await client.from('projects').update({ status: newStatus, updated_at: new Date().toISOString() }).eq('id', project.id)
+      if (error) throw error
+      project.status = newStatus
+    } catch (err) {
+      console.error('Failed to update project status:', err)
+    } finally {
+      oppActionId.value = null
+    }
+  }
+
+  async function updateProject(id: string, formData: { name: string, slug: string, description: string, stack: string[], stage: string, featured: boolean, start_here: boolean, npm_package: string, url: string }) {
+    oppActionId.value = id
+    try {
+      const { error } = await client
+        .from('projects')
+        .update({
+          name: formData.name,
+          slug: formData.slug,
+          description: formData.description || null,
+          stack: formData.stack || [],
+          stage: formData.stage,
+          featured: formData.featured,
+          start_here: formData.start_here,
+          npm_package: formData.npm_package || null,
+          url: formData.url || null,
+          updated_at: new Date().toISOString()
+        })
+        .eq('id', id)
+      if (error) throw error
+      const idx = projectListings.value.findIndex((p: any) => p.id === id)
+      if (idx !== -1) {
+        projectListings.value[idx] = { ...projectListings.value[idx], ...formData, updated_at: new Date().toISOString() }
+      }
+    } catch (err) {
+      console.error('Failed to update project:', err)
+      alert('Failed to update project.')
+    } finally {
+      oppActionId.value = null
+    }
+  }
+
   // --- Utility ---
   function formatEventDate(dateStr: string) {
     return new Date(dateStr).toLocaleDateString('en-US', {
@@ -420,6 +520,7 @@ export function useAdminData() {
     jobListings,
     ossListings,
     startupIdeas,
+    projectListings,
     loading,
     savingId,
     eventActionId,
@@ -444,6 +545,10 @@ export function useAdminData() {
     createIdea,
     deleteIdea,
     updateIdeaStatus,
+    createProject,
+    deleteProject,
+    updateProjectStatus,
+    updateProject,
     formatEventDate
   }
 }
