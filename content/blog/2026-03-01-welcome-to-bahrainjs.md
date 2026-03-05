@@ -1,6 +1,6 @@
 ---
-title: 'Welcome to Bahrain.js'
-description: 'Introducing Bahrain.js — the JavaScript community for Bahrain. Here''s what we''re building and why.'
+title: 'Bahrain Now Has a JavaScript Community'
+description: 'Bahrain.js is here — events, open source, jobs, and a path from your first line of code to publishing packages on npm. Join us.'
 date: '2026-03-01'
 author: 'Bahrain.js Team'
 author_github: 'bahrain-js'
@@ -10,33 +10,40 @@ tags:
 featured: true
 ---
 
-# Welcome to Bahrain.js
+# Bahrain Now Has a JavaScript Community
 
-We're launching **Bahrain.js** — a home for JavaScript developers in Bahrain.
+If you write JavaScript in Bahrain — or want to learn — this is for you.
 
-## Why now?
+**Bahrain.js** is a new developer community built around one idea: JavaScript developers in Bahrain deserve a home. A place to meet, build, and grow together.
 
-Bahrain's tech scene is growing fast. Bootcamps are graduating developers, startups are hiring, and the government is backing digital transformation. But there's no single place where JS developers can find each other, share work, and build together.
+## What You Get
 
-That changes today.
+🗓 **Events** — Monthly meetups with lightning talks, live demos, and hands-on coding. No boring panels. Come build something.
 
-## What Bahrain.js is
+💼 **Opportunities** — Job postings and startup ideas from companies in Bahrain that need JavaScript developers. Updated by the community, for the community.
 
-We're three things:
+📦 **Open Source** — We build and publish real npm packages under `@bahrain.js`. Your first open source contribution could be your next portfolio piece.
 
-1. **A signal hub** — one place to find events, projects, people, and opportunities in Bahrain's JS ecosystem
-2. **A builder community** — we ship code, not just attend talks
-3. **An on-ramp** — from "just learned JavaScript" to "publishing packages under `@bahrain.js` on npm"
+👥 **Your People** — A directory of JavaScript developers in Bahrain. Find collaborators, mentors, or your next cofounder.
 
-## What's coming
+🚀 **A Clear Path** — Whether you just learned `console.log` or you ship production apps daily, our contributor pipeline takes you from first pull request to package maintainer.
 
-- **Monthly meetups** with lightning talks and demos
-- **Builder sessions** where we code together and ship real projects
-- **A growing collection of open source packages** under the `@bahrain.js` npm namespace
-- **This website** — a living dashboard for the community
+## This Is Not Another Meetup Group
 
-## Get involved
+Most developer communities are talk-heavy and build-light. Bahrain.js is different. Every meetup includes hands-on time. Every project we start targets a real `npm publish`. We measure output, not attendance.
 
-The best way to get started is simple: show up to our first event and say hello. Everything we do is open source, and everyone is welcome.
+## Everything Is Open Source
 
-See you at the [inaugural meetup](/events/2026-04-15-inaugural-meetup).
+This website, our packages, our event listings — all of it lives in public Git repos. You can contribute right now, today, without asking anyone for permission.
+
+→ [Browse the code on GitHub](https://github.com/bahrain-js)
+
+## Join Us
+
+Our first event is coming up. Show up, introduce yourself, and write some code with us.
+
+→ [See upcoming events](/events)
+→ [Meet the community](/people)
+→ [Explore open source projects](/projects)
+
+**Share this with a developer in Bahrain who should know about us.** 🇧🇭
