@@ -8,7 +8,7 @@ const emit = defineEmits<{
 const heroRef = ref<HTMLElement>()
 const sliderList = ref<HTMLElement>()
 
-const words = ['Events', 'Startups', 'Meetups', 'Workshops', 'Projects', 'Opportunities', 'Connections', 'Careers', 'Community', 'Tools']
+const words = ['Events', 'Meetups', 'Workshops', 'Demos', 'Projects', 'Startups', 'Tools', 'Jobs', 'Careers','Opportunities', 'Connections',  'Community']
 
 onMounted(async () => {
   await nextTick()
@@ -57,13 +57,13 @@ onMounted(async () => {
     <div class="mx-auto max-w-4xl px-6 text-center relative z-10">
       <h1 class="text-4xl sm:text-7xl font-extrabold tracking-tight leading-[1.1]">
         <span
-          v-for="(word, i) in ['Bahrain\'s', 'community', 'for']"
+          v-for="(word, i) in ['Bahrain\'s', 'community', 'for', 'JavaScript']"
           :key="'w' + i"
           class="hero-reveal inline-block mr-[0.3em]"
         >{{ word }}</span>
         <span class="hero-reveal inline-block overflow-hidden align-bottom h-[1.2em] mt-4">
           <span ref="sliderList" class="flex flex-col">
-            <span v-for="word in words" :key="word" class="v-slide text-left inline-block text-primary py-2 text-shadow-[0_0_12px_var(--ui-primary)]">
+            <span v-for="word in words" :key="word" class="v-slide text-center inline-block text-primary py-2 text-shadow-[0_0_12px_var(--ui-primary)]">
               {{ word }}
             </span>
           </span>
