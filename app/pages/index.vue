@@ -43,8 +43,8 @@ onMounted(async () => {
 })
 
 useSeoMeta({
-  title: 'Bahrain.js — JavaScript Community',
-  description: 'The home of JavaScript in Bahrain. Build, ship, learn, and connect with the local JS community.'
+  title: 'Bahrain.js — Bahrain\'s JavaScript Community',
+  description: 'Bahrain\'s JavaScript community — events, open source projects, jobs, and a clear path from beginner to maintainer.'
 })
 </script>
 

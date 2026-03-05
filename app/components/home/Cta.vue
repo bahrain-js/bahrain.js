@@ -15,7 +15,7 @@ useScrollReveal(ctaRef, ['.cta-title', '.cta-desc', '.cta-btn'])
         Ready to build?
       </h2>
       <p class="cta-desc mt-4 text-lg text-muted max-w-xl mx-auto">
-        Join Bahrain's JavaScript community. Whether you're just learning or shipping production code, there's a place for you.
+        Whether you're writing your first function or shipping to production — there's a place for you here.
       </p>
       <div class="mt-8 flex flex-wrap justify-center gap-4">
         <UButton

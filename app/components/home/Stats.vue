@@ -21,9 +21,9 @@ const repoCount = computed(() => (githubRepos.value ?? []).length)
 
 const stats = computed(() => [
   { value: memberCount.value, label: 'Members', icon: 'i-lucide-users' },
-  { value: eventCount.value, label: 'Events Held', icon: 'i-lucide-calendar' },
-  { value: repoCount.value, label: 'Repos', icon: 'i-lucide-git-branch' },
-  { value: totalStars.value, label: 'GitHub Stars', icon: 'i-lucide-star' }
+  { value: eventCount.value, label: 'Events', icon: 'i-lucide-calendar' },
+  { value: repoCount.value, label: 'Open Source Repos', icon: 'i-lucide-git-branch' },
+  { value: totalStars.value, label: 'GitHub ★', icon: 'i-lucide-star' }
 ])
 
 const displayStats = ref([0, 0, 0, 0])

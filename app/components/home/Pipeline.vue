@@ -1,10 +1,10 @@
 <script setup lang="ts">
 const pipeline = [
-  { icon: 'i-lucide-lightbulb', title: 'Idea', description: 'Surface at meetups or chat' },
-  { icon: 'i-lucide-hammer', title: 'Build', description: 'Hands-on coding session' },
+  { icon: 'i-lucide-lightbulb', title: 'Idea', description: 'Pitched at a meetup or on Discord' },
+  { icon: 'i-lucide-hammer', title: 'Build', description: 'Built at a builder session' },
   { icon: 'i-lucide-flask-conical', title: 'Prototype', description: 'Working proof of concept' },
-  { icon: 'i-lucide-git-branch', title: 'Repo', description: 'Under bahrain-js org' },
-  { icon: 'i-lucide-package', title: 'Publish', description: 'Ship to npm' }
+  { icon: 'i-lucide-git-branch', title: 'Repo', description: 'Published under bahrain-js on GitHub' },
+  { icon: 'i-lucide-package', title: 'Publish', description: 'Live on npm as @bahrain.js/*' }
 ]
 
 const pipelineRef = ref<HTMLElement>()
@@ -22,7 +22,7 @@ useScrollReveal(pipelineRef, ['.section-header', '.pipeline-step', '.pipeline-ar
           From idea to npm package
         </h2>
         <p class="mt-4 text-lg text-muted max-w-2xl mx-auto">
-          Bahrain.js isn't just events. It's a factory for open source output.
+          Bahrain.js isn't just meetups — it's a launchpad for open source.
         </p>
       </div>
 

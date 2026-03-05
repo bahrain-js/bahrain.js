@@ -4,7 +4,7 @@ const client = useNeonClient()
 
 useSeoMeta({
   title: 'Opportunities — Bahrain.js',
-  description: 'JavaScript and web development opportunities in Bahrain. Jobs, freelance gigs, and open source contributions.'
+  description: 'JavaScript jobs, open source contributions, and startup ideas in Bahrain. Find your next opportunity with Bahrain.js.'
 })
 
 // ─── Fetch from DB ───
@@ -156,7 +156,7 @@ const difficultyColor: Record<string, string> = {
         Opportunities
       </h1>
       <p class="mt-4 text-lg text-zinc-500 dark:text-zinc-400 max-w-2xl mx-auto">
-        JavaScript and web development opportunities in Bahrain. Jobs, contributions, and ways to level up.
+        Jobs, open source contributions, and startup ideas — all from the Bahrain JS ecosystem.
       </p>
     </div>
 
@@ -182,7 +182,7 @@ const difficultyColor: Record<string, string> = {
           Contribute to Open Source
         </h2>
         <p class="text-zinc-500 dark:text-zinc-400 mb-6">
-          The best way to build your portfolio and skills. Real projects, real impact.
+          Build your portfolio with real projects. Real code, real impact.
         </p>
         <div
           v-if="ossOpportunities.length"
@@ -264,7 +264,7 @@ const difficultyColor: Record<string, string> = {
               name="i-lucide-lightbulb"
               class="text-orange-500"
             />
-            Startup Ideas Looking for Founders
+            Startup Ideas Looking for Builders
           </h2>
           <UButton
             v-if="isAuthenticated"
@@ -284,7 +284,7 @@ const difficultyColor: Record<string, string> = {
           />
         </div>
         <p class="text-zinc-500 dark:text-zinc-400 mb-6">
-          Bahrain-focused startup ideas that need technical co-founders or founding team members.
+          Bahrain-focused ideas that need technical co-founders or founding engineers.
         </p>
         <div
           v-if="startupIdeas.length"
@@ -657,10 +657,10 @@ const difficultyColor: Record<string, string> = {
       <!-- CTA -->
       <section class="text-center py-12 rounded-2xl bg-zinc-50 dark:bg-zinc-800/30">
         <h2 class="text-2xl font-bold mb-2">
-          Want to level up?
+          Ready to level up?
         </h2>
         <p class="text-zinc-500 dark:text-zinc-400 mb-6 max-w-md mx-auto">
-          Join Bahrain.js events, contribute to projects, and connect with developers who are building.
+          Attend events, contribute to projects, and connect with builders who are shipping.
         </p>
         <div class="flex justify-center gap-3">
           <UButton

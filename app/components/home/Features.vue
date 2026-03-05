@@ -1,9 +1,9 @@
 <script setup lang="ts">
 const features = [
-  { icon: 'i-lucide-radio', title: 'Signal Hub', description: 'One place for events, projects, jobs, and people in Bahrain\'s JS scene.' },
-  { icon: 'i-lucide-hammer', title: 'Builder Community', description: 'Ship code, present work, and collaborate on open source under @bahrain.js.' },
-  { icon: 'i-lucide-package', title: 'Open Source Pipeline', description: 'Ideas become npm packages at builder sessions. Tangible output.' },
-  { icon: 'i-lucide-graduation-cap', title: 'Clear On-Ramp', description: 'From "just learned JS" to maintainer. The path is transparent.' }
+  { icon: 'i-lucide-radio', title: 'Signal Hub', description: 'Events, jobs, projects, and people — one feed for Bahrain\'s JS scene.' },
+  { icon: 'i-lucide-hammer', title: 'Build Together', description: 'Collaborate on open source. Ship code under the @bahrain.js org.' },
+  { icon: 'i-lucide-package', title: 'Idea → npm', description: 'Every idea has a clear path to becoming a published package.' },
+  { icon: 'i-lucide-graduation-cap', title: 'Level Up', description: 'A transparent path from your first line of JS to project maintainer.' }
 ]
 
 const featuresRef = ref<HTMLElement>()
@@ -21,7 +21,7 @@ useScrollReveal(featuresRef, ['.section-header', '.feature-card'])
           More than meetups
         </h2>
         <p class="mt-4 text-lg text-muted max-w-2xl mx-auto">
-          A signal hub, a builder community, and an on-ramp for JavaScript developers at every level.
+          Everything Bahrain's JS developers need — in one place.
         </p>
       </div>
       <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">

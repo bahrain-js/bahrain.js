@@ -49,10 +49,10 @@ async function subscribe() {
       class="size-10 text-primary mx-auto mb-4"
     />
     <h3 class="text-2xl font-bold">
-      Stay in the loop
+      Don't miss a thing
     </h3>
     <p class="mt-2 text-zinc-500 dark:text-zinc-400 max-w-md mx-auto">
-      Get notified about upcoming events, new projects, and community updates. No spam, ever.
+      Events, new projects, and community highlights — delivered to your inbox. No spam.
     </p>
 
     <!-- Success state -->

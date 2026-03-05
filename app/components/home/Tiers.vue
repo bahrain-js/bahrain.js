@@ -1,9 +1,9 @@
 <script setup lang="ts">
 const tiers = [
-  { icon: 'i-lucide-user', title: 'Member', description: 'Attending events and learning', how: 'Sign up and join the chat' },
-  { icon: 'i-lucide-git-pull-request', title: 'Contributor', description: 'Merged PRs, talks, or posts', how: 'Submit a PR or give a talk' },
-  { icon: 'i-lucide-shield', title: 'Maintainer', description: 'Stewards specific projects', how: 'Consistent contributions' },
-  { icon: 'i-lucide-crown', title: 'Core Team', description: 'Stewards of the org', how: 'Sustained community impact' }
+  { icon: 'i-lucide-user', title: 'Member', description: 'Show up, learn, and connect', how: 'Create your profile' },
+  { icon: 'i-lucide-git-pull-request', title: 'Contributor', description: 'Ship a PR, give a talk, or write a post', how: 'Your first merged contribution' },
+  { icon: 'i-lucide-shield', title: 'Maintainer', description: 'Own and steward a @bahrain.js project', how: 'Sustained contributions over time' },
+  { icon: 'i-lucide-crown', title: 'Core Team', description: 'Shape the direction of the community', how: 'Recognized community leadership' }
 ]
 
 const tiersRef = ref<HTMLElement>()
@@ -18,10 +18,10 @@ useScrollReveal(tiersRef, ['.section-header', '.tier-card'])
     <div class="mx-auto max-w-5xl px-6">
       <div class="section-header text-center mb-12">
         <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">
-          Level up
+          Your path forward
         </h2>
         <p class="mt-4 text-lg text-muted max-w-2xl mx-auto">
-          Transparent progression from attendee to maintainer.
+          A clear, transparent progression — no gatekeeping.
         </p>
       </div>
       <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">

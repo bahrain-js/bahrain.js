@@ -11,7 +11,7 @@
       <div class="flex items-center gap-3">
         <AppLogo />
         <p class="text-sm text-muted">
-          The JavaScript community in Bahrain
+          Bahrain's JavaScript community — building in the open.
         </p>
       </div>
     </template>

@@ -8,7 +8,7 @@ const emit = defineEmits<{
 const heroRef = ref<HTMLElement>()
 const sliderList = ref<HTMLElement>()
 
-const words = ['Events', 'Meetups', 'Workshops', 'Demos', 'Projects', 'Startups', 'Tools', 'Jobs', 'Careers','Opportunities', 'Connections',  'Community']
+const words = ['Events', 'Meetups', 'Projects', 'Careers', 'Open Source', 'Startups', 'Community']
 
 onMounted(async () => {
   await nextTick()
@@ -71,7 +71,8 @@ onMounted(async () => {
       </h1>
 
       <p class="hero-reveal mt-6 text-lg sm:text-xl text-zinc-500 dark:text-zinc-400 max-w-2xl mx-auto">
-        Find events, ship open source projects under @bahrain.js, and grow from beginner to maintainer.
+        Find your next event. Ship open source under @bahrain.js.
+        Go from first commit to maintainer.
       </p>
 
       <div class="mt-8 flex flex-wrap justify-center gap-4">

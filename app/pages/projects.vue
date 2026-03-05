@@ -147,7 +147,7 @@ const filteredProjects = computed(() => {
 
 useSeoMeta({
   title: 'Projects — Bahrain.js',
-  description: 'Open source projects from the Bahrain.js community. Explore, contribute, or start your own.'
+  description: 'Open source JavaScript projects from the Bahrain.js community. Contribute to existing repos or start your own under the @bahrain.js org.'
 })
 </script>
 
@@ -158,14 +158,14 @@ useSeoMeta({
         Projects
       </h1>
       <p class="mt-4 text-lg text-zinc-500 dark:text-zinc-400 max-w-2xl mx-auto">
-        Open source projects from the Bahrain.js community. Explore, contribute, or start your own.
+        Everything we build lives in the open. Explore, contribute, or pitch your own idea.
       </p>
     </div>
 
     <!-- Open Source Pipeline -->
     <section class="mb-16">
       <h2 class="text-xl font-bold mb-6 text-center">
-        The Pipeline
+        How ideas become packages
       </h2>
       <div class="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-0">
         <div
@@ -301,7 +301,7 @@ useSeoMeta({
         Start Here
       </h2>
       <p class="text-zinc-500 dark:text-zinc-400 mb-6">
-        New to open source? These projects are beginner-friendly with clear contributing guides.
+        New to open source? These repos have clear contributing guides and welcoming maintainers.
       </p>
       <div class="grid sm:grid-cols-2 gap-4">
         <UCard
@@ -494,10 +494,10 @@ useSeoMeta({
     <!-- CTA -->
     <section class="mt-16 text-center py-12 rounded-2xl bg-zinc-50 dark:bg-zinc-800/30">
       <h2 class="text-2xl font-bold mb-2">
-        Got a project idea?
+        Got something to build?
       </h2>
       <p class="text-zinc-500 dark:text-zinc-400 mb-6 max-w-md mx-auto">
-        Pitch it at a meetup or builder session. We'll help you ship it under the @bahrain.js namespace.
+        Bring your idea to a meetup or builder session — we'll help you ship it under @bahrain.js.
       </p>
       <div class="flex justify-center gap-3">
         <UButton

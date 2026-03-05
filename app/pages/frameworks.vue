@@ -85,7 +85,7 @@ onMounted(() => {
 
 useSeoMeta({
   title: 'Frameworks — Bahrain.js',
-  description: 'Explore JavaScript frameworks and see what the Bahrain.js community loves building with.'
+  description: 'Explore JavaScript frameworks and tools — and see what Bahrain\'s developer community builds with. Vue, React, Node.js, and more.'
 })
 </script>
 
@@ -97,7 +97,7 @@ useSeoMeta({
         Frameworks
       </h1>
       <p class="mt-4 text-lg text-zinc-500 dark:text-zinc-400 max-w-2xl mx-auto">
-        Explore the JavaScript ecosystem and discover what our community loves building with.
+        The JavaScript ecosystem through the lens of Bahrain's developer community.
       </p>
     </div>
 
@@ -114,7 +114,7 @@ useSeoMeta({
         Community Favorites
       </h2>
       <p class="text-sm text-zinc-500 dark:text-zinc-400">
-        Based on member profiles — add your favorites on your <NuxtLink
+        Ranked by member profiles — add yours on your <NuxtLink
           to="/profile"
           class="underline hover:text-white transition-colors"
         >profile page</NuxtLink>.
@@ -191,10 +191,10 @@ useSeoMeta({
     <!-- CTA -->
     <div class="text-center space-y-4 py-8">
       <h2 class="text-xl font-bold">
-        Which frameworks do you love?
+        What's your stack?
       </h2>
       <p class="text-zinc-500 dark:text-zinc-400">
-        Sign in and add your favorite frameworks to your profile.
+        Sign in, update your profile, and represent your favorite tools.
       </p>
       <div class="flex gap-3 justify-center">
         <UButton

@@ -100,7 +100,7 @@ const filteredPast = computed(() => past.value.filter(matchesFilters))
 
 useSeoMeta({
   title: 'Events — Bahrain.js',
-  description: 'Meetups, builder sessions, hackathons, and coffee & code — find your next Bahrain.js event.'
+  description: 'Upcoming JavaScript meetups, hackathons, and builder sessions in Bahrain. RSVP and join the Bahrain.js community.'
 })
 </script>
 
@@ -111,7 +111,7 @@ useSeoMeta({
         Events
       </h1>
       <p class="mt-4 text-lg text-zinc-500 dark:text-zinc-400 max-w-2xl mx-auto">
-        Meetups, builder sessions, hackathons, and coffee & code. Find your next Bahrain.js event.
+        Meetups, builder sessions, hackathons, and coffee & code — where Bahrain's JS community comes together.
       </p>
 
       <!-- Submit Event CTA -->
@@ -287,7 +287,7 @@ useSeoMeta({
           class="size-12 text-zinc-300 dark:text-zinc-600 mx-auto mb-4"
         />
         <p class="text-zinc-500 dark:text-zinc-400">
-          No upcoming events right now. Check back soon!
+          No events scheduled yet — but we're always planning the next one. Join Discord to stay in the know.
         </p>
       </section>
 

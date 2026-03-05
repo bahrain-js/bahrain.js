@@ -97,7 +97,7 @@ onMounted(() => {
 
 useSeoMeta({
   title: 'People — Bahrain.js',
-  description: 'Meet the Bahrain.js community — developers, maintainers, and contributors building the JavaScript ecosystem in Bahrain.'
+  description: 'Meet the Bahrain.js community — developers, maintainers, and builders shaping the JavaScript ecosystem in Bahrain.'
 })
 </script>
 
@@ -110,7 +110,7 @@ useSeoMeta({
           People
         </h1>
         <p class="mt-4 text-lg text-zinc-500 dark:text-zinc-400">
-          The developers building Bahrain's JavaScript community.
+          The developers, maintainers, and builders behind Bahrain.js.
         </p>
       </div>
 
@@ -459,10 +459,10 @@ useSeoMeta({
 
           <div class="relative">
             <h2 class="text-2xl font-bold">
-              Join the Community
+              Join the roster
             </h2>
             <p class="mt-2 text-zinc-500 dark:text-zinc-400 max-w-md mx-auto">
-              Sign in with GitHub, create your profile, and connect with JavaScript developers in Bahrain.
+              Sign in with GitHub, create your developer profile, and connect with Bahrain's JS community.
             </p>
 
             <div class="mt-6 flex items-center justify-center gap-3">
