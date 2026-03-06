@@ -74,7 +74,7 @@
           Blog
         </NuxtLink>
       </div> -->
-    <UNavigationMenu :items="navItems" />
+    <UNavigationMenu :items="navItems"  />
     <!-- </template> -->
 
     <template #right>
@@ -115,10 +115,10 @@
 import type { NavigationMenuItem } from '@nuxt/ui'
 
 const navItems: NavigationMenuItem[] = [
-  { label: 'Events', icon: 'i-lucide-calendar', to: '/events' },
-  { label: 'Projects', icon: 'i-lucide-code-2', to: '/projects' },
-  { label: 'Frameworks', icon: 'i-lucide-blocks', to: '/frameworks' },
-  { label: 'People', icon: 'i-lucide-users', to: '/people' },
-  { label: 'Opportunities', icon: 'i-lucide-briefcase', to: '/opportunities' }
+  { label: 'Events', to: '/events' },
+  { label: 'Projects', to: '/projects' },
+  { label: 'Frameworks', to: '/frameworks' },
+  { label: 'People', to: '/people' },
+  { label: 'Opportunities', to: '/opportunities' }
 ]
 </script>
