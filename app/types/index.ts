@@ -51,6 +51,7 @@ export interface CommunityEvent {
   id: string
   title: string
   description: string
+  details: string | null
   date: string
   location: string | null
   type: EventType
@@ -63,6 +64,17 @@ export interface CommunityEvent {
   updated_at: string
   /** Populated by admin data enrichment */
   submitter?: Pick<Member, 'user_id' | 'display_name' | 'github_username'> | null
+}
+
+export interface EventRsvp {
+  id: string
+  event_id: number
+  user_id: string
+  created_at: string
+}
+
+export interface EventRsvpWithMember extends EventRsvp {
+  member: Pick<Member, 'user_id' | 'display_name' | 'avatar_url' | 'github_username'> | null
 }
 
 // ─── Projects ────────────────────────────────────────────────────
@@ -147,19 +159,19 @@ export const ROLE_OPTIONS: { label: string, value: MemberRole }[] = [
   { label: 'Member', value: 'member' },
   { label: 'Contributor', value: 'contributor' },
   { label: 'Maintainer', value: 'maintainer' },
-  { label: 'Core Team', value: 'core' },
+  { label: 'Core Team', value: 'core' }
 ]
 
 export const ROLE_BADGE_COLOR: Record<MemberRole, 'primary' | 'success' | 'info' | 'neutral'> = {
   core: 'primary',
   maintainer: 'success',
   contributor: 'info',
-  member: 'neutral',
+  member: 'neutral'
 }
 
 export const STATUS_BADGE_COLOR: Record<string, 'warning' | 'success' | 'error' | 'neutral'> = {
   pending: 'warning',
   approved: 'success',
   rejected: 'error',
-  draft: 'neutral',
+  draft: 'neutral'
 }

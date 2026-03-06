@@ -4,7 +4,8 @@ import type { Member, CommunityEvent } from '~/types'
 defineProps<{
   members: Member[]
   pendingEvents: CommunityEvent[]
-}>()</script>
+}>()
+</script>
 
 <template>
   <div class="grid grid-cols-2 md:grid-cols-4 gap-4">

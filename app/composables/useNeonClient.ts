@@ -27,4 +27,3 @@ export function useNeonClient() {
 
   return client
 }
-

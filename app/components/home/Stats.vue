@@ -19,7 +19,7 @@ async function fetchStats() {
   }
 }
 
-const totalStars = computed(() => (githubRepos.value ?? []).reduce((sum: number, r: any) => sum + (r.stars || 0), 0))
+const totalStars = computed(() => (githubRepos.value ?? []).reduce((sum: number, r: { stars?: number }) => sum + (r.stars || 0), 0))
 const repoCount = computed(() => (githubRepos.value ?? []).length)
 
 const stats = computed(() => [

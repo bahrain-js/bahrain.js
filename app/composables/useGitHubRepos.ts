@@ -16,9 +16,9 @@ export function useGitHubRepos() {
         {
           headers: {
             'Accept': 'application/vnd.github.v3+json',
-            'User-Agent': 'bahrainjs-website',
-          },
-        },
+            'User-Agent': 'bahrainjs-website'
+          }
+        }
       )
 
       return repos
@@ -34,7 +34,7 @@ export function useGitHubRepos() {
           homepage: repo.homepage as string | null,
           topics: (repo.topics as string[]) || [],
           updatedAt: repo.updated_at as string,
-          openIssues: repo.open_issues_count as number,
+          openIssues: repo.open_issues_count as number
         }))
     } catch (error: unknown) {
       console.error('[useGitHubRepos] GitHub API error:', (error as Error).message)

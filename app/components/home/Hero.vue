@@ -62,8 +62,15 @@ onMounted(async () => {
           class="hero-reveal inline-block mr-[0.3em]"
         >{{ word }}</span>
         <span class="hero-reveal inline-block overflow-hidden align-bottom h-[1.2em] mt-4">
-          <span ref="sliderList" class="flex flex-col">
-            <span v-for="word in words" :key="word" class="v-slide text-center inline-block text-primary py-2 text-shadow-[0_0_12px_var(--ui-primary)]">
+          <span
+            ref="sliderList"
+            class="flex flex-col"
+          >
+            <span
+              v-for="word in words"
+              :key="word"
+              class="v-slide text-center inline-block text-primary py-2 text-shadow-[0_0_12px_var(--ui-primary)]"
+            >
               {{ word }}
             </span>
           </span>

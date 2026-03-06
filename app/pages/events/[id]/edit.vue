@@ -16,8 +16,8 @@ const form = ref({
   title: '',
   description: '',
   details: '',
-  date: null as any,
-  time: new Time(18, 0) as any,
+  date: null as CalendarDate | null,
+  time: new Time(18, 0),
   format: 'in-person',
   type: 'meetup',
   location: '',
@@ -89,8 +89,8 @@ async function fetchEvent() {
       speakers: Array.isArray(event.speakers) ? event.speakers.join(', ') : '',
       status: event.status
     }
-  } catch (err: any) {
-    if (err.statusCode === 404) throw err
+  } catch (err: unknown) {
+    if (err instanceof Error && 'statusCode' in err && (err as { statusCode: number }).statusCode === 404) throw err
     console.error('Failed to fetch event:', err)
   } finally {
     loading.value = false

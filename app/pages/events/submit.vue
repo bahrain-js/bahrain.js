@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { CalendarDate } from '@internationalized/date'
 import { Time } from '@internationalized/date'
 
 const { user, isAuthenticated, loading: authLoading, signInWithGitHub } = useAuth()
@@ -11,8 +12,8 @@ const form = ref({
   title: '',
   description: '',
   details: '',
-  date: null as any,
-  time: new Time(18, 0) as any,
+  date: null as CalendarDate | null,
+  time: new Time(18, 0),
   format: 'in-person',
   type: 'meetup',
   location: '',

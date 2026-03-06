@@ -1,10 +1,12 @@
 <script setup lang="ts">
+import type { CommunityEvent } from '~/types'
+
 const { isAuthenticated, signInWithGitHub } = useAuth()
 const client = useNeonClient()
 
 const loading = ref(true)
-const upcoming = ref<any[]>([])
-const past = ref<any[]>([])
+const upcoming = ref<CommunityEvent[]>([])
+const past = ref<CommunityEvent[]>([])
 
 const eventTypeConfig: Record<string, { icon: string, label: string, color: string }> = {
   'meetup': { icon: 'i-lucide-mic', label: 'Meetup', color: 'text-yellow-500' },
@@ -65,7 +67,7 @@ async function fetchEvents() {
   }
 }
 
-function getRsvpCount(_event: any) {
+function getRsvpCount(_event: CommunityEvent) {
   return 0 // Will be fetched on detail page
 }
 
@@ -83,7 +85,7 @@ const typeOptions = [
   { label: 'Coffee & Code', value: 'coffee-and-code' }
 ]
 
-function matchesFilters(event: any) {
+function matchesFilters(event: CommunityEvent) {
   const q = searchQuery.value.toLowerCase()
   const matchesSearch = !q
     || event.title?.toLowerCase().includes(q)

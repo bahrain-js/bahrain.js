@@ -31,7 +31,6 @@ jobs:
 
       - run: npx nuxi generate
         env:
-          NUXT_APP_BASE_URL: /bahrain.js/
           NUXT_PUBLIC_NEON_AUTH_URL: ${{ secrets.NEON_AUTH_URL }}
           NUXT_PUBLIC_NEON_DATA_API_URL: ${{ secrets.NEON_DATA_API_URL }}
 

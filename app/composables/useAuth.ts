@@ -72,7 +72,7 @@ export function useAuth() {
         display_name: authUser.name || authUser.email?.split('@')[0] || 'New Member',
         github_username: ghUsername,
         avatar_url: authUser.image || '',
-        role: 'member',
+        role: 'member'
       }
 
       await client.from('members').insert(newMember)
@@ -85,7 +85,7 @@ export function useAuth() {
   async function signInWithGitHub() {
     await client.auth.signIn.social({
       provider: 'github',
-      callbackURL: window.location.href,
+      callbackURL: window.location.href
     })
   }
 
@@ -112,6 +112,6 @@ export function useAuth() {
     loading: readonly(loading),
     signInWithGitHub,
     signOut,
-    fetchSession,
+    fetchSession
   }
 }

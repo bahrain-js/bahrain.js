@@ -16,7 +16,7 @@ const roleBadgeLabel: Record<MemberRole, string> = {
   core: 'Core Team',
   maintainer: 'Maintainer',
   contributor: 'Contributor',
-  member: 'Member',
+  member: 'Member'
 }
 
 const skillColors = [

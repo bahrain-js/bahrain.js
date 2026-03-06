@@ -177,198 +177,118 @@ useSeoMeta({
     </div>
 
     <template v-else>
-    <!-- Featured Projects -->
-    <section
-      v-if="featuredProjects.length"
-      class="mb-16"
-    >
-      <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
-        <UIcon
-          name="i-lucide-star"
-          class="text-yellow-500"
-        />
-        Featured
-      </h2>
-      <div class="grid gap-6">
-        <UCard
-          v-for="project in featuredProjects"
-          :key="project.slug"
-          class="hover:ring-2 hover:ring-yellow-400/50 transition-all"
-        >
-          <div class="flex flex-col gap-4">
-            <div class="flex items-start justify-between gap-4">
-              <div class="flex-1">
-                <div class="flex items-center gap-2 mb-2">
-                  <span
-                    :class="stageConfig[project.stage]?.color"
-                    class="inline-flex items-center gap-1 text-xs font-medium"
+      <!-- Featured Projects -->
+      <section
+        v-if="featuredProjects.length"
+        class="mb-16"
+      >
+        <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+          <UIcon
+            name="i-lucide-star"
+            class="text-yellow-500"
+          />
+          Featured
+        </h2>
+        <div class="grid gap-6">
+          <UCard
+            v-for="project in featuredProjects"
+            :key="project.slug"
+            class="hover:ring-2 hover:ring-yellow-400/50 transition-all"
+          >
+            <div class="flex flex-col gap-4">
+              <div class="flex items-start justify-between gap-4">
+                <div class="flex-1">
+                  <div class="flex items-center gap-2 mb-2">
+                    <span
+                      :class="stageConfig[project.stage]?.color"
+                      class="inline-flex items-center gap-1 text-xs font-medium"
+                    >
+                      <UIcon
+                        :name="stageConfig[project.stage]?.icon"
+                        class="size-3.5"
+                      />
+                      {{ stageConfig[project.stage]?.label }}
+                    </span>
+                  </div>
+                  <a
+                    :href="project.url"
+                    target="_blank"
+                    class="group"
                   >
-                    <UIcon
-                      :name="stageConfig[project.stage]?.icon"
-                      class="size-3.5"
-                    />
-                    {{ stageConfig[project.stage]?.label }}
-                  </span>
+                    <h3 class="text-xl font-bold group-hover:text-yellow-500 transition-colors">
+                      {{ project.name }}
+                    </h3>
+                  </a>
+                  <p class="text-zinc-500 dark:text-zinc-400 mt-1">
+                    {{ project.description }}
+                  </p>
                 </div>
-                <a
-                  :href="project.url"
+                <div class="flex items-center gap-1 text-sm text-zinc-400 shrink-0">
+                  <UIcon
+                    name="i-lucide-star"
+                    class="size-4"
+                  />
+                  {{ project.stars }}
+                </div>
+              </div>
+
+              <!-- Tech stack -->
+              <div class="flex flex-wrap gap-1.5">
+                <span
+                  v-for="tech in project.stack"
+                  :key="tech"
+                  class="text-xs px-2 py-0.5 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400"
+                >
+                  {{ tech }}
+                </span>
+              </div>
+
+              <!-- Contributors -->
+              <div class="flex items-center justify-between">
+                <div class="flex -space-x-2">
+                  <img
+                    src="https://github.com/bahrain-js.png?size=64"
+                    alt="bahrain-js"
+                    class="size-7 rounded-full ring-2 ring-white dark:ring-zinc-900"
+                  >
+                </div>
+                <UButton
+                  :to="project.url"
                   target="_blank"
-                  class="group"
-                >
-                  <h3 class="text-xl font-bold group-hover:text-yellow-500 transition-colors">
-                    {{ project.name }}
-                  </h3>
-                </a>
-                <p class="text-zinc-500 dark:text-zinc-400 mt-1">
-                  {{ project.description }}
-                </p>
-              </div>
-              <div class="flex items-center gap-1 text-sm text-zinc-400 shrink-0">
-                <UIcon
-                  name="i-lucide-star"
-                  class="size-4"
+                  label="View on GitHub"
+                  icon="i-simple-icons-github"
+                  variant="outline"
+                  size="xs"
                 />
-                {{ project.stars }}
               </div>
             </div>
+          </UCard>
+        </div>
+      </section>
 
-            <!-- Tech stack -->
-            <div class="flex flex-wrap gap-1.5">
-              <span
-                v-for="tech in project.stack"
-                :key="tech"
-                class="text-xs px-2 py-0.5 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400"
-              >
-                {{ tech }}
-              </span>
-            </div>
-
-            <!-- Contributors -->
-            <div class="flex items-center justify-between">
-              <div class="flex -space-x-2">
-                <img
-                  src="https://github.com/bahrain-js.png?size=64"
-                  alt="bahrain-js"
-                  class="size-7 rounded-full ring-2 ring-white dark:ring-zinc-900"
-                >
-              </div>
-              <UButton
-                :to="project.url"
-                target="_blank"
-                label="View on GitHub"
-                icon="i-simple-icons-github"
-                variant="outline"
-                size="xs"
-              />
-            </div>
-          </div>
-        </UCard>
-      </div>
-    </section>
-
-    <!-- Start Here -->
-    <section
-      v-if="startHereProjects.length"
-      class="mb-16"
-    >
-      <h2 class="text-2xl font-bold mb-2 flex items-center gap-2">
-        <UIcon
-          name="i-lucide-rocket"
-          class="text-green-500"
-        />
-        Start Here
-      </h2>
-      <p class="text-zinc-500 dark:text-zinc-400 mb-6">
-        New to open source? These repos have clear contributing guides and welcoming maintainers.
-      </p>
-      <div class="grid sm:grid-cols-2 gap-4">
-        <UCard
-          v-for="project in startHereProjects"
-          :key="project.slug"
-          class="hover:ring-2 hover:ring-green-400/30 transition-all"
-        >
-          <div class="flex flex-col gap-3">
-            <div class="flex items-center gap-2">
-              <span
-                :class="stageConfig[project.stage]?.color"
-                class="inline-flex items-center gap-1 text-xs font-medium"
-              >
-                <UIcon
-                  :name="stageConfig[project.stage]?.icon"
-                  class="size-3"
-                />
-                {{ stageConfig[project.stage]?.label }}
-              </span>
-            </div>
-            <a
-              :href="project.url"
-              target="_blank"
-              class="group"
-            >
-              <h3 class="font-semibold group-hover:text-yellow-500 transition-colors">
-                {{ project.name }}
-              </h3>
-            </a>
-            <p class="text-sm text-zinc-500 dark:text-zinc-400">
-              {{ project.description }}
-            </p>
-            <div class="flex flex-wrap gap-1.5">
-              <span
-                v-for="tech in project.stack"
-                :key="tech"
-                class="text-xs px-2 py-0.5 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400"
-              >
-                {{ tech }}
-              </span>
-            </div>
-            <UButton
-              :to="project.url"
-              target="_blank"
-              label="Contribute"
-              icon="i-lucide-git-pull-request"
-              variant="soft"
-              size="xs"
-              class="self-start"
-            />
-          </div>
-        </UCard>
-      </div>
-    </section>
-
-    <!-- All Projects -->
-    <section>
-      <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
-        <UIcon
-          name="i-lucide-folder-git-2"
-          class="text-zinc-400"
-        />
-        All Projects
-      </h2>
-
-      <!-- Search & Filter -->
-      <div class="flex flex-col sm:flex-row gap-3 mb-6">
-        <UInput
-          v-model="searchQuery"
-          icon="i-lucide-search"
-          placeholder="Search projects..."
-          class="flex-1"
-        />
-        <USelect
-          v-model="selectedStage"
-          :items="stageOptions"
-          class="w-full sm:w-48"
-          :ui="{ content: 'min-w-fit' }"
-        />
-      </div>
-
-      <div class="grid gap-4">
-        <UCard
-          v-for="project in filteredProjects"
-          :key="project.slug"
-        >
-          <div class="flex items-center gap-4">
-            <div class="flex-1 min-w-0">
-              <div class="flex items-center gap-2 mb-0.5">
+      <!-- Start Here -->
+      <section
+        v-if="startHereProjects.length"
+        class="mb-16"
+      >
+        <h2 class="text-2xl font-bold mb-2 flex items-center gap-2">
+          <UIcon
+            name="i-lucide-rocket"
+            class="text-green-500"
+          />
+          Start Here
+        </h2>
+        <p class="text-zinc-500 dark:text-zinc-400 mb-6">
+          New to open source? These repos have clear contributing guides and welcoming maintainers.
+        </p>
+        <div class="grid sm:grid-cols-2 gap-4">
+          <UCard
+            v-for="project in startHereProjects"
+            :key="project.slug"
+            class="hover:ring-2 hover:ring-green-400/30 transition-all"
+          >
+            <div class="flex flex-col gap-3">
+              <div class="flex items-center gap-2">
                 <span
                   :class="stageConfig[project.stage]?.color"
                   class="inline-flex items-center gap-1 text-xs font-medium"
@@ -379,118 +299,198 @@ useSeoMeta({
                   />
                   {{ stageConfig[project.stage]?.label }}
                 </span>
-                <span
-                  v-if="project.npm_package"
-                  class="text-xs text-zinc-400"
-                >
-                  · {{ project.npm_package }}
-                </span>
               </div>
               <a
                 :href="project.url"
                 target="_blank"
                 class="group"
               >
-                <h3 class="font-medium group-hover:text-yellow-500 transition-colors">
+                <h3 class="font-semibold group-hover:text-yellow-500 transition-colors">
                   {{ project.name }}
                 </h3>
               </a>
-              <p class="text-sm text-zinc-500 dark:text-zinc-400 mt-0.5 truncate">
+              <p class="text-sm text-zinc-500 dark:text-zinc-400">
                 {{ project.description }}
               </p>
-            </div>
-            <div class="flex items-center gap-3 shrink-0">
-              <div class="flex -space-x-1.5">
-                <img
-                  src="https://github.com/bahrain-js.png?size=64"
-                  alt="bahrain-js"
-                  class="size-6 rounded-full ring-2 ring-white dark:ring-zinc-900"
-                >
-              </div>
-              <span class="flex items-center gap-1 text-sm text-zinc-400">
-                <UIcon
-                  name="i-lucide-star"
-                  class="size-3.5"
-                />
-                {{ project.stars }}
-              </span>
-            </div>
-          </div>
-        </UCard>
-
-        <!-- Additional GitHub repos not in static list -->
-        <UCard
-          v-for="repo in additionalRepos"
-          :key="repo.name"
-        >
-          <div class="flex items-center gap-4">
-            <div class="flex-1 min-w-0">
-              <div class="flex items-center gap-2 mb-0.5">
-                <span class="inline-flex items-center gap-1 text-xs font-medium text-green-500">
-                  <UIcon
-                    name="i-lucide-git-branch"
-                    class="size-3"
-                  />
-                  Active Repo
-                </span>
+              <div class="flex flex-wrap gap-1.5">
                 <span
-                  v-if="repo.language"
-                  class="text-xs text-zinc-400"
+                  v-for="tech in project.stack"
+                  :key="tech"
+                  class="text-xs px-2 py-0.5 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400"
                 >
-                  · {{ repo.language }}
+                  {{ tech }}
                 </span>
               </div>
-              <a
-                :href="repo.url"
+              <UButton
+                :to="project.url"
                 target="_blank"
-                class="group"
-              >
-                <h3 class="font-medium group-hover:text-yellow-500 transition-colors">
-                  {{ repo.name }}
-                </h3>
-              </a>
-              <p class="text-sm text-zinc-500 dark:text-zinc-400 mt-0.5 truncate">
-                {{ repo.description }}
-              </p>
+                label="Contribute"
+                icon="i-lucide-git-pull-request"
+                variant="soft"
+                size="xs"
+                class="self-start"
+              />
             </div>
-            <div class="flex items-center gap-3 shrink-0">
-              <span class="flex items-center gap-1 text-sm text-zinc-400">
-                <UIcon
-                  name="i-lucide-star"
-                  class="size-3.5"
-                />
-                {{ repo.stars }}
-              </span>
-            </div>
-          </div>
-        </UCard>
-      </div>
-    </section>
+          </UCard>
+        </div>
+      </section>
 
-    <!-- CTA -->
-    <section class="mt-16 text-center py-12 rounded-2xl bg-zinc-50 dark:bg-zinc-800/30">
-      <h2 class="text-2xl font-bold mb-2">
-        Got something to build?
-      </h2>
-      <p class="text-zinc-500 dark:text-zinc-400 mb-6 max-w-md mx-auto">
-        Bring your idea to a meetup or builder session — we'll help you ship it under @bahrain.js.
-      </p>
-      <div class="flex justify-center gap-3">
-        <UButton
-          to="/events"
-          label="Upcoming events"
-          icon="i-lucide-calendar"
-          size="lg"
-        />
-        <UButton
-          to="/blog/2026-03-10-how-to-contribute"
-          label="How to contribute"
-          icon="i-lucide-book-open"
-          variant="outline"
-          size="lg"
-        />
-      </div>
-    </section>
+      <!-- All Projects -->
+      <section>
+        <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+          <UIcon
+            name="i-lucide-folder-git-2"
+            class="text-zinc-400"
+          />
+          All Projects
+        </h2>
+
+        <!-- Search & Filter -->
+        <div class="flex flex-col sm:flex-row gap-3 mb-6">
+          <UInput
+            v-model="searchQuery"
+            icon="i-lucide-search"
+            placeholder="Search projects..."
+            class="flex-1"
+          />
+          <USelect
+            v-model="selectedStage"
+            :items="stageOptions"
+            class="w-full sm:w-48"
+            :ui="{ content: 'min-w-fit' }"
+          />
+        </div>
+
+        <div class="grid gap-4">
+          <UCard
+            v-for="project in filteredProjects"
+            :key="project.slug"
+          >
+            <div class="flex items-center gap-4">
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2 mb-0.5">
+                  <span
+                    :class="stageConfig[project.stage]?.color"
+                    class="inline-flex items-center gap-1 text-xs font-medium"
+                  >
+                    <UIcon
+                      :name="stageConfig[project.stage]?.icon"
+                      class="size-3"
+                    />
+                    {{ stageConfig[project.stage]?.label }}
+                  </span>
+                  <span
+                    v-if="project.npm_package"
+                    class="text-xs text-zinc-400"
+                  >
+                    · {{ project.npm_package }}
+                  </span>
+                </div>
+                <a
+                  :href="project.url"
+                  target="_blank"
+                  class="group"
+                >
+                  <h3 class="font-medium group-hover:text-yellow-500 transition-colors">
+                    {{ project.name }}
+                  </h3>
+                </a>
+                <p class="text-sm text-zinc-500 dark:text-zinc-400 mt-0.5 truncate">
+                  {{ project.description }}
+                </p>
+              </div>
+              <div class="flex items-center gap-3 shrink-0">
+                <div class="flex -space-x-1.5">
+                  <img
+                    src="https://github.com/bahrain-js.png?size=64"
+                    alt="bahrain-js"
+                    class="size-6 rounded-full ring-2 ring-white dark:ring-zinc-900"
+                  >
+                </div>
+                <span class="flex items-center gap-1 text-sm text-zinc-400">
+                  <UIcon
+                    name="i-lucide-star"
+                    class="size-3.5"
+                  />
+                  {{ project.stars }}
+                </span>
+              </div>
+            </div>
+          </UCard>
+
+          <!-- Additional GitHub repos not in static list -->
+          <UCard
+            v-for="repo in additionalRepos"
+            :key="repo.name"
+          >
+            <div class="flex items-center gap-4">
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2 mb-0.5">
+                  <span class="inline-flex items-center gap-1 text-xs font-medium text-green-500">
+                    <UIcon
+                      name="i-lucide-git-branch"
+                      class="size-3"
+                    />
+                    Active Repo
+                  </span>
+                  <span
+                    v-if="repo.language"
+                    class="text-xs text-zinc-400"
+                  >
+                    · {{ repo.language }}
+                  </span>
+                </div>
+                <a
+                  :href="repo.url"
+                  target="_blank"
+                  class="group"
+                >
+                  <h3 class="font-medium group-hover:text-yellow-500 transition-colors">
+                    {{ repo.name }}
+                  </h3>
+                </a>
+                <p class="text-sm text-zinc-500 dark:text-zinc-400 mt-0.5 truncate">
+                  {{ repo.description }}
+                </p>
+              </div>
+              <div class="flex items-center gap-3 shrink-0">
+                <span class="flex items-center gap-1 text-sm text-zinc-400">
+                  <UIcon
+                    name="i-lucide-star"
+                    class="size-3.5"
+                  />
+                  {{ repo.stars }}
+                </span>
+              </div>
+            </div>
+          </UCard>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section class="mt-16 text-center py-12 rounded-2xl bg-zinc-50 dark:bg-zinc-800/30">
+        <h2 class="text-2xl font-bold mb-2">
+          Got something to build?
+        </h2>
+        <p class="text-zinc-500 dark:text-zinc-400 mb-6 max-w-md mx-auto">
+          Bring your idea to a meetup or builder session — we'll help you ship it under @bahrain.js.
+        </p>
+        <div class="flex justify-center gap-3">
+          <UButton
+            to="/events"
+            label="Upcoming events"
+            icon="i-lucide-calendar"
+            size="lg"
+          />
+          <UButton
+            to="/blog/2026-03-10-how-to-contribute"
+            label="How to contribute"
+            icon="i-lucide-book-open"
+            variant="outline"
+            size="lg"
+          />
+        </div>
+      </section>
     </template>
   </UContainer>
 </template>

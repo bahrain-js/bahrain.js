@@ -166,7 +166,7 @@ async function saveProfile() {
     setTimeout(() => {
       successMessage.value = ''
     }, 3000)
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error('Failed to save profile:', err)
     alert('Failed to save profile. Please try again.')
   } finally {
@@ -295,7 +295,11 @@ useSeoMeta({
           </UFormField>
 
           <!-- Bio -->
-          <UFormField label="Bio" name="bio" class="w-full">
+          <UFormField
+            label="Bio"
+            name="bio"
+            class="w-full"
+          >
             <UTextarea
               v-model="form.bio"
               placeholder="Tell the community about yourself..."
@@ -305,7 +309,10 @@ useSeoMeta({
           </UFormField>
 
           <!-- Skills -->
-          <UFormField label="Skills" name="skills">
+          <UFormField
+            label="Skills"
+            name="skills"
+          >
             <div class="space-y-2">
               <div class="flex gap-2">
                 <UInput

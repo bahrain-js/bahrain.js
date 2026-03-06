@@ -1,12 +1,14 @@
 <script setup lang="ts">
+import type { CommunityEvent, EventRsvpWithMember, Member } from '~/types'
+
 const route = useRoute()
 const { user, isAuthenticated, signInWithGitHub } = useAuth()
 const { isAdmin } = useAdmin()
 const client = useNeonClient()
 
 const eventId = route.params.id as string
-const event = ref<any>(null)
-const rsvps = ref<any[]>([])
+const event = ref<CommunityEvent | null>(null)
+const rsvps = ref<EventRsvpWithMember[]>([])
 const loading = ref(true)
 const rsvpLoading = ref(false)
 
@@ -72,22 +74,23 @@ async function fetchEvent() {
 
     if (rsvpData?.length) {
       // Lookup member info for each RSVP user
-      const userIds = rsvpData.map((r: any) => r.user_id)
+      const userIds = rsvpData.map((r: { user_id: string }) => r.user_id)
       const { data: memberData } = await client
         .from('members')
         .select('user_id, display_name, avatar_url, github_username')
         .in('user_id', userIds)
 
-      const memberMap = new Map((memberData || []).map((m: any) => [m.user_id, m]))
-      rsvps.value = rsvpData.map((r: any) => ({
+      type MemberPick = Pick<Member, 'user_id' | 'display_name' | 'avatar_url' | 'github_username'>
+      const memberMap = new Map((memberData || []).map((m: MemberPick) => [m.user_id, m]))
+      rsvps.value = rsvpData.map((r: { id: string, event_id: number, user_id: string, created_at: string }) => ({
         ...r,
         member: memberMap.get(r.user_id) || null
       }))
     } else {
       rsvps.value = []
     }
-  } catch (err: any) {
-    if (err.statusCode === 404) throw err
+  } catch (err: unknown) {
+    if (err instanceof Error && 'statusCode' in err && (err as { statusCode: number }).statusCode === 404) throw err
     console.error('Failed to fetch event:', err)
   } finally {
     loading.value = false

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { JobListing, OssOpportunity, StartupIdea } from '~/types'
+
 const { isAuthenticated, user, signInWithGitHub } = useAuth()
 const client = useNeonClient()
 
@@ -8,14 +10,15 @@ useSeoMeta({
 })
 
 // ─── Fetch from DB ───
-const jobs = ref<any[]>([])
-const ossOpportunities = ref<any[]>([])
-const startupIdeas = ref<any[]>([])
+const jobs = ref<JobListing[]>([])
+const ossOpportunities = ref<OssOpportunity[]>([])
+const startupIdeas = ref<StartupIdea[]>([])
 const loading = ref(true)
 
 async function fetchOpportunities() {
   try {
-    const fetches: Promise<any>[] = [
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const fetches: Promise<{ data: any[] | null, error: unknown }>[] = [
       client.from('opportunities').select('*').eq('status', 'approved').order('created_at', { ascending: false }),
       client.from('open_source_opportunities').select('*').eq('status', 'active').order('created_at', { ascending: false }),
       client.from('startup_ideas').select('*').eq('status', 'approved').order('created_at', { ascending: false })
@@ -32,12 +35,12 @@ async function fetchOpportunities() {
     // Merge approved ideas with user's own (dedup by id)
     const approvedIdeas = results[2].data || []
     const myIdeas = results[3]?.data || []
-    const ideasMap = new Map<string, any>()
+    const ideasMap = new Map<string, StartupIdea>()
     for (const idea of [...approvedIdeas, ...myIdeas]) {
       ideasMap.set(idea.id, idea)
     }
     startupIdeas.value = Array.from(ideasMap.values()).sort(
-      (a: any, b: any) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+      (a: StartupIdea, b: StartupIdea) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
     )
   } catch (err) {
     console.error('Failed to load opportunities:', err)
@@ -81,7 +84,7 @@ const editIdeaForm = ref({
   tags: [] as string[]
 })
 
-function openEditIdea(idea: any) {
+function openEditIdea(idea: StartupIdea) {
   editingIdeaId.value = idea.id
   editIdeaForm.value = {
     title: idea.title || '',
@@ -113,7 +116,7 @@ async function submitEditIdea() {
       .eq('id', editingIdeaId.value)
     if (error) throw error
     // Update local state
-    const idx = startupIdeas.value.findIndex((i: any) => i.id === editingIdeaId.value)
+    const idx = startupIdeas.value.findIndex((i: StartupIdea) => i.id === editingIdeaId.value)
     if (idx !== -1) {
       startupIdeas.value[idx] = {
         ...startupIdeas.value[idx],
@@ -165,7 +168,11 @@ const difficultyColor: Record<string, string> = {
       v-if="loading"
       class="space-y-12"
     >
-      <div v-for="section in 3" :key="section" class="space-y-4">
+      <div
+        v-for="section in 3"
+        :key="section"
+        class="space-y-4"
+      >
         <USkeleton class="h-7 w-56" />
         <USkeleton class="h-4 w-80" />
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">

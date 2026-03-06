@@ -1,7 +1,9 @@
 <script setup lang="ts">
+import type { CommunityEvent } from '~/types'
+
 const client = useNeonClient()
 
-const nextEvent = ref<any>(null)
+const nextEvent = ref<CommunityEvent | null>(null)
 const countdown = ref({ days: 0, hours: 0, minutes: 0, seconds: 0 })
 let countdownInterval: ReturnType<typeof setInterval>
 

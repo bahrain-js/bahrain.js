@@ -5,7 +5,7 @@ import type {
   JobListing,
   OssOpportunity,
   StartupIdea,
-  Project,
+  Project
 } from '~/types'
 import { ROLE_OPTIONS, ROLE_BADGE_COLOR, STATUS_BADGE_COLOR } from '~/types'
 
@@ -57,7 +57,7 @@ export function useAdminData() {
       if (data?.length) {
         // Enrich events with submitter info
         const submitterIds = [...new Set(
-          data.filter((e: CommunityEvent) => e.submitted_by).map((e: CommunityEvent) => e.submitted_by),
+          data.filter((e: CommunityEvent) => e.submitted_by).map((e: CommunityEvent) => e.submitted_by)
         )]
         let memberMap = new Map<string, Pick<Member, 'user_id' | 'display_name' | 'github_username'>>()
         if (submitterIds.length) {
@@ -69,7 +69,7 @@ export function useAdminData() {
         }
         pendingEvents.value = data.map((e: CommunityEvent) => ({
           ...e,
-          submitter: memberMap.get(e.submitted_by!) || null,
+          submitter: memberMap.get(e.submitted_by!) || null
         }))
       } else {
         pendingEvents.value = []
@@ -144,7 +144,7 @@ export function useAdminData() {
       fetchJobListings(),
       fetchOssListings(),
       fetchStartupIdeas(),
-      fetchProjectListings(),
+      fetchProjectListings()
     ])
     loading.value = false
   }
@@ -242,7 +242,7 @@ export function useAdminData() {
         salary_range: formData.salary_range || null,
         is_remote: formData.is_remote,
         tags: formData.tags || [],
-        status: 'approved',
+        status: 'approved'
       })
       if (error) throw error
       await fetchJobListings()
@@ -298,7 +298,7 @@ export function useAdminData() {
         issues_label: formData.issues_label || null,
         url: formData.url || null,
         tags: formData.tags || [],
-        status: 'active',
+        status: 'active'
       })
       if (error) throw error
       await fetchOssListings()
@@ -355,7 +355,7 @@ export function useAdminData() {
           difficulty: formData.difficulty,
           issues_label: formData.issues_label || null,
           url: formData.url || null,
-          tags: formData.tags || [],
+          tags: formData.tags || []
         })
         .eq('id', id)
       if (error) throw error
@@ -390,7 +390,7 @@ export function useAdminData() {
         sector: formData.sector || null,
         contact_url: formData.contact_url || null,
         tags: formData.tags || [],
-        status: 'approved',
+        status: 'approved'
       })
       if (error) throw error
       await fetchStartupIdeas()
@@ -452,7 +452,7 @@ export function useAdminData() {
         start_here: formData.start_here,
         npm_package: formData.npm_package || null,
         url: formData.url || null,
-        status: 'active',
+        status: 'active'
       })
       if (error) throw error
       await fetchProjectListings()
@@ -519,7 +519,7 @@ export function useAdminData() {
           start_here: formData.start_here,
           npm_package: formData.npm_package || null,
           url: formData.url || null,
-          updated_at: new Date().toISOString(),
+          updated_at: new Date().toISOString()
         })
         .eq('id', id)
       if (error) throw error
@@ -540,7 +540,7 @@ export function useAdminData() {
     return new Date(dateStr).toLocaleDateString('en-US', {
       month: 'short',
       day: 'numeric',
-      year: 'numeric',
+      year: 'numeric'
     })
   }
 
@@ -580,6 +580,6 @@ export function useAdminData() {
     deleteProject,
     updateProjectStatus,
     updateProject,
-    formatEventDate,
+    formatEventDate
   }
 }
