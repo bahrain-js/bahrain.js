@@ -2,10 +2,13 @@
 import type { NavigationMenuItem } from '@nuxt/ui'
 
 const communityLinks = [
-  { label: 'Discord', description: 'Chat with the community in real time', icon: 'i-simple-icons-discord', to: 'https://discord.gg/EZrDeaErBV', target: '_blank' },
   { label: 'GitHub', description: 'Explore our open-source repos', icon: 'i-simple-icons-github', to: 'https://github.com/bahrain-js', target: '_blank' },
-  { label: 'npm Packages', description: 'Packages published under @bahrainjs', icon: 'i-simple-icons-npm', to: 'https://www.npmjs.com/org/bahrain.js', target: '_blank' },
-  { label: 'Blog', description: 'Updates, recaps, and member posts', icon: 'i-lucide-pen-line', to: '/blog' }
+  { label: 'npm', description: 'Packages published under @bahrainjs', icon: 'i-simple-icons-npm', to: 'https://www.npmjs.com/org/bahrain.js', target: '_blank' },
+  { label: 'Reddit', description: 'Join the discussion on Reddit', icon: 'i-simple-icons-reddit', to: 'https://www.reddit.com/r/bahrainjs', target: '_blank' },
+  { label: 'Discord', description: 'Chat with the community in real time', icon: 'i-simple-icons-discord', to: 'https://discord.gg/EZrDeaErBV', target: '_blank' },
+  { label: 'WhatsApp', description: 'Join the WhatsApp community', icon: 'i-simple-icons-whatsapp', to: 'https://chat.whatsapp.com/EZrDeaErBV', target: '_blank' },
+  { label: 'Instagram', description: 'Follow us on Instagram', icon: 'i-simple-icons-instagram', to: 'https://www.instagram.com/bahrain.js', target: '_blank' },
+  { label: 'Blog', description: 'Updates, recaps, and member posts', icon: 'i-lucide-pen-line', to: '/blog' },
 ]
 
 const navItems: NavigationMenuItem[] = [
