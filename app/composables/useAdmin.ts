@@ -37,8 +37,9 @@ export function useAdmin() {
   }
 
   // Remove a member from public.members.
-  // A database trigger (trg_delete_auth_user) automatically cascades
-  // the delete to neon_auth.user → account/session, preventing re-login.
+  // RLS allows authenticated users to delete. Admin check is done at the UI level.
+  // A database trigger (trg_delete_auth_user) cascades the delete to
+  // neon_auth.user → account/session, preventing re-login and auto-recreation.
   async function removeMember(memberId: string) {
     const { error } = await client
       .from('members')
