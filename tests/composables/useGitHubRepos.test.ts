@@ -93,7 +93,7 @@ describe('useGitHubRepos', () => {
       'https://api.github.com/orgs/bahrain-js/repos?per_page=50&sort=updated',
       expect.objectContaining({
         headers: expect.objectContaining({
-          'Accept': 'application/vnd.github.v3+json'
+          Accept: 'application/vnd.github.v3+json'
         })
       })
     )

@@ -8,7 +8,7 @@ const communityLinks = [
   { label: 'Discord', description: 'Chat with the community in real time', icon: 'i-simple-icons-discord', to: 'https://discord.gg/EZrDeaErBV', target: '_blank' },
   { label: 'WhatsApp', description: 'Join the WhatsApp community', icon: 'i-simple-icons-whatsapp', to: 'https://chat.whatsapp.com/EZrDeaErBV', target: '_blank' },
   { label: 'Instagram', description: 'Follow us on Instagram', icon: 'i-simple-icons-instagram', to: 'https://www.instagram.com/bahrain.js', target: '_blank' },
-  { label: 'Blog', description: 'Updates, recaps, and member posts', icon: 'i-lucide-pen-line', to: '/blog' },
+  { label: 'Blog', description: 'Updates, recaps, and member posts', icon: 'i-lucide-pen-line', to: '/blog' }
 ]
 
 const navItems: NavigationMenuItem[] = [
@@ -126,7 +126,10 @@ const userMenuItems = computed(() => {
     <template #body>
       <!-- Navigation links — large touch targets -->
       <nav class="flex flex-col gap-1">
-        <template v-for="item in navItems" :key="item.label">
+        <template
+          v-for="item in navItems"
+          :key="item.label"
+        >
           <!-- Regular nav links -->
           <NuxtLink
             v-if="!item.children"

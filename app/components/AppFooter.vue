@@ -16,7 +16,10 @@
             target="_blank"
             class="text-sm text-muted hover:text-highlighted transition-colors flex items-center gap-1.5"
           >
-            <UIcon name="i-lucide-rocket" class="size-4" />
+            <UIcon
+              name="i-lucide-rocket"
+              class="size-4"
+            />
             Startup Bahrain
           </NuxtLink>
           <span class="text-default/20">·</span>
@@ -25,7 +28,10 @@
             target="_blank"
             class="text-sm text-muted hover:text-highlighted transition-colors flex items-center gap-1.5"
           >
-            <UIcon name="i-lucide-landmark" class="size-4" />
+            <UIcon
+              name="i-lucide-landmark"
+              class="size-4"
+            />
             Tamkeen
           </NuxtLink>
         </div>
@@ -42,7 +48,7 @@
     </template>
 
     <!-- <template #default> -->
-      <!-- <div class="flex items-center justify-end gap-4 text-sm text-muted">
+    <!-- <div class="flex items-center justify-end gap-4 text-sm text-muted">
         <NuxtLink
           to="/events"
           class="hover:text-default transition-colors"
@@ -68,7 +74,7 @@
           Blog
         </NuxtLink>
       </div> -->
-      <UNavigationMenu :items="navItems" />
+    <UNavigationMenu :items="navItems" />
     <!-- </template> -->
 
     <template #right>
@@ -113,6 +119,6 @@ const navItems: NavigationMenuItem[] = [
   { label: 'Projects', icon: 'i-lucide-code-2', to: '/projects' },
   { label: 'Frameworks', icon: 'i-lucide-blocks', to: '/frameworks' },
   { label: 'People', icon: 'i-lucide-users', to: '/people' },
-  { label: 'Opportunities', icon: 'i-lucide-briefcase', to: '/opportunities' },
+  { label: 'Opportunities', icon: 'i-lucide-briefcase', to: '/opportunities' }
 ]
 </script>

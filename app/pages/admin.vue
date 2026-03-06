@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { isAuthenticated, user, loading: authLoading } = useAuth()
+const { isAuthenticated: _isAuthenticated, user, loading: authLoading } = useAuth()
 const { isAdmin, adminChecked } = useAdmin()
 
 const {

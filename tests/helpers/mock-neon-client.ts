@@ -5,7 +5,7 @@ import { vi } from 'vitest'
  * Each method returns `this` for chaining, except terminal methods
  * (select, insert, update, delete) which resolve to `{ data, error }`.
  */
-export function createMockQueryBuilder(resolvedValue: { data?: unknown; error?: unknown } = { data: [], error: null }) {
+export function createMockQueryBuilder(resolvedValue: { data?: unknown, error?: unknown } = { data: [], error: null }) {
   const builder: Record<string, ReturnType<typeof vi.fn>> = {}
 
   const chainMethods = ['eq', 'neq', 'gt', 'lt', 'gte', 'lte', 'like', 'ilike', 'is', 'in', 'order', 'limit', 'single', 'range', 'contains', 'schema']
@@ -34,7 +34,7 @@ export function createMockQueryBuilder(resolvedValue: { data?: unknown; error?: 
 /**
  * Creates a full mock Neon client with configurable per-table responses.
  */
-export function createMockNeonClient(tableResponses: Record<string, { data?: unknown; error?: unknown }> = {}) {
+export function createMockNeonClient(tableResponses: Record<string, { data?: unknown, error?: unknown }> = {}) {
   const defaultResponse = { data: [], error: null }
 
   const mockClient = {
