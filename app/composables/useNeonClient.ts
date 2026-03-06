@@ -17,7 +17,12 @@ export function useNeonClient() {
       allowAnonymous: true
     },
     dataApi: {
-      url: dataUrl
+      url: dataUrl,
+      options: {
+        db: {
+          schema: 'public'
+        }
+      }
     }
   })
 

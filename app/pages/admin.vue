@@ -18,17 +18,17 @@ const {
 const activeTab = ref('members')
 
 // Redirect non-admins
-watch(
-  [() => authLoading.value, () => adminChecked.value],
-  ([isLoading, checked]) => {
-    if (!isLoading && checked) {
-      if (!isAuthenticated.value || !isAdmin.value) {
-        navigateTo('/people')
-      }
-    }
-  },
-  { immediate: true }
-)
+// watch(
+//   [() => authLoading.value, () => adminChecked.value],
+//   ([isLoading, checked]) => {
+//     if (!isLoading && checked) {
+//       if (!isAuthenticated.value || !isAdmin.value) {
+//         navigateTo('/people')
+//       }
+//     }
+//   },
+//   { immediate: true }
+// )
 
 onMounted(fetchAll)
 

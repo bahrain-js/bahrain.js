@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const config = useRuntimeConfig()
+const client = useNeonClient()
 
 const email = ref('')
 const submitting = ref(false)
@@ -13,25 +13,18 @@ async function subscribe() {
   error.value = ''
 
   try {
-    const apiUrl = config.public.neonDataApiUrl
-    const res = await fetch(`${apiUrl}/newsletter_subscribers`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Prefer': 'return=minimal'
-      },
-      body: JSON.stringify({ email: email.value })
-    })
+    const { error: insertError } = await client
+      .from('newsletter_subscribers')
+      .insert({ email: email.value })
 
-    if (res.ok) {
-      submitted.value = true
-    } else {
-      const data = await res.json().catch(() => null)
-      if (data?.code === '23505') {
+    if (insertError) {
+      if (insertError.code === '23505') {
         error.value = 'You\'re already subscribed!'
       } else {
-        throw new Error(data?.message || 'Failed to subscribe')
+        throw new Error(insertError.message || 'Failed to subscribe')
       }
+    } else {
+      submitted.value = true
     }
   } catch (err) {
     console.error('Newsletter signup failed:', err)
