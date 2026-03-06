@@ -144,6 +144,7 @@ useSeoMeta({
             color="primary"
             variant="subtle"
             size="xs"
+            class="ms-1"
           >
             {{ count }} {{ count === 1 ? 'member' : 'members' }}
           </UBadge>

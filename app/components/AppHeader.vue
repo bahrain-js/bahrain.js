@@ -1,11 +1,24 @@
 <script setup lang="ts">
-const navItems = [
+import type { NavigationMenuItem } from '@nuxt/ui'
+
+const communityLinks = [
+  { label: 'Discord', description: 'Chat with the community in real time', icon: 'i-simple-icons-discord', to: 'https://discord.gg/EZrDeaErBV', target: '_blank' },
+  { label: 'GitHub', description: 'Explore our open-source repos', icon: 'i-simple-icons-github', to: 'https://github.com/bahrain-js', target: '_blank' },
+  { label: 'npm Packages', description: 'Packages published under @bahrainjs', icon: 'i-simple-icons-npm', to: 'https://www.npmjs.com/org/bahrain.js', target: '_blank' },
+  { label: 'Blog', description: 'Updates, recaps, and member posts', icon: 'i-lucide-pen-line', to: '/blog' }
+]
+
+const navItems: NavigationMenuItem[] = [
   { label: 'Events', icon: 'i-lucide-calendar', to: '/events' },
   { label: 'Projects', icon: 'i-lucide-code-2', to: '/projects' },
   { label: 'Frameworks', icon: 'i-lucide-blocks', to: '/frameworks' },
   { label: 'People', icon: 'i-lucide-users', to: '/people' },
   { label: 'Opportunities', icon: 'i-lucide-briefcase', to: '/opportunities' },
-  { label: 'Blog', icon: 'i-lucide-pen-line', to: '/blog' }
+  {
+    label: 'Community',
+    icon: 'i-lucide-heart',
+    children: communityLinks
+  }
 ]
 
 const { user: authUser, isAuthenticated, loading: authLoading, signInWithGitHub, signOut } = useAuth()
@@ -110,19 +123,46 @@ const userMenuItems = computed(() => {
     <template #body>
       <!-- Navigation links — large touch targets -->
       <nav class="flex flex-col gap-1">
-        <NuxtLink
-          v-for="item in navItems"
-          :key="item.to"
-          :to="item.to"
-          class="flex items-center gap-4 px-3 py-3.5 rounded-lg text-lg font-medium text-muted hover:text-highlighted hover:bg-elevated/50 active:bg-elevated transition-colors"
-          active-class="!text-primary bg-primary/10"
-        >
-          <UIcon
-            :name="item.icon"
-            class="size-6 shrink-0"
-          />
-          {{ item.label }}
-        </NuxtLink>
+        <template v-for="item in navItems" :key="item.label">
+          <!-- Regular nav links -->
+          <NuxtLink
+            v-if="!item.children"
+            :to="item.to"
+            class="flex items-center gap-4 px-3 py-3.5 rounded-lg text-lg font-medium text-muted hover:text-highlighted hover:bg-elevated/50 active:bg-elevated transition-colors"
+            active-class="!text-primary bg-primary/10"
+          >
+            <UIcon
+              :name="item.icon!"
+              class="size-6 shrink-0"
+            />
+            {{ item.label }}
+          </NuxtLink>
+
+          <!-- Community section with sub-links -->
+          <template v-else>
+            <p class="flex items-center gap-4 px-3 pt-5 pb-2 text-xs font-semibold uppercase tracking-wider text-muted">
+              <UIcon
+                :name="item.icon!"
+                class="size-4 shrink-0"
+              />
+              {{ item.label }}
+            </p>
+            <NuxtLink
+              v-for="child in item.children"
+              :key="child.label"
+              :to="child.to"
+              :target="(child as any).target"
+              class="flex items-center gap-4 px-3 py-3 rounded-lg text-base text-muted hover:text-highlighted hover:bg-elevated/50 active:bg-elevated transition-colors ms-2"
+              active-class="!text-primary bg-primary/10"
+            >
+              <UIcon
+                :name="child.icon!"
+                class="size-5 shrink-0"
+              />
+              {{ child.label }}
+            </NuxtLink>
+          </template>
+        </template>
       </nav>
 
       <USeparator class="my-4" />
@@ -195,39 +235,8 @@ const userMenuItems = computed(() => {
 
       <USeparator class="my-4" />
 
-      <!-- Social links -->
-      <div class="flex items-center gap-2 px-1">
-        <UButton
-          to="https://github.com/bahrain-js"
-          target="_blank"
-          icon="i-simple-icons-github"
-          aria-label="GitHub"
-          color="neutral"
-          variant="ghost"
-          size="lg"
-        />
-        <UButton
-          to="https://discord.gg/EZrDeaErBV"
-          target="_blank"
-          icon="i-simple-icons-discord"
-          aria-label="Discord"
-          color="neutral"
-          variant="ghost"
-          size="lg"
-        />
-        <UButton
-          to="https://www.npmjs.com/org/bahrainjs"
-          target="_blank"
-          icon="i-simple-icons-npm"
-          aria-label="npm"
-          color="neutral"
-          variant="ghost"
-          size="lg"
-        />
-
-        <div class="ml-auto">
-          <UColorModeButton size="lg" />
-        </div>
+      <div class="flex items-center justify-end px-1">
+        <UColorModeButton size="lg" />
       </div>
     </template>
   </UHeader>
