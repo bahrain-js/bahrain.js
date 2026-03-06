@@ -8,12 +8,13 @@ const client = useNeonClient()
 const saving = ref(false)
 const saved = ref(false)
 
+const formDate = shallowRef<CalendarDate | null>(null)
+const formTime = shallowRef(new Time(18, 0))
+
 const form = ref({
   title: '',
   description: '',
   details: '',
-  date: null as CalendarDate | null,
-  time: new Time(18, 0),
   format: 'in-person',
   type: 'meetup',
   location: '',
@@ -43,13 +44,13 @@ const timeSlots = Array.from({ length: 48 }, (_, i) => {
 })
 
 async function submitEvent() {
-  if (!user.value || !form.value.title || !form.value.date) return
+  if (!user.value || !form.value.title || !formDate.value) return
 
   saving.value = true
   try {
     // Convert CalendarDate + Time to ISO string
-    const d = form.value.date
-    const t = form.value.time
+    const d = formDate.value
+    const t = formTime.value
     const dateStr = `${d.year}-${String(d.month).padStart(2, '0')}-${String(d.day).padStart(2, '0')}`
     const timeStr = `${String(t.hour).padStart(2, '0')}:${String(t.minute).padStart(2, '0')}:00`
     const eventDate = new Date(`${dateStr}T${timeStr}+03:00`).toISOString()
@@ -208,7 +209,7 @@ useSeoMeta({
             required
           >
             <UInputDate
-              v-model="form.date"
+              v-model="formDate"
               locale="en-GB"
               required
             >
@@ -223,7 +224,7 @@ useSeoMeta({
                     class="px-0"
                   />
                   <template #content>
-                    <UCalendar v-model="form.date" />
+                    <UCalendar v-model="formDate" />
                   </template>
                 </UPopover>
               </template>
@@ -232,7 +233,7 @@ useSeoMeta({
 
           <UFormField label="Time">
             <UInputTime
-              v-model="form.time"
+              v-model="formTime"
             >
               <template #leading>
                 <UPopover>
@@ -249,10 +250,10 @@ useSeoMeta({
                       <UButton
                         v-for="slot in timeSlots"
                         :key="slot.label"
-                        :color="form.time?.hour === slot.hour && form.time?.minute === slot.minute ? 'primary' : 'neutral'"
-                        :variant="form.time?.hour === slot.hour && form.time?.minute === slot.minute ? 'solid' : 'link'"
+                        :color="formTime?.hour === slot.hour && formTime?.minute === slot.minute ? 'primary' : 'neutral'"
+                        :variant="formTime?.hour === slot.hour && formTime?.minute === slot.minute ? 'solid' : 'link'"
                         class="flex justify-center"
-                        @click="form.time = new Time(slot.hour, slot.minute)"
+                        @click="formTime = new Time(slot.hour, slot.minute)"
                       >
                         {{ slot.label }}
                       </UButton>
@@ -306,7 +307,7 @@ useSeoMeta({
             label="Submit for Review"
             icon="i-lucide-send"
             :loading="saving"
-            :disabled="!form.title || !form.date"
+            :disabled="!form.title || !formDate"
           />
           <p class="text-sm text-zinc-500 dark:text-zinc-400">
             Events are published after core team approval.

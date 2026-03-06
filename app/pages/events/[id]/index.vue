@@ -28,7 +28,7 @@ const formatConfigMap: Record<string, { icon: string, label: string }> = {
 const isUpcoming = computed(() => event.value && new Date(event.value.date) >= new Date())
 const hasRsvped = computed(() => {
   if (!user.value) return false
-  return rsvps.value.some(r => r.user_id === user.value.id)
+  return rsvps.value.some(r => r.user_id === user.value!.id)
 })
 const canEditEvent = computed(() => {
   if (!event.value || !user.value) return false
@@ -110,7 +110,7 @@ async function toggleRsvp() {
         .eq('event_id', eventId)
         .eq('user_id', user.value.id)
 
-      rsvps.value = rsvps.value.filter(r => r.user_id !== user.value.id)
+      rsvps.value = rsvps.value.filter(r => r.user_id !== user.value!.id)
     } else {
       // RSVP
       const { data, error } = await client

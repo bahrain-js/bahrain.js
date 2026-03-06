@@ -30,10 +30,10 @@ async function fetchOpportunities() {
       )
     }
     const results = await Promise.all(fetches)
-    jobs.value = results[0].data || []
-    ossOpportunities.value = results[1].data || []
+    jobs.value = results[0]!.data || []
+    ossOpportunities.value = results[1]!.data || []
     // Merge approved ideas with user's own (dedup by id)
-    const approvedIdeas = results[2].data || []
+    const approvedIdeas = results[2]!.data || []
     const myIdeas = results[3]?.data || []
     const ideasMap = new Map<string, StartupIdea>()
     for (const idea of [...approvedIdeas, ...myIdeas]) {
@@ -118,13 +118,12 @@ async function submitEditIdea() {
     // Update local state
     const idx = startupIdeas.value.findIndex((i: StartupIdea) => i.id === editingIdeaId.value)
     if (idx !== -1) {
-      startupIdeas.value[idx] = {
-        ...startupIdeas.value[idx],
+      Object.assign(startupIdeas.value[idx]!, {
         ...editIdeaForm.value,
         description: editIdeaForm.value.description || null,
         sector: editIdeaForm.value.sector || null,
         tags: editIdeaForm.value.tags || []
-      }
+      })
     }
     showEditIdea.value = false
     editingIdeaId.value = null
