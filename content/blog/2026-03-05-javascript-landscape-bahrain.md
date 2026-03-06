@@ -10,8 +10,6 @@ tags:
   - bahrain
 ---
 
-# The JavaScript Landscape in Bahrain
-
 Bahrain is a small country with an outsized ambition in tech. The government's Economic Vision 2030 puts digital transformation at the center of national strategy. Fintech companies are setting up in Bahrain FinTech Bay. Startups are graduating from accelerators like Flat6Labs and C5 Accelerate. And behind most of these products, someone is writing JavaScript.
 
 But what does the JavaScript ecosystem actually look like here? We spent our first week talking to developers across Bahrain to find out.

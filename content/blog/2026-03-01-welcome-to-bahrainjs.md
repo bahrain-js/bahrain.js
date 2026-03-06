@@ -10,8 +10,6 @@ tags:
 featured: true
 ---
 
-# Bahrain Now Has a JavaScript Community
-
 If you write JavaScript in Bahrain — or want to learn — this is for you.
 
 **Bahrain.js** is a new developer community built around one idea: JavaScript developers in Bahrain deserve a home. A place to meet, build, and grow together.

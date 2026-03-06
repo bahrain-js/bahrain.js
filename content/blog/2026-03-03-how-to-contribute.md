@@ -10,8 +10,6 @@ tags:
   - contributing
 ---
 
-# How to Contribute to Bahrain.js
-
 Every part of Bahrain.js is open source — this website, our packages, our event listings. They are all files in a Git repo, and every one of them accepts pull requests. You do not need permission to start. You just need a GitHub account.
 
 ## Start Small
