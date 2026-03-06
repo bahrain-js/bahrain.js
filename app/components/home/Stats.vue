@@ -1,9 +1,10 @@
 <script setup lang="ts">
 const client = useNeonClient()
-const { data: githubRepos } = await useGitHubRepos()
+const { data: githubRepos } = useGitHubRepos()
 
 const memberCount = ref(0)
 const eventCount = ref(0)
+const statsLoading = ref(true)
 
 async function fetchStats() {
   try {
@@ -13,7 +14,9 @@ async function fetchStats() {
     ])
     memberCount.value = membersRes.count || 0
     eventCount.value = eventsRes.count || 0
-  } catch { /* silent */ }
+  } catch { /* silent */ } finally {
+    statsLoading.value = false
+  }
 }
 
 const totalStars = computed(() => (githubRepos.value ?? []).reduce((sum: number, r: any) => sum + (r.stars || 0), 0))
@@ -30,7 +33,7 @@ const displayStats = ref([0, 0, 0, 0])
 const statsRef = ref<HTMLElement>()
 
 // Scroll reveal for the stat items
-useScrollReveal(statsRef, '.stat-item', { start: 'top 85%' })
+useScrollReveal(statsRef, '.stat-item')
 
 onMounted(async () => {
   await fetchStats()
@@ -68,7 +71,27 @@ onMounted(async () => {
     class="py-16 bg-elevated relative z-10"
   >
     <div class="mx-auto max-w-5xl px-6">
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+      <!-- Loading Skeletons -->
+      <div
+        v-if="statsLoading"
+        class="grid grid-cols-2 md:grid-cols-4 gap-8"
+      >
+        <div
+          v-for="i in 4"
+          :key="i"
+          class="flex flex-col items-center gap-2"
+        >
+          <USkeleton class="size-6 rounded-full" />
+          <USkeleton class="h-10 w-16" />
+          <USkeleton class="h-4 w-24" />
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div
+        v-else
+        class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center"
+      >
         <div
           v-for="(stat, i) in stats"
           :key="stat.label"

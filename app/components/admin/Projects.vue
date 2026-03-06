@@ -1,12 +1,14 @@
 <script setup lang="ts">
+import type { Project } from '~/types'
+
 defineProps<{
-  projects: any[]
+  projects: Project[]
   oppActionId: string | null
 }>()
 
 const emit = defineEmits<{
-  'update-status': [project: any, status: string]
-  'delete-project': [project: any]
+  'update-status': [project: Project, status: string]
+  'delete-project': [project: Project]
   'create': [form: { name: string, slug: string, description: string, stack: string[], stage: string, featured: boolean, start_here: boolean, npm_package: string, url: string }]
   'edit': [id: string, form: { name: string, slug: string, description: string, stack: string[], stage: string, featured: boolean, start_here: boolean, npm_package: string, url: string }]
 }>()
@@ -42,7 +44,7 @@ function submit() {
   form.value = { name: '', slug: '', description: '', stack: [], stage: 'idea', featured: false, start_here: false, npm_package: '', url: '' }
 }
 
-function openEdit(project: any) {
+function openEdit(project: Project) {
   editingId.value = project.id
   editForm.value = {
     name: project.name || '',
@@ -65,12 +67,12 @@ function submitEdit() {
   editingId.value = null
 }
 
-const stageColor: Record<string, string> = {
+const stageColor = {
   idea: 'neutral',
   prototype: 'info',
   repo: 'success',
   package: 'warning'
-}
+} as const
 </script>
 
 <template>
@@ -107,7 +109,7 @@ const stageColor: Record<string, string> = {
                 {{ project.status }}
               </UBadge>
               <UBadge
-                :color="(stageColor[project.stage] as any) || 'neutral'"
+                :color="(stageColor[project.stage]) || 'neutral'"
                 variant="subtle"
                 size="xs"
               >

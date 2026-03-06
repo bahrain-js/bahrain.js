@@ -1,13 +1,15 @@
 <script setup lang="ts">
+import type { CommunityEvent } from '~/types'
+
 defineProps<{
-  events: any[]
+  events: CommunityEvent[]
   statusBadgeColor: Record<string, 'warning' | 'success' | 'error' | 'neutral'>
   eventActionId: string | null
 }>()
 
 const emit = defineEmits<{
-  'update-status': [event: any, status: string]
-  'delete-event': [event: any]
+  'update-status': [event: CommunityEvent, status: string]
+  'delete-event': [event: CommunityEvent]
 }>()
 
 function formatEventDate(dateStr: string) {

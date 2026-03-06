@@ -103,7 +103,21 @@ useSeoMeta({
 
     <!-- Community Favorites -->
     <section
-      v-if="topFrameworks.length"
+      v-if="loadingFavorites"
+      class="space-y-4"
+    >
+      <USkeleton class="h-7 w-48" />
+      <USkeleton class="h-4 w-64" />
+      <div class="flex flex-wrap gap-3">
+        <USkeleton
+          v-for="i in 5"
+          :key="i"
+          class="h-12 w-28 rounded-xl"
+        />
+      </div>
+    </section>
+    <section
+      v-else-if="topFrameworks.length"
       class="space-y-4"
     >
       <h2 class="text-xl font-bold flex items-center gap-2">

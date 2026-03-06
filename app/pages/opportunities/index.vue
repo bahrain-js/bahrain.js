@@ -160,15 +160,22 @@ const difficultyColor: Record<string, string> = {
       </p>
     </div>
 
-    <!-- Loading -->
+    <!-- Loading Skeletons -->
     <div
       v-if="loading"
-      class="flex justify-center py-12"
+      class="space-y-12"
     >
-      <UIcon
-        name="i-lucide-loader-2"
-        class="size-8 text-muted animate-spin"
-      />
+      <div v-for="section in 3" :key="section" class="space-y-4">
+        <USkeleton class="h-7 w-56" />
+        <USkeleton class="h-4 w-80" />
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <USkeleton
+            v-for="i in 3"
+            :key="i"
+            class="h-36 rounded-xl"
+          />
+        </div>
+      </div>
     </div>
 
     <template v-else>
@@ -514,7 +521,7 @@ const difficultyColor: Record<string, string> = {
             class="hover:ring-2 hover:ring-yellow-400/20 transition-all"
           >
             <div class="flex items-start gap-4">
-              <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-primary/10 flex-shrink-0">
+              <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-primary/10 shrink-0">
                 <UIcon
                   name="i-lucide-briefcase"
                   class="size-6 text-primary"
@@ -575,7 +582,7 @@ const difficultyColor: Record<string, string> = {
                 label="Apply"
                 variant="outline"
                 size="sm"
-                class="flex-shrink-0"
+                class="shrink-0"
               />
             </div>
           </UCard>
@@ -639,7 +646,7 @@ const difficultyColor: Record<string, string> = {
             >
               <UIcon
                 :name="resource.icon"
-                class="size-5 text-blue-500 flex-shrink-0"
+                class="size-5 text-blue-500 shrink-0"
               />
               <div>
                 <p class="font-medium group-hover:text-primary transition-colors">{{ resource.title }}</p>
@@ -647,7 +654,7 @@ const difficultyColor: Record<string, string> = {
               </div>
               <UIcon
                 name="i-lucide-external-link"
-                class="size-4 text-zinc-400 ml-auto flex-shrink-0"
+                class="size-4 text-zinc-400 ml-auto shrink-0"
               />
             </a>
           </UCard>

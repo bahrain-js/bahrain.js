@@ -1,9 +1,10 @@
 <script setup lang="ts">
+import type { Member, CommunityEvent } from '~/types'
+
 defineProps<{
-  members: any[]
-  pendingEvents: any[]
-}>()
-</script>
+  members: Member[]
+  pendingEvents: CommunityEvent[]
+}>()</script>
 
 <template>
   <div class="grid grid-cols-2 md:grid-cols-4 gap-4">

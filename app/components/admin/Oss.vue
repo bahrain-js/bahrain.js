@@ -1,12 +1,14 @@
 <script setup lang="ts">
+import type { OssOpportunity } from '~/types'
+
 defineProps<{
-  listings: any[]
+  listings: OssOpportunity[]
   oppActionId: string | null
 }>()
 
 const emit = defineEmits<{
-  'update-status': [opp: any, status: string]
-  'delete-oss': [opp: any]
+  'update-status': [opp: OssOpportunity, status: string]
+  'delete-oss': [opp: OssOpportunity]
   'create': [form: { project_name: string, description: string, difficulty: string, issues_label: string, url: string, tags: string[] }]
   'edit': [id: string, form: { project_name: string, description: string, difficulty: string, issues_label: string, url: string, tags: string[] }]
 }>()
@@ -24,7 +26,7 @@ function submit() {
   form.value = { project_name: '', description: '', difficulty: 'beginner', issues_label: '', url: '', tags: [] }
 }
 
-function openEdit(opp: any) {
+function openEdit(opp: OssOpportunity) {
   editingId.value = opp.id
   editForm.value = {
     project_name: opp.project_name || '',

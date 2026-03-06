@@ -1,7 +1,9 @@
+import type { AuthUser, AuthSession, Member } from '~/types'
+
 export function useAuth() {
   const client = useNeonClient()
-  const user = useState<any | null>('auth-user', () => null)
-  const session = useState<any | null>('auth-session', () => null)
+  const user = useState<AuthUser | null>('auth-user', () => null)
+  const session = useState<AuthSession | null>('auth-session', () => null)
   const loading = useState('auth-loading', () => true)
 
   const isAuthenticated = computed(() => !!user.value)
@@ -13,7 +15,6 @@ export function useAuth() {
       if (data?.session) {
         session.value = data.session
         user.value = data.user
-        // Auto-create member profile if first sign-in
         await ensureMemberProfile(data.user)
       } else {
         session.value = null
@@ -27,9 +28,12 @@ export function useAuth() {
     }
   }
 
-  // Resolve GitHub username from avatar URL (numeric GitHub user ID)
-  async function resolveGitHubUsername(u: any): Promise<string> {
-    const avatarMatch = u.image?.match(/avatars\.githubusercontent\.com\/u\/(\d+)/)
+  /**
+   * Extract the GitHub username from the user's avatar URL by resolving
+   * the numeric GitHub user ID via the public GitHub API.
+   */
+  async function resolveGitHubUsername(authUser: AuthUser): Promise<string> {
+    const avatarMatch = authUser.image?.match(/avatars\.githubusercontent\.com\/u\/(\d+)/)
     if (avatarMatch?.[1]) {
       try {
         const res = await fetch(`https://api.github.com/user/${avatarMatch[1]}`)
@@ -38,48 +42,50 @@ export function useAuth() {
           if (ghUser.login) return ghUser.login
         }
       } catch {
-        // Fallback below
+        // Fall through to fallback
       }
     }
-    return u.username || u.name || ''
+    return authUser.username || authUser.name || ''
   }
 
-  // Auto-create a minimal members row on first sign-in
-  async function ensureMemberProfile(u: any) {
-    if (!u?.id) return
+  /**
+   * On first sign-in, auto-create a minimal members row so the user
+   * immediately appears on the People page. Then redirect to /profile
+   * so they can fill in details like bio and skills.
+   */
+  async function ensureMemberProfile(authUser: AuthUser) {
+    if (!authUser?.id) return
 
     try {
       const { data } = await client
         .from('members')
         .select('id')
-        .eq('user_id', u.id)
+        .eq('user_id', authUser.id)
         .limit(1)
 
-      if (data?.length) return // Profile already exists
+      if (data?.length) return
 
-      // Resolve GitHub username
-      const ghUsername = await resolveGitHubUsername(u)
+      const ghUsername = await resolveGitHubUsername(authUser)
 
-      // Create minimal member record
-      await client.from('members').insert({
-        user_id: u.id,
-        display_name: u.name || u.email?.split('@')[0] || 'New Member',
+      const newMember: Partial<Member> = {
+        user_id: authUser.id,
+        display_name: authUser.name || authUser.email?.split('@')[0] || 'New Member',
         github_username: ghUsername,
-        avatar_url: u.image || '',
-        role: 'member'
-      })
+        avatar_url: authUser.image || '',
+        role: 'member',
+      }
 
-      // Redirect to profile page to fill out details
+      await client.from('members').insert(newMember)
       await navigateTo('/profile')
     } catch (err) {
-      console.error('Failed to auto-create member profile:', err)
+      console.error('[useAuth] Failed to auto-create member profile:', err)
     }
   }
 
   async function signInWithGitHub() {
     await client.auth.signIn.social({
       provider: 'github',
-      callbackURL: window.location.href
+      callbackURL: window.location.href,
     })
   }
 
@@ -106,7 +112,6 @@ export function useAuth() {
     loading: readonly(loading),
     signInWithGitHub,
     signOut,
-    fetchSession
+    fetchSession,
   }
 }
-

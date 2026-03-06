@@ -1,25 +1,23 @@
 <script setup lang="ts">
+import type { Member, MemberRole } from '~/types'
+import { ROLE_BADGE_COLOR } from '~/types'
+
 const { user, isAuthenticated, loading: authLoading, signInWithGitHub } = useAuth()
 const client = useNeonClient()
 
 const searchQuery = ref('')
 const selectedSkill = ref('all')
-const members = ref<any[]>([]) // eslint-disable-line @typescript-eslint/no-explicit-any
+const members = ref<Member[]>([])
 const loading = ref(true)
 
-const roleBadgeColor = {
-  core: 'primary' as const,
-  maintainer: 'success' as const,
-  contributor: 'info' as const,
-  member: 'neutral' as const
-}
+const roleBadgeColor = ROLE_BADGE_COLOR
 
-const roleBadgeLabel = {
+const roleBadgeLabel: Record<MemberRole, string> = {
   core: 'Core Team',
   maintainer: 'Maintainer',
   contributor: 'Contributor',
-  member: 'Member'
-} as Record<string, string>
+  member: 'Member',
+}
 
 const skillColors = [
   'text-yellow-600 bg-yellow-50 ring-yellow-200 dark:text-yellow-400 dark:bg-yellow-900/30 dark:ring-yellow-800',
@@ -61,7 +59,7 @@ async function fetchMembers() {
 // Computed: all unique skills across members
 const allSkills = computed(() => {
   const skills = new Set<string>()
-  members.value.forEach((m: any) => {
+  members.value.forEach((m) => {
     if (m.skills) m.skills.forEach((s: string) => skills.add(s))
   })
   return Array.from(skills).sort()
@@ -69,7 +67,7 @@ const allSkills = computed(() => {
 
 // Computed: filtered members
 const filteredMembers = computed(() => {
-  return members.value.filter((m: any) => {
+  return members.value.filter((m) => {
     const matchesSearch = !searchQuery.value
       || m.display_name.toLowerCase().includes(searchQuery.value.toLowerCase())
       || m.github_username.toLowerCase().includes(searchQuery.value.toLowerCase())
@@ -82,13 +80,13 @@ const filteredMembers = computed(() => {
 })
 
 // Computed: core team (top section)
-const coreTeam = computed(() => filteredMembers.value.filter((m: any) => m.role === 'core'))
-const communityMembers = computed(() => filteredMembers.value.filter((m: any) => m.role !== 'core'))
+const coreTeam = computed(() => filteredMembers.value.filter(m => m.role === 'core'))
+const communityMembers = computed(() => filteredMembers.value.filter(m => m.role !== 'core'))
 
 // Check if current user has a profile
 const currentUserProfile = computed(() => {
   if (!user.value) return null
-  return members.value.find((m: any) => m.user_id === user.value.id)
+  return members.value.find(m => m.user_id === user.value!.id)
 })
 
 onMounted(() => {
@@ -225,10 +223,10 @@ useSeoMeta({
             <div
               v-for="member in coreTeam"
               :key="member.id"
-              class="group relative rounded-2xl border-2 border-yellow-200 dark:border-yellow-800/50 bg-gradient-to-br from-yellow-50/50 to-white dark:from-yellow-900/10 dark:to-zinc-900 p-6 transition-all duration-300 hover:shadow-lg hover:shadow-yellow-500/10 hover:-translate-y-0.5"
+              class="group relative rounded-2xl border-2 border-yellow-200 dark:border-yellow-800/50 bg-linear-to-br from-yellow-50/50 to-white dark:from-yellow-900/10 dark:to-zinc-900 p-6 transition-all duration-300 hover:shadow-lg hover:shadow-yellow-500/10 hover:-translate-y-0.5"
             >
               <!-- Gold accent line -->
-              <div class="absolute top-0 left-6 right-6 h-0.5 bg-gradient-to-r from-transparent via-yellow-400 to-transparent" />
+              <div class="absolute top-0 left-6 right-6 h-0.5 bg-linear-to-r from-transparent via-yellow-400 to-transparent" />
 
               <div class="flex items-start gap-5">
                 <a
@@ -452,7 +450,7 @@ useSeoMeta({
 
       <!-- Join the Community CTA  -->
       <section class="mt-12">
-        <div class="relative overflow-hidden rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-gradient-to-br from-yellow-50/80 via-white to-primary-50/50 dark:from-yellow-900/10 dark:via-zinc-900 dark:to-primary-900/10 p-8 sm:p-10 text-center">
+        <div class="relative overflow-hidden rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-linear-to-br from-yellow-50/80 via-white to-primary-50/50 dark:from-yellow-900/10 dark:via-zinc-900 dark:to-primary-900/10 p-8 sm:p-10 text-center">
           <!-- Background decorations -->
           <div class="absolute -top-12 -right-12 size-48 rounded-full bg-yellow-200/30 dark:bg-yellow-800/10 blur-3xl" />
           <div class="absolute -bottom-12 -left-12 size-48 rounded-full bg-primary-200/30 dark:bg-primary-800/10 blur-3xl" />

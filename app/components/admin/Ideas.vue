@@ -1,13 +1,15 @@
 <script setup lang="ts">
+import type { StartupIdea } from '~/types'
+
 defineProps<{
-  ideas: any[]
+  ideas: StartupIdea[]
   statusBadgeColor: Record<string, 'warning' | 'success' | 'error' | 'neutral'>
   oppActionId: string | null
 }>()
 
 const emit = defineEmits<{
-  'update-status': [idea: any, status: string]
-  'delete-idea': [idea: any]
+  'update-status': [idea: StartupIdea, status: string]
+  'delete-idea': [idea: StartupIdea]
   'create': [form: { title: string, problem: string, description: string, looking_for: string, sector: string, contact_url: string, tags: string[] }]
 }>()
 

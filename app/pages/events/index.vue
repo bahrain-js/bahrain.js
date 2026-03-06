@@ -263,7 +263,7 @@ useSeoMeta({
               </div>
 
               <!-- RSVP button -->
-              <div class="flex-shrink-0">
+              <div class="shrink-0">
                 <UButton
                   :to="`/events/${event.id}`"
                   label="View & RSVP"
@@ -310,7 +310,7 @@ useSeoMeta({
             class="opacity-75 hover:opacity-100 transition-opacity"
           >
             <div class="flex items-center gap-4">
-              <div class="flex-shrink-0 text-center w-16">
+              <div class="shrink-0 text-center w-16">
                 <div class="text-lg font-bold text-zinc-400">
                   {{ new Date(event.date).getDate() }}
                 </div>

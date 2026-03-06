@@ -1,15 +1,17 @@
 <script setup lang="ts">
+import type { Member, MemberRole } from '~/types'
+
 defineProps<{
-  members: any[]
-  roles: { label: string, value: string }[]
-  roleBadgeColor: Record<string, 'primary' | 'success' | 'info' | 'neutral'>
+  members: Member[]
+  roles: { label: string, value: MemberRole }[]
+  roleBadgeColor: Record<MemberRole, 'primary' | 'success' | 'info' | 'neutral'>
   savingId: string | null
   currentUserId: string | undefined
 }>()
 
 const emit = defineEmits<{
-  'change-role': [member: any, newRole: string]
-  'delete-member': [member: any]
+  'change-role': [member: Member, newRole: MemberRole]
+  'delete-member': [member: Member]
 }>()
 </script>
 
@@ -60,7 +62,7 @@ const emit = defineEmits<{
             :items="roles"
             :disabled="savingId === member.id"
             class="w-40"
-            @update:model-value="(val: string) => emit('change-role', member, val)"
+            @update:model-value="(val: string) => emit('change-role', member, val as MemberRole)"
           />
 
           <!-- Delete -->

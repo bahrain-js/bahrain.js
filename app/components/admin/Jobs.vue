@@ -1,13 +1,15 @@
 <script setup lang="ts">
+import type { JobListing } from '~/types'
+
 defineProps<{
-  jobs: any[]
+  jobs: JobListing[]
   statusBadgeColor: Record<string, 'warning' | 'success' | 'error' | 'neutral'>
   oppActionId: string | null
 }>()
 
 const emit = defineEmits<{
-  'update-status': [job: any, status: string]
-  'delete-job': [job: any]
+  'update-status': [job: JobListing, status: string]
+  'delete-job': [job: JobListing]
   'create': [form: { title: string, company: string, description: string, location: string, url: string, salary_range: string, is_remote: boolean, tags: string[] }]
 }>()
 

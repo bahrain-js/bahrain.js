@@ -41,8 +41,8 @@ async function fetchProjects() {
 
 onMounted(fetchProjects)
 
-// Fetch live data from GitHub API
-const { data: githubRepos } = await useGitHubRepos()
+// Fetch live data from GitHub API (non-blocking — page renders with DB data immediately)
+const { data: githubRepos } = useGitHubRepos()
 
 // Merge GitHub stars into DB projects
 const projects = computed(() => {
@@ -161,6 +161,22 @@ useSeoMeta({
       </div>
     </section>
 
+    <!-- Loading Skeletons -->
+    <div
+      v-if="dbLoading"
+      class="space-y-6 mb-16"
+    >
+      <USkeleton class="h-6 w-32" />
+      <div class="grid gap-6">
+        <USkeleton
+          v-for="i in 3"
+          :key="i"
+          class="h-40 rounded-xl"
+        />
+      </div>
+    </div>
+
+    <template v-else>
     <!-- Featured Projects -->
     <section
       v-if="featuredProjects.length"
@@ -207,7 +223,7 @@ useSeoMeta({
                   {{ project.description }}
                 </p>
               </div>
-              <div class="flex items-center gap-1 text-sm text-zinc-400 flex-shrink-0">
+              <div class="flex items-center gap-1 text-sm text-zinc-400 shrink-0">
                 <UIcon
                   name="i-lucide-star"
                   class="size-4"
@@ -383,7 +399,7 @@ useSeoMeta({
                 {{ project.description }}
               </p>
             </div>
-            <div class="flex items-center gap-3 flex-shrink-0">
+            <div class="flex items-center gap-3 shrink-0">
               <div class="flex -space-x-1.5">
                 <img
                   src="https://github.com/bahrain-js.png?size=64"
@@ -437,7 +453,7 @@ useSeoMeta({
                 {{ repo.description }}
               </p>
             </div>
-            <div class="flex items-center gap-3 flex-shrink-0">
+            <div class="flex items-center gap-3 shrink-0">
               <span class="flex items-center gap-1 text-sm text-zinc-400">
                 <UIcon
                   name="i-lucide-star"
@@ -475,5 +491,6 @@ useSeoMeta({
         />
       </div>
     </section>
+    </template>
   </UContainer>
 </template>
