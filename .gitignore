@@ -30,9 +30,10 @@ AGENTS.md
 CLAUDE.md
 Bahrainjs-Plan.md
 specs/
-.livespec/
+.livespec
 .livespec-repo/
 tmp/
+PURPOSE.md
 
 # Socials
-.socials/PURPOSE.md
+.socials/

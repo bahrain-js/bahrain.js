@@ -1,60 +1,130 @@
-# Nuxt Starter Template
+# Bahrain.js
 
-[![Nuxt UI](https://img.shields.io/badge/Made%20with-Nuxt%20UI-00DC82?logo=nuxt&labelColor=020420)](https://ui.nuxt.com)
+[![Build](https://github.com/bahrain-js/bahrain.js/actions/workflows/deploy.yml/badge.svg)](https://github.com/bahrain-js/bahrain.js/actions/workflows/deploy.yml)
+[![Live Site](https://img.shields.io/badge/bahrain.js.org-live-00DC82?style=flat&logo=nuxt&labelColor=020420)](https://bahrain.js.org)
+[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-Use this template to get started with [Nuxt UI](https://ui.nuxt.com) quickly.
+The community platform for JavaScript developers in Bahrain. One place to find events, projects, people, and opportunities in the local JS scene.
 
-- [Live demo](https://starter-template.nuxt.dev/)
-- [Documentation](https://ui.nuxt.com/docs/getting-started/installation/nuxt)
+**🌐 [bahrain.js.org](https://bahrain.js.org)**
 
-<a href="https://starter-template.nuxt.dev/" target="_blank">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://ui.nuxt.com/assets/templates/nuxt/starter-dark.png">
-    <source media="(prefers-color-scheme: light)" srcset="https://ui.nuxt.com/assets/templates/nuxt/starter-light.png">
-    <img alt="Nuxt Starter Template" src="https://ui.nuxt.com/assets/templates/nuxt/starter-light.png" width="830" height="466">
-  </picture>
-</a>
+---
 
-> The starter template for Vue is on https://github.com/nuxt-ui-templates/starter-vue.
+## What This Is
 
-## Quick Start
+Bahrain.js is a community hub — not just a landing page. The website is the operating system for the community: events are listed, projects are showcased, members have profiles, and everything is open source.
 
-```bash [Terminal]
-npm create nuxt@latest -- -t github:nuxt-ui-templates/starter
-```
+### Pages
 
-## Deploy your own
+| Page | Description |
+|---|---|
+| **Home** | Hero, next event, recent projects, community stats |
+| **Events** | Upcoming and past meetups, builder sessions, hackathons |
+| **Projects** | Open source showcase from the `bahrain-js` GitHub org |
+| **People** | Member directory with profiles, skills, and roles |
+| **Blog** | Community updates, guides, and member posts |
+| **Opportunities** | Curated JS/TS roles and gigs in Bahrain |
+| **Frameworks** | Interactive framework landscape |
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-name=starter&repository-url=https%3A%2F%2Fgithub.com%2Fnuxt-ui-templates%2Fstarter&demo-image=https%3A%2F%2Fui.nuxt.com%2Fassets%2Ftemplates%2Fnuxt%2Fstarter-dark.png&demo-url=https%3A%2F%2Fstarter-template.nuxt.dev%2F&demo-title=Nuxt%20Starter%20Template&demo-description=A%20minimal%20template%20to%20get%20started%20with%20Nuxt%20UI.)
+## Tech Stack
 
-## Setup
+| Layer | Choice |
+|---|---|
+| **Framework** | [Nuxt 4](https://nuxt.com) (SSG via GitHub Pages) |
+| **UI** | [Nuxt UI v4](https://ui.nuxt.com) + [Tailwind CSS v4](https://tailwindcss.com) |
+| **Content** | [Nuxt Content v3](https://content.nuxt.com) (Markdown-driven blog) |
+| **Database** | [Neon](https://neon.tech) (Serverless Postgres) |
+| **Auth** | [Neon Auth](https://neon.tech/docs/guides/neon-auth) (GitHub OAuth) |
+| **Animations** | [GSAP](https://gsap.com) via `v-gsap-nuxt` |
+| **Hosting** | [GitHub Pages](https://pages.github.com) (static deployment) |
+| **Package Manager** | pnpm |
 
-Make sure to install the dependencies:
+## Getting Started
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org) 18+
+- [pnpm](https://pnpm.io) 10+
+
+### Setup
 
 ```bash
+# Clone the repo
+git clone https://github.com/bahrain-js/bahrain.js.git
+cd bahrain.js
+
+# Install dependencies
 pnpm install
 ```
 
-## Development Server
+### Environment
 
-Start the development server on `http://localhost:3000`:
+Create a `.env` file from the example:
+
+```bash
+cp .env.example .env
+```
+
+Required variables:
+
+| Variable | Purpose |
+|---|---|
+| `NUXT_PUBLIC_NEON_AUTH_URL` | Neon Auth endpoint for GitHub OAuth |
+| `NUXT_PUBLIC_NEON_DATA_API_URL` | Neon Data API endpoint for database access |
+
+### Development
 
 ```bash
 pnpm dev
 ```
 
-## Production
+The dev server starts at `http://localhost:3000`.
 
-Build the application for production:
-
-```bash
-pnpm build
-```
-
-Locally preview production build:
+### Other Commands
 
 ```bash
-pnpm preview
+pnpm build        # Production build (GitHub Pages preset)
+pnpm preview      # Preview the production build locally
+pnpm lint         # Run ESLint
+pnpm typecheck    # Run TypeScript type checking
+pnpm test         # Run tests with Vitest
 ```
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+## Project Structure
+
+```
+bahrain.js/
+├── app/
+│   ├── components/     # Vue components (AppHeader, AppFooter, home/*, admin/*)
+│   ├── composables/    # Shared composables (auth, data fetching)
+│   ├── pages/          # File-based routing (index, events, projects, people, blog, etc.)
+│   ├── types/          # TypeScript type definitions
+│   └── assets/         # CSS and static assets
+├── content/            # Markdown content for blog posts (Nuxt Content)
+├── public/             # Static files (favicons, images)
+├── server/             # Server routes (if any)
+└── nuxt.config.ts      # Nuxt configuration
+```
+
+## Contributing
+
+Contributions are welcome! Whether it's fixing a bug, adding a feature, or writing a blog post — all PRs are appreciated.
+
+1. Fork the repo
+2. Create your branch (`git checkout -b feature/my-feature`)
+3. Commit your changes (`git commit -m 'Add my feature'`)
+4. Push to the branch (`git push origin feature/my-feature`)
+5. Open a Pull Request
+
+### Writing Blog Posts
+
+Blog content lives in the `content/` directory as Markdown files. Create a new `.md` file and submit a PR.
+
+## Community
+
+- **GitHub**: [bahrain-js](https://github.com/bahrain-js)
+- **npm**: [`@bahrainjs`](https://www.npmjs.com/org/bahrainjs)
+
+## License
+
+[MIT](LICENSE) © Bahrain.js
