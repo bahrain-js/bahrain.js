@@ -124,6 +124,11 @@ Blog content lives in the `content/` directory as Markdown files. Create a new `
 
 - **GitHub**: [bahrain-js](https://github.com/bahrain-js)
 - **npm**: [`@bahrain.js`](https://www.npmjs.com/org/bahrain.js)
+- **Discord**: [Join our Discord community](https://discord.gg/EZrDeaErBV)
+- **Reddit**: [Join our Reddit community](https://www.reddit.com/r/bahrainjs/)
+- **Instagram**: [Follow us on Instagram](https://www.instagram.com/bahrain.js/)
+- **WhatsApp**: [Join our WhatsApp community](https://chat.whatsapp.com/CMDUyDgaBS6FYQoT4swRD0)
+
 
 ## License
 
