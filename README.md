@@ -1,7 +1,7 @@
 # Bahrain.js
 
-[![Build](https://github.com/bahrain-js/bahrain.js/actions/workflows/deploy.yml/badge.svg)](https://github.com/bahrain-js/bahrain.js/actions/workflows/deploy.yml)
-[![Live Site](https://img.shields.io/badge/bahrain.js.org-live-00DC82?style=flat&logo=nuxt&labelColor=020420)](https://bahrain.js.org)
+[![Build](https://img.shields.io/github/actions/workflow/status/bahrain-js/bahrain.js/deploy.yml?label=Build&logo=github)](https://github.com/bahrain-js/bahrain.js/actions/workflows/deploy.yml)
+[![Live Site](https://img.shields.io/badge/bahrain.js.org-live-F9D34A?style=flat&logo=nuxt&labelColor=020420)](https://bahrain.js.org)
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 The community platform for JavaScript developers in Bahrain. One place to find events, projects, people, and opportunities in the local JS scene.
