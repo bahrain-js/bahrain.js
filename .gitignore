@@ -26,7 +26,13 @@ logs
 # Agent
 .agent/
 .memory/
+AGENTS.md
+CLAUDE.md
+Bahrainjs-Plan.md
 specs/
 .livespec/
 .livespec-repo/
 tmp/
+
+# Socials
+.socials/
