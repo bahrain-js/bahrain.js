@@ -123,7 +123,7 @@ Blog content lives in the `content/` directory as Markdown files. Create a new `
 ## Community
 
 - **GitHub**: [bahrain-js](https://github.com/bahrain-js)
-- **npm**: [`@bahrainjs`](https://www.npmjs.com/org/bahrainjs)
+- **npm**: [`@bahrain.js`](https://www.npmjs.com/org/bahrain.js)
 
 ## License
 
