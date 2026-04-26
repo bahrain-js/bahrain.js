@@ -67,8 +67,6 @@ async function fetchEvents() {
   }
 }
 
-
-
 onMounted(fetchEvents)
 
 // ─── Search & Filter ───
@@ -249,7 +247,6 @@ useSeoMeta({
                     />
                     {{ event.location }}
                   </span>
-
                 </div>
               </div>
 
@@ -329,8 +326,6 @@ useSeoMeta({
                   </h3>
                 </NuxtLink>
               </div>
-
-
             </div>
           </UCard>
         </div>

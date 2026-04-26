@@ -48,7 +48,6 @@ async function submitIdea() {
 
   saving.value = true
   try {
-
     const { error } = await client
       .from('startup_ideas')
       .insert({
