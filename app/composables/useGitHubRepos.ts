@@ -2,6 +2,9 @@ import type { GitHubRepo } from '~/types'
 
 const GITHUB_ORG = 'bahrain-js'
 
+/** Repos that exist for org infrastructure, not community projects */
+const EXCLUDED_REPOS = ['.github']
+
 /**
  * Fetches public repos from the Bahrain.js GitHub organization.
  * Returns non-forked, non-archived repos sorted by last updated.
@@ -32,7 +35,7 @@ export function useGitHubRepos() {
       )
 
       data.value = repos
-        .filter(repo => !repo.fork && !repo.archived)
+        .filter(repo => !repo.fork && !repo.archived && !EXCLUDED_REPOS.includes(repo.name as string))
         .map(repo => ({
           name: repo.name as string,
           fullName: repo.full_name as string,
