@@ -15,16 +15,32 @@ const emit = defineEmits<{
 }>()
 
 const showForm = ref(false)
-const form = ref({ title: '', problem: '', description: '', looking_for: 'co-founder', sector: '', contact_url: '', tags: [] as string[] })
+const form = ref({ title: '', problem: '', description: '', looking_for: 'Technical Co-founder', sector: '', contact_url: '', tags: [] as string[] })
+
+const lookingForOptions = ref([
+  'Technical Co-founder',
+  'Full-stack Developer',
+  'Frontend Developer',
+  'Backend Developer',
+  'Mobile Developer',
+  'Designer',
+  'Any Builder'
+])
+
+function onCreateLookingFor(item: string, target: 'create' | 'edit') {
+  lookingForOptions.value.push(item)
+  if (target === 'create') form.value.looking_for = item
+  else editForm.value.looking_for = item
+}
 
 const showEditForm = ref(false)
 const editingId = ref<string | null>(null)
-const editForm = ref({ title: '', problem: '', description: '', looking_for: 'co-founder', sector: '', contact_url: '', tags: [] as string[] })
+const editForm = ref({ title: '', problem: '', description: '', looking_for: 'Technical Co-founder', sector: '', contact_url: '', tags: [] as string[] })
 
 function submit() {
   emit('create', { ...form.value })
   showForm.value = false
-  form.value = { title: '', problem: '', description: '', looking_for: 'co-founder', sector: '', contact_url: '', tags: [] }
+  form.value = { title: '', problem: '', description: '', looking_for: 'Technical Co-founder', sector: '', contact_url: '', tags: [] }
 }
 
 function openEdit(idea: StartupIdea) {
@@ -33,7 +49,7 @@ function openEdit(idea: StartupIdea) {
     title: idea.title || '',
     problem: idea.problem || '',
     description: idea.description || '',
-    looking_for: idea.looking_for || 'co-founder',
+    looking_for: idea.looking_for || 'Technical Co-founder',
     sector: idea.sector || '',
     contact_url: idea.contact_url || '',
     tags: Array.isArray(idea.tags) ? [...idea.tags] : []
@@ -165,10 +181,13 @@ function submitEdit() {
         </UFormField>
         <div class="grid grid-cols-2 gap-4">
           <UFormField label="Looking For">
-            <USelect
+            <USelectMenu
               v-model="form.looking_for"
-              :items="['co-founder', 'technical co-founder', 'business co-founder', 'founding engineer']"
+              :items="lookingForOptions"
+              create-item
+              placeholder="Select or type a new role"
               class="w-full"
+              @create="(item: string) => onCreateLookingFor(item, 'create')"
             />
           </UFormField>
           <UFormField label="Sector">
@@ -241,10 +260,13 @@ function submitEdit() {
         </UFormField>
         <div class="grid grid-cols-2 gap-4">
           <UFormField label="Looking For">
-            <USelect
+            <USelectMenu
               v-model="editForm.looking_for"
-              :items="['co-founder', 'technical co-founder', 'business co-founder', 'founding engineer']"
+              :items="lookingForOptions"
+              create-item
+              placeholder="Select or type a new role"
               class="w-full"
+              @create="(item: string) => onCreateLookingFor(item, 'edit')"
             />
           </UFormField>
           <UFormField label="Sector">

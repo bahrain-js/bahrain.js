@@ -28,15 +28,20 @@ const sectors = [
   { label: 'Other', value: 'Other' }
 ]
 
-const lookingForOptions = [
-  { label: 'Technical Co-founder', value: 'Technical Co-founder' },
-  { label: 'Full-stack Developer', value: 'Full-stack Developer' },
-  { label: 'Frontend Developer', value: 'Frontend Developer' },
-  { label: 'Backend Developer', value: 'Backend Developer' },
-  { label: 'Mobile Developer', value: 'Mobile Developer' },
-  { label: 'Designer', value: 'Designer' },
-  { label: 'Any Builder', value: 'Any Builder' }
-]
+const lookingForOptions = ref([
+  'Technical Co-founder',
+  'Full-stack Developer',
+  'Frontend Developer',
+  'Backend Developer',
+  'Mobile Developer',
+  'Designer',
+  'Any Builder'
+])
+
+function onCreateLookingFor(item: string) {
+  lookingForOptions.value.push(item)
+  form.value.looking_for = item
+}
 
 async function submitIdea() {
   if (!user.value || !form.value.title || !form.value.problem || !form.value.contact_url) return
@@ -202,10 +207,13 @@ useSeoMeta({
             label="Looking For"
             required
           >
-            <USelect
+            <USelectMenu
               v-model="form.looking_for"
               :items="lookingForOptions"
-              :ui="{ content: 'min-w-fit' }"
+              create-item
+              placeholder="Select or type a new role"
+              class="w-full"
+              @create="onCreateLookingFor"
             />
           </UFormField>
         </div>
