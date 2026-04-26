@@ -38,6 +38,7 @@ export interface Member {
   website_url: string | null
   twitter_handle: string | null
   currently_building: string | null
+  founder: boolean
   created_at: string
   updated_at: string
 }

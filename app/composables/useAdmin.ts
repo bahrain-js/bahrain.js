@@ -4,9 +4,11 @@ export function useAdmin() {
 
   // Check if the current user is a core team member (admin)
   const currentUserRole = useState<string | null>('admin-role', () => null)
+  const currentUserFounder = useState<boolean>('admin-founder', () => false)
   const adminChecked = useState('admin-checked', () => false)
 
   const isAdmin = computed(() => currentUserRole.value === 'core')
+  const isFounder = computed(() => currentUserFounder.value === true)
 
   async function checkAdminStatus() {
     if (!user.value || adminChecked.value) return
@@ -14,13 +16,15 @@ export function useAdmin() {
     try {
       const { data } = await client
         .from('members')
-        .select('role')
+        .select('role, founder')
         .eq('user_id', user.value.id)
         .limit(1)
 
       currentUserRole.value = data?.[0]?.role || null
+      currentUserFounder.value = data?.[0]?.founder === true
     } catch {
       currentUserRole.value = null
+      currentUserFounder.value = false
     } finally {
       adminChecked.value = true
     }
@@ -58,6 +62,7 @@ export function useAdmin() {
 
   return {
     isAdmin,
+    isFounder,
     adminChecked: readonly(adminChecked),
     updateMemberRole,
     removeMember,

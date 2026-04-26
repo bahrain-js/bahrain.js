@@ -3,6 +3,7 @@ const { isAuthenticated: _isAuthenticated, user, loading: authLoading } = useAut
 const { isAdmin, adminChecked } = useAdmin()
 
 const {
+  isFounder,
   members, pendingEvents, jobListings, ossListings, startupIdeas, projectListings,
   loading, savingId, eventActionId, oppActionId,
   roles, roleBadgeColor, statusBadgeColor,
@@ -142,6 +143,7 @@ useSeoMeta({
         :role-badge-color="roleBadgeColor"
         :saving-id="savingId"
         :current-user-id="user?.id"
+        :is-founder="isFounder"
         @change-role="changeRole"
         @delete-member="deleteMember"
       />

@@ -15,7 +15,7 @@ import { ROLE_OPTIONS, ROLE_BADGE_COLOR, STATUS_BADGE_COLOR } from '~/types'
  */
 export function useAdminData() {
   const { user } = useAuth()
-  const { updateMemberRole, removeMember } = useAdmin()
+  const { updateMemberRole, removeMember, isFounder } = useAdmin()
   const client = useNeonClient()
 
   // ─── State ───────────────────────────────────────────────────────
@@ -151,6 +151,13 @@ export function useAdminData() {
 
   // ─── Members CRUD ────────────────────────────────────────────────
   async function changeRole(member: Member, newRole: MemberRole) {
+    // Non-founders cannot change the role of core team members
+    if (member.role === 'core' && !isFounder.value) {
+      alert('Only the founder can change a Core Team member\'s role.')
+      return
+    }
+
+    // Warn if demoting yourself
     if (member.user_id === user.value?.id && newRole !== 'core') {
       if (!confirm('You are about to remove your own admin privileges. Are you sure?')) return
     }
@@ -168,11 +175,27 @@ export function useAdminData() {
   }
 
   async function deleteMember(member: Member) {
-    if (member.user_id === user.value?.id) {
-      alert('You cannot delete your own profile from the admin panel.')
+    const isSelf = member.user_id === user.value?.id
+
+    // Founder account can never be deleted — by anyone
+    if (member.founder) {
+      alert('The founder account cannot be deleted.')
       return
     }
-    if (!confirm(`Remove ${member.display_name} (@${member.github_username}) from the community?`)) return
+
+    // Non-founders cannot delete other core team members
+    if (member.role === 'core' && !isSelf && !isFounder.value) {
+      alert('Only the founder can remove a Core Team member.')
+      return
+    }
+
+    // Self-deletion: double confirmation
+    if (isSelf) {
+      if (!confirm('You are about to permanently delete your own account. This will remove your profile and revoke access.')) return
+      if (!confirm('This action cannot be undone. Are you absolutely sure?')) return
+    } else {
+      if (!confirm(`Remove ${member.display_name} (@${member.github_username}) from the community?`)) return
+    }
 
     savingId.value = member.id
     try {
@@ -545,6 +568,8 @@ export function useAdminData() {
   }
 
   return {
+    // Auth context
+    isFounder,
     // State
     members,
     pendingEvents,
