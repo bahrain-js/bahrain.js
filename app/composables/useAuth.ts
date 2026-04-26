@@ -1,10 +1,25 @@
 import type { AuthUser, AuthSession, Member } from '~/types'
+import { resolveGitHubUsername } from '~/utils/github'
+import { resetNeonClient } from '~/composables/useNeonClient'
 
 export function useAuth() {
   const client = useNeonClient()
   const user = useState<AuthUser | null>('auth-user', () => null)
   const session = useState<AuthSession | null>('auth-session', () => null)
   const loading = useState('auth-loading', () => true)
+
+  /**
+   * Guards against running ensureMemberProfile more than once per session.
+   * Set to true after the first successful check/insert so subsequent
+   * page navigations skip the DB round-trip entirely.
+   */
+  const memberProfileChecked = useState('member-profile-checked', () => false)
+
+  /**
+   * True when the user has just signed up (first-ever session).
+   * Used by the caller to redirect new members to /profile.
+   */
+  const isNewMember = useState('is-new-member', () => false)
 
   const isAuthenticated = computed(() => !!user.value)
 
@@ -15,7 +30,11 @@ export function useAuth() {
       if (data?.session) {
         session.value = data.session
         user.value = data.user
-        await ensureMemberProfile(data.user)
+        const newUser = await ensureMemberProfile(data.user)
+        if (newUser) {
+          isNewMember.value = true
+          await navigateTo('/profile')
+        }
       } else {
         session.value = null
         user.value = null
@@ -29,32 +48,17 @@ export function useAuth() {
   }
 
   /**
-   * Extract the GitHub username from the user's avatar URL by resolving
-   * the numeric GitHub user ID via the public GitHub API.
-   */
-  async function resolveGitHubUsername(authUser: AuthUser): Promise<string> {
-    const avatarMatch = authUser.image?.match(/avatars\.githubusercontent\.com\/u\/(\d+)/)
-    if (avatarMatch?.[1]) {
-      try {
-        const res = await fetch(`https://api.github.com/user/${avatarMatch[1]}`)
-        if (res.ok) {
-          const ghUser = await res.json()
-          if (ghUser.login) return ghUser.login
-        }
-      } catch {
-        // Fall through to fallback
-      }
-    }
-    return authUser.username || authUser.name || ''
-  }
-
-  /**
    * On first sign-in, auto-create a minimal members row so the user
-   * immediately appears on the People page. Then redirect to /profile
-   * so they can fill in details like bio and skills.
+   * immediately appears on the People page.
+   *
+   * Returns `true` if a new member was created (first sign-in),
+   * `false` if the member already existed or the check was skipped.
    */
-  async function ensureMemberProfile(authUser: AuthUser) {
-    if (!authUser?.id) return
+  async function ensureMemberProfile(authUser: AuthUser): Promise<boolean> {
+    if (!authUser?.id) return false
+
+    // Skip if already checked this session
+    if (memberProfileChecked.value) return false
 
     try {
       const { data } = await client
@@ -63,7 +67,9 @@ export function useAuth() {
         .eq('user_id', authUser.id)
         .limit(1)
 
-      if (data?.length) return
+      memberProfileChecked.value = true
+
+      if (data?.length) return false
 
       const ghUsername = await resolveGitHubUsername(authUser)
 
@@ -76,9 +82,10 @@ export function useAuth() {
       }
 
       await client.from('members').insert(newMember)
-      await navigateTo('/profile')
+      return true
     } catch (err) {
       console.error('[useAuth] Failed to auto-create member profile:', err)
+      return false
     }
   }
 
@@ -97,6 +104,9 @@ export function useAuth() {
     }
     session.value = null
     user.value = null
+    memberProfileChecked.value = false
+    isNewMember.value = false
+    resetNeonClient()
     await navigateTo('/')
   }
 
@@ -110,6 +120,7 @@ export function useAuth() {
     session: readonly(session),
     isAuthenticated,
     loading: readonly(loading),
+    isNewMember: readonly(isNewMember),
     signInWithGitHub,
     signOut,
     fetchSession
