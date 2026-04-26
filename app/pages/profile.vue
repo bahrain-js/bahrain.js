@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { resolveGitHubUsername } from '~/utils/github'
+
 const { user, isAuthenticated, loading: authLoading, signInWithGitHub } = useAuth()
 const client = useNeonClient()
 
@@ -31,32 +33,6 @@ watch(
   { immediate: true }
 )
 
-// Fetch GitHub username by resolving the numeric ID from the avatar URL
-async function fetchGitHubUsername(): Promise<string> {
-  const u = user.value
-  if (!u) return ''
-
-  // Better Auth stores the GitHub avatar as: https://avatars.githubusercontent.com/u/{numeric_id}
-  const avatarMatch = u.image?.match(/avatars\.githubusercontent\.com\/u\/(\d+)/)
-
-  if (avatarMatch?.[1]) {
-    try {
-      const res = await fetch(`https://api.github.com/user/${avatarMatch[1]}`)
-      if (res.ok) {
-        const ghUser = await res.json()
-        if (ghUser.login) return ghUser.login
-      }
-    } catch (err) {
-      console.warn('GitHub API call failed:', err)
-    }
-  }
-
-  // Fallback: check user object
-  if (u.username) return u.username
-
-  return ''
-}
-
 // Pre-populate from GitHub user data and load existing profile
 watch(
   () => user.value,
@@ -67,8 +43,8 @@ watch(
     form.display_name = u.name || u.email?.split('@')[0] || ''
     form.avatar_url = u.image || ''
 
-    // Fetch GitHub username from OAuth account data
-    const ghUsername = await fetchGitHubUsername()
+    // Resolve GitHub username from shared cached utility
+    const ghUsername = await resolveGitHubUsername(u)
     if (ghUsername) form.github_username = ghUsername
 
     // Check for existing profile in members table

@@ -32,3 +32,12 @@ export function useNeonClient() {
 
   return client
 }
+
+/**
+ * Clear the cached Neon client singleton.
+ * Must be called on sign-out to prevent stale auth state
+ * (tokens, session cookies) from persisting in the reused client.
+ */
+export function resetNeonClient() {
+  _client = null
+}

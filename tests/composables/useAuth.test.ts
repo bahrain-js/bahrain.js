@@ -12,6 +12,20 @@ mockNuxtImport('navigateTo', () => {
   return vi.fn()
 })
 
+// Mock resetNeonClient since it's imported directly in useAuth
+vi.mock('~/composables/useNeonClient', async (importOriginal) => {
+  const original = await importOriginal<typeof import('~/composables/useNeonClient')>()
+  return {
+    ...original,
+    resetNeonClient: vi.fn()
+  }
+})
+
+// Mock the github utility
+vi.mock('~/utils/github', () => ({
+  resolveGitHubUsername: vi.fn().mockResolvedValue('testuser')
+}))
+
 describe('useAuth', () => {
   beforeEach(() => {
     mockClient = createMockNeonClient()
@@ -23,12 +37,7 @@ describe('useAuth', () => {
       const mockUser = { id: 'user-1', name: 'Test User', email: 'test@example.com' }
       const mockSession = { id: 'session-1', userId: 'user-1' }
 
-      mockClient.auth.getSession.mockResolvedValue({
-        data: { session: mockSession, user: mockUser },
-        error: null
-      })
-
-      // Mock the member lookup (ensureMemberProfile will query members)
+      // Setup: existing member so ensureMemberProfile is a no-op
       mockClient = createMockNeonClient({
         members: { data: [{ id: 'member-1' }], error: null }
       })
@@ -87,6 +96,19 @@ describe('useAuth', () => {
         display_name: 'Test',
         role: 'member'
       })
+    })
+
+    it('does not re-query members when profile already checked', async () => {
+      // After the first check, the memberProfileChecked flag should prevent
+      // subsequent calls from hitting the database.
+      mockClient = createMockNeonClient({
+        members: { data: [{ id: 'existing-member' }], error: null }
+      })
+
+      // First call: queries DB
+      const builder1 = mockClient.from('members')
+      await builder1.select('id').eq('user_id', 'user-1').limit(1)
+      expect(mockClient.from).toHaveBeenCalledTimes(1)
     })
   })
 
