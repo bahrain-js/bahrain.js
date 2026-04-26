@@ -6,10 +6,20 @@ const GITHUB_ORG = 'bahrain-js'
  * Fetches public repos from the Bahrain.js GitHub organization.
  * Returns non-forked, non-archived repos sorted by last updated.
  *
- * Uses `useAsyncData` for SSR payload deduplication and client-side caching.
+ * Uses plain ref + client-side fetch instead of useAsyncData because
+ * this composable is only used on `ssr: false` routes (projects page).
+ * useAsyncData crashes on direct navigation to static ssr:false pages
+ * because the Nuxt payload object is undefined — getCachedData tries
+ * to read `payload.data['github-repos']` which throws.
  */
 export function useGitHubRepos() {
-  return useAsyncData<GitHubRepo[]>('github-repos', async () => {
+  const data = useState<GitHubRepo[]>('github-repos', () => [])
+  const status = ref<'idle' | 'pending' | 'success' | 'error'>('idle')
+  const error = ref<Error | null>(null)
+
+  async function refresh() {
+    status.value = 'pending'
+    error.value = null
     try {
       const repos = await $fetch<Record<string, unknown>[]>(
         `https://api.github.com/orgs/${GITHUB_ORG}/repos?per_page=50&sort=updated`,
@@ -21,7 +31,7 @@ export function useGitHubRepos() {
         }
       )
 
-      return repos
+      data.value = repos
         .filter(repo => !repo.fork && !repo.archived)
         .map(repo => ({
           name: repo.name as string,
@@ -36,13 +46,19 @@ export function useGitHubRepos() {
           updatedAt: repo.updated_at as string,
           openIssues: repo.open_issues_count as number
         }))
-    } catch (error: unknown) {
-      console.error('[useGitHubRepos] GitHub API error:', (error as Error).message)
-      return []
+      status.value = 'success'
+    } catch (err: unknown) {
+      console.error('[useGitHubRepos] GitHub API error:', (err as Error).message)
+      error.value = err as Error
+      data.value = []
+      status.value = 'error'
     }
-  }, {
-    server: false,
-    lazy: true,
-    default: () => []
-  })
+  }
+
+  // Fetch on first client-side use if not already loaded
+  if (import.meta.client && !data.value.length && status.value === 'idle') {
+    refresh()
+  }
+
+  return { data, status, error, refresh }
 }
