@@ -44,7 +44,7 @@ async function submitJob() {
     saved.value = true
   } catch (err) {
     console.error('Failed to submit job:', err)
-    alert('Failed to submit job listing. Please try again.')
+    useToast().add({ title: 'Failed to submit job listing', description: 'Please try again.', color: 'error', icon: 'i-lucide-circle-x' })
   } finally {
     saving.value = false
   }

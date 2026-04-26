@@ -1,5 +1,5 @@
 export function useAdmin() {
-  const { user, isAuthenticated: _isAuthenticated } = useAuth()
+  const { user } = useAuth()
   const client = useNeonClient()
 
   // Check if the current user is a core team member (admin)

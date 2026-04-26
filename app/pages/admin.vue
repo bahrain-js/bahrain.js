@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { isAuthenticated: _isAuthenticated, user, loading: authLoading } = useAuth()
+const { isAuthenticated, user, loading: authLoading } = useAuth()
 const { isAdmin, adminChecked } = useAdmin()
 
 const {
@@ -18,24 +18,25 @@ const {
 
 const activeTab = ref('members')
 
-// Redirect non-admins
-// watch(
-//   [() => authLoading.value, () => adminChecked.value],
-//   ([isLoading, checked]) => {
-//     if (!isLoading && checked) {
-//       if (!isAuthenticated.value || !isAdmin.value) {
-//         navigateTo('/people')
-//       }
-//     }
-//   },
-//   { immediate: true }
-// )
-
-onMounted(fetchAll)
+// Only fetch admin data once we've confirmed the user is an admin
+watch(
+  [() => authLoading.value, () => adminChecked.value],
+  ([isLoading, checked]) => {
+    if (!isLoading && checked) {
+      if (!isAuthenticated.value || !isAdmin.value) {
+        navigateTo('/people')
+      } else {
+        fetchAll()
+      }
+    }
+  },
+  { immediate: true }
+)
 
 useSeoMeta({
   title: 'Admin — Bahrain.js',
-  description: 'Manage community members, events, opportunities, and roles.'
+  description: 'Manage community members, events, opportunities, and roles.',
+  robots: 'noindex, nofollow'
 })
 </script>
 

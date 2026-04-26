@@ -135,7 +135,7 @@ async function toggleRsvp() {
     }
   } catch (err) {
     console.error('Failed to toggle RSVP:', err)
-    alert('Failed to update RSVP. Please try again.')
+    useToast().add({ title: 'Failed to update RSVP', description: 'Please try again.', color: 'error', icon: 'i-lucide-circle-x' })
   } finally {
     rsvpLoading.value = false
   }

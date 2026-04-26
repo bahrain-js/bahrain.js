@@ -132,7 +132,7 @@ async function saveEvent() {
     setTimeout(() => navigateTo(`/events/${eventId}`), 1500)
   } catch (err) {
     console.error('Failed to update event:', err)
-    alert('Failed to save changes. Please try again.')
+    useToast().add({ title: 'Failed to save changes', description: 'Please try again.', color: 'error', icon: 'i-lucide-circle-x' })
   } finally {
     saving.value = false
   }

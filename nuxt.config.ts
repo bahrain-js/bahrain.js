@@ -22,7 +22,8 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       neonAuthUrl: '',
-      neonDataApiUrl: ''
+      neonDataApiUrl: '',
+      siteUrl: 'https://bahrain.js.org'
     }
   },
 

@@ -144,7 +144,7 @@ async function saveProfile() {
     }, 3000)
   } catch (err: unknown) {
     console.error('Failed to save profile:', err)
-    alert('Failed to save profile. Please try again.')
+    useToast().add({ title: 'Failed to save profile', description: 'Please try again.', color: 'error', icon: 'i-lucide-circle-x' })
   } finally {
     saving.value = false
   }

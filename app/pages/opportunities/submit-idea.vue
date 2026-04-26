@@ -48,9 +48,6 @@ async function submitIdea() {
 
   saving.value = true
   try {
-    // const tags = form.value.tags
-    //   ? form.value.tags.split(',').map((t: string) => t.trim()).filter(Boolean)
-    //   : []
 
     const { error } = await client
       .from('startup_ideas')
@@ -70,7 +67,7 @@ async function submitIdea() {
     saved.value = true
   } catch (err) {
     console.error('Failed to submit idea:', err)
-    alert('Failed to submit startup idea. Please try again.')
+    useToast().add({ title: 'Failed to submit startup idea', description: 'Please try again.', color: 'error', icon: 'i-lucide-circle-x' })
   } finally {
     saving.value = false
   }

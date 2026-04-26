@@ -17,6 +17,7 @@ export function useAdminData() {
   const { user } = useAuth()
   const { updateMemberRole, removeMember, isFounder } = useAdmin()
   const client = useNeonClient()
+  const toast = useToast()
 
   // ─── State ───────────────────────────────────────────────────────
   const members = ref<Member[]>([])
@@ -153,7 +154,7 @@ export function useAdminData() {
   async function changeRole(member: Member, newRole: MemberRole) {
     // Non-founders cannot change the role of core team members
     if (member.role === 'core' && !isFounder.value) {
-      alert('Only the founder can change a Core Team member\'s role.')
+      toast.add({ title: 'Permission denied', description: 'Only the founder can change a Core Team member\'s role.', color: 'warning', icon: 'i-lucide-shield-alert' })
       return
     }
 
@@ -168,7 +169,7 @@ export function useAdminData() {
       member.role = newRole
     } catch (err) {
       console.error('[admin] Failed to update role:', err)
-      alert('Failed to update role. Please try again.')
+      toast.add({ title: 'Failed to update role', description: 'Please try again.', color: 'error', icon: 'i-lucide-circle-x' })
     } finally {
       savingId.value = null
     }
@@ -179,13 +180,13 @@ export function useAdminData() {
 
     // Founder account can never be deleted — by anyone
     if (member.founder) {
-      alert('The founder account cannot be deleted.')
+      toast.add({ title: 'Cannot delete founder', description: 'The founder account cannot be deleted.', color: 'warning', icon: 'i-lucide-shield-alert' })
       return
     }
 
     // Non-founders cannot delete other core team members
     if (member.role === 'core' && !isSelf && !isFounder.value) {
-      alert('Only the founder can remove a Core Team member.')
+      toast.add({ title: 'Permission denied', description: 'Only the founder can remove a Core Team member.', color: 'warning', icon: 'i-lucide-shield-alert' })
       return
     }
 
@@ -203,7 +204,7 @@ export function useAdminData() {
       members.value = members.value.filter(m => m.id !== member.id)
     } catch (err) {
       console.error('[admin] Failed to remove member:', err)
-      alert('Failed to remove member. Please try again.')
+      toast.add({ title: 'Failed to remove member', description: 'Please try again.', color: 'error', icon: 'i-lucide-circle-x' })
     } finally {
       savingId.value = null
     }
@@ -222,7 +223,7 @@ export function useAdminData() {
       event.reviewed_by = user.value?.id ?? null
     } catch (err) {
       console.error('[admin] Failed to update event:', err)
-      alert('Failed to update event. Please try again.')
+      toast.add({ title: 'Failed to update event', description: 'Please try again.', color: 'error', icon: 'i-lucide-circle-x' })
     } finally {
       eventActionId.value = null
     }
@@ -238,7 +239,7 @@ export function useAdminData() {
       pendingEvents.value = pendingEvents.value.filter(e => e.id !== event.id)
     } catch (err) {
       console.error('[admin] Failed to delete event:', err)
-      alert('Failed to delete event. Please try again.')
+      toast.add({ title: 'Failed to delete event', description: 'Please try again.', color: 'error', icon: 'i-lucide-circle-x' })
     } finally {
       eventActionId.value = null
     }
@@ -271,7 +272,7 @@ export function useAdminData() {
       await fetchJobListings()
     } catch (err) {
       console.error('[admin] Failed to create job:', err)
-      alert('Failed to create job listing.')
+      toast.add({ title: 'Failed to create job listing', color: 'error', icon: 'i-lucide-circle-x' })
     }
   }
 
@@ -284,7 +285,7 @@ export function useAdminData() {
       jobListings.value = jobListings.value.filter(j => j.id !== job.id)
     } catch (err) {
       console.error('[admin] Failed to delete job:', err)
-      alert('Failed to delete.')
+      toast.add({ title: 'Failed to delete', color: 'error', icon: 'i-lucide-circle-x' })
     } finally {
       oppActionId.value = null
     }
@@ -327,7 +328,7 @@ export function useAdminData() {
       await fetchOssListings()
     } catch (err) {
       console.error('[admin] Failed to create OSS:', err)
-      alert('Failed to create project.')
+      toast.add({ title: 'Failed to create project', color: 'error', icon: 'i-lucide-circle-x' })
     }
   }
 
@@ -340,7 +341,7 @@ export function useAdminData() {
       ossListings.value = ossListings.value.filter(o => o.id !== opp.id)
     } catch (err) {
       console.error('[admin] Failed to delete OSS:', err)
-      alert('Failed to delete.')
+      toast.add({ title: 'Failed to delete', color: 'error', icon: 'i-lucide-circle-x' })
     } finally {
       oppActionId.value = null
     }
@@ -388,7 +389,7 @@ export function useAdminData() {
       }
     } catch (err) {
       console.error('[admin] Failed to update OSS:', err)
-      alert('Failed to update project.')
+      toast.add({ title: 'Failed to update project', color: 'error', icon: 'i-lucide-circle-x' })
     } finally {
       oppActionId.value = null
     }
@@ -419,7 +420,7 @@ export function useAdminData() {
       await fetchStartupIdeas()
     } catch (err) {
       console.error('[admin] Failed to create idea:', err)
-      alert('Failed to create startup idea.')
+      toast.add({ title: 'Failed to create startup idea', color: 'error', icon: 'i-lucide-circle-x' })
     }
   }
 
@@ -432,7 +433,7 @@ export function useAdminData() {
       startupIdeas.value = startupIdeas.value.filter(i => i.id !== idea.id)
     } catch (err) {
       console.error('[admin] Failed to delete idea:', err)
-      alert('Failed to delete.')
+      toast.add({ title: 'Failed to delete', color: 'error', icon: 'i-lucide-circle-x' })
     } finally {
       oppActionId.value = null
     }
@@ -482,7 +483,7 @@ export function useAdminData() {
       }
     } catch (err) {
       console.error('[admin] Failed to update idea:', err)
-      alert('Failed to update startup idea.')
+      toast.add({ title: 'Failed to update startup idea', color: 'error', icon: 'i-lucide-circle-x' })
     } finally {
       oppActionId.value = null
     }
@@ -517,7 +518,7 @@ export function useAdminData() {
       await fetchProjectListings()
     } catch (err) {
       console.error('[admin] Failed to create project:', err)
-      alert('Failed to create project.')
+      toast.add({ title: 'Failed to create project', color: 'error', icon: 'i-lucide-circle-x' })
     }
   }
 
@@ -530,7 +531,7 @@ export function useAdminData() {
       projectListings.value = projectListings.value.filter(p => p.id !== project.id)
     } catch (err) {
       console.error('[admin] Failed to delete project:', err)
-      alert('Failed to delete.')
+      toast.add({ title: 'Failed to delete', color: 'error', icon: 'i-lucide-circle-x' })
     } finally {
       oppActionId.value = null
     }
@@ -588,7 +589,7 @@ export function useAdminData() {
       }
     } catch (err) {
       console.error('[admin] Failed to update project:', err)
-      alert('Failed to update project.')
+      toast.add({ title: 'Failed to update project', color: 'error', icon: 'i-lucide-circle-x' })
     } finally {
       oppActionId.value = null
     }

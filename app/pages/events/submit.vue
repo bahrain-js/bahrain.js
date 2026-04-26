@@ -74,7 +74,7 @@ async function submitEvent() {
     saved.value = true
   } catch (err) {
     console.error('Failed to submit event:', err)
-    alert('Failed to submit event. Please try again.')
+    useToast().add({ title: 'Failed to submit event', description: 'Please try again.', color: 'error', icon: 'i-lucide-circle-x' })
   } finally {
     saving.value = false
   }

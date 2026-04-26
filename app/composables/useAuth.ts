@@ -90,9 +90,11 @@ export function useAuth() {
   }
 
   async function signInWithGitHub() {
+    const { siteUrl } = useRuntimeConfig().public
+    const callbackURL = siteUrl ? `${siteUrl}${window.location.pathname}` : window.location.href
     await client.auth.signIn.social({
       provider: 'github',
-      callbackURL: window.location.href
+      callbackURL
     })
   }
 

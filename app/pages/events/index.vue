@@ -67,9 +67,7 @@ async function fetchEvents() {
   }
 }
 
-function getRsvpCount(_event: CommunityEvent) {
-  return 0 // Will be fetched on detail page
-}
+
 
 onMounted(fetchEvents)
 
@@ -251,16 +249,7 @@ useSeoMeta({
                     />
                     {{ event.location }}
                   </span>
-                  <span
-                    v-if="getRsvpCount(event)"
-                    class="flex items-center gap-1"
-                  >
-                    <UIcon
-                      name="i-lucide-users"
-                      class="size-3.5"
-                    />
-                    {{ getRsvpCount(event) }} attending
-                  </span>
+
                 </div>
               </div>
 
@@ -341,16 +330,7 @@ useSeoMeta({
                 </NuxtLink>
               </div>
 
-              <div
-                v-if="getRsvpCount(event)"
-                class="text-sm text-zinc-400 flex items-center gap-1"
-              >
-                <UIcon
-                  name="i-lucide-users"
-                  class="size-3.5"
-                />
-                {{ getRsvpCount(event) }}
-              </div>
+
             </div>
           </UCard>
         </div>

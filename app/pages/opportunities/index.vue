@@ -134,7 +134,7 @@ async function submitEditIdea() {
     editingIdeaId.value = null
   } catch (err) {
     console.error('Failed to update idea:', err)
-    alert('Failed to update idea. Please try again.')
+    useToast().add({ title: 'Failed to update idea', description: 'Please try again.', color: 'error', icon: 'i-lucide-circle-x' })
   } finally {
     editIdeaSaving.value = false
   }
