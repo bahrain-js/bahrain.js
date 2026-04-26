@@ -40,5 +40,9 @@ export function useGitHubRepos() {
       console.error('[useGitHubRepos] GitHub API error:', (error as Error).message)
       return []
     }
+  }, {
+    server: false,
+    lazy: true,
+    default: () => []
   })
 }
