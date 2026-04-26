@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const selectedTag = ref<string | null>(null)
 
-const { data: posts } = await useAsyncData('blog-posts', () =>
+const { data: posts, status } = useLazyAsyncData('blog-posts', () =>
   queryCollection('blog')
     .order('date', 'DESC')
     .all()
@@ -55,117 +55,131 @@ useSeoMeta({
       </p>
     </div>
 
-    <!-- Tag filter -->
+    <!-- Loading state -->
     <div
-      v-if="allTags.length"
-      class="flex flex-wrap gap-2 justify-center mb-10"
+      v-if="status === 'pending'"
+      class="max-w-3xl mx-auto space-y-6"
     >
-      <UButton
-        v-for="tag in allTags"
-        :key="tag"
-        :label="tag"
-        :variant="selectedTag === tag ? 'solid' : 'outline'"
-        size="xs"
-        class="capitalize"
-        @click="toggleTag(tag)"
-      />
-      <UButton
-        v-if="selectedTag"
-        label="Clear"
-        icon="i-lucide-x"
-        variant="ghost"
-        size="xs"
-        class="capitalize"
-        @click="selectedTag = null"
+      <USkeleton
+        v-for="i in 3"
+        :key="i"
+        class="h-48 rounded-xl"
       />
     </div>
 
-    <!-- Posts grid -->
-    <div
-      v-if="filteredPosts.length"
-      class="grid gap-8 max-w-3xl mx-auto"
-    >
-      <article
-        v-for="post in filteredPosts"
-        :key="post.path"
+    <template v-else>
+      <!-- Tag filter -->
+      <div
+        v-if="allTags.length"
+        class="flex flex-wrap gap-2 justify-center mb-10"
       >
-        <NuxtLink
-          :to="post.path"
-          class="group block"
+        <UButton
+          v-for="tag in allTags"
+          :key="tag"
+          :label="tag"
+          :variant="selectedTag === tag ? 'solid' : 'outline'"
+          size="xs"
+          class="capitalize"
+          @click="toggleTag(tag)"
+        />
+        <UButton
+          v-if="selectedTag"
+          label="Clear"
+          icon="i-lucide-x"
+          variant="ghost"
+          size="xs"
+          class="capitalize"
+          @click="selectedTag = null"
+        />
+      </div>
+
+      <!-- Posts grid -->
+      <div
+        v-if="filteredPosts.length"
+        class="grid gap-8 max-w-3xl mx-auto"
+      >
+        <article
+          v-for="post in filteredPosts"
+          :key="post.path"
         >
-          <UCard class="hover:ring-2 hover:ring-yellow-400/50 transition-all">
-            <div class="flex flex-col gap-3">
-              <!-- Featured badge -->
-              <div
-                v-if="post.featured"
-                class="flex items-center gap-1 text-xs font-medium text-yellow-600 dark:text-yellow-400"
-              >
-                <UIcon
-                  name="i-lucide-star"
-                  class="size-3.5"
-                />
-                Featured
-              </div>
-
-              <!-- Title -->
-              <h2 class="text-xl font-bold group-hover:text-yellow-500 transition-colors">
-                {{ post.title }}
-              </h2>
-
-              <!-- Description -->
-              <p class="text-zinc-500 dark:text-zinc-400">
-                {{ post.description }}
-              </p>
-
-              <!-- Meta -->
-              <div class="flex items-center gap-4 text-sm text-zinc-400 dark:text-zinc-500">
-                <span class="flex items-center gap-1">
-                  <UIcon
-                    name="i-lucide-user"
-                    class="size-3.5"
-                  />
-                  {{ post.author }}
-                </span>
-                <span class="flex items-center gap-1">
-                  <UIcon
-                    name="i-lucide-calendar"
-                    class="size-3.5"
-                  />
-                  {{ formatDate(post.date) }}
-                </span>
-              </div>
-
-              <!-- Tags -->
-              <div
-                v-if="post.tags?.length"
-                class="flex flex-wrap gap-1.5"
-              >
-                <span
-                  v-for="tag in post.tags"
-                  :key="tag"
-                  class="text-xs px-2 py-0.5 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400"
+          <NuxtLink
+            :to="post.path"
+            class="group block"
+          >
+            <UCard class="hover:ring-2 hover:ring-yellow-400/50 transition-all">
+              <div class="flex flex-col gap-3">
+                <!-- Featured badge -->
+                <div
+                  v-if="post.featured"
+                  class="flex items-center gap-1 text-xs font-medium text-yellow-600 dark:text-yellow-400"
                 >
-                  {{ tag }}
-                </span>
-              </div>
-            </div>
-          </UCard>
-        </NuxtLink>
-      </article>
-    </div>
+                  <UIcon
+                    name="i-lucide-star"
+                    class="size-3.5"
+                  />
+                  Featured
+                </div>
 
-    <!-- Empty state -->
-    <div
-      v-else
-      class="text-center py-12"
-    >
-      <UIcon
-        name="i-lucide-file-text"
-        class="size-12 text-zinc-300 dark:text-zinc-600 mx-auto mb-4"
-      />
-      <p class="text-zinc-500 dark:text-zinc-400">
-        No posts found{{ selectedTag ? ` for tag "${selectedTag}"` : '' }}.
-      </p>
-    </div>
+                <!-- Title -->
+                <h2 class="text-xl font-bold group-hover:text-yellow-500 transition-colors">
+                  {{ post.title }}
+                </h2>
+
+                <!-- Description -->
+                <p class="text-zinc-500 dark:text-zinc-400">
+                  {{ post.description }}
+                </p>
+
+                <!-- Meta -->
+                <div class="flex items-center gap-4 text-sm text-zinc-400 dark:text-zinc-500">
+                  <span class="flex items-center gap-1">
+                    <UIcon
+                      name="i-lucide-user"
+                      class="size-3.5"
+                    />
+                    {{ post.author }}
+                  </span>
+                  <span class="flex items-center gap-1">
+                    <UIcon
+                      name="i-lucide-calendar"
+                      class="size-3.5"
+                    />
+                    {{ formatDate(post.date) }}
+                  </span>
+                </div>
+
+                <!-- Tags -->
+                <div
+                  v-if="post.tags?.length"
+                  class="flex flex-wrap gap-1.5"
+                >
+                  <span
+                    v-for="tag in post.tags"
+                    :key="tag"
+                    class="text-xs px-2 py-0.5 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400"
+                  >
+                    {{ tag }}
+                  </span>
+                </div>
+              </div>
+            </UCard>
+          </NuxtLink>
+        </article>
+      </div>
+
+      <!-- Empty state -->
+      <div
+        v-else
+        class="text-center py-12"
+      >
+        <UIcon
+          name="i-lucide-file-text"
+          class="size-12 text-zinc-300 dark:text-zinc-600 mx-auto mb-4"
+        />
+        <p class="text-zinc-500 dark:text-zinc-400">
+          No posts found{{ selectedTag ? ` for tag "${selectedTag}"` : '' }}.
+        </p>
+      </div>
+    </template>
   </UContainer>
 </template>

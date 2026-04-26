@@ -2,15 +2,18 @@
 const route = useRoute()
 const contentPath = `/blog/${route.params.slug}`
 
-const { data: post } = await useAsyncData(`blog-${contentPath}`, () =>
+const { data: post, status } = useLazyAsyncData(`blog-${contentPath}`, () =>
   queryCollection('blog')
     .path(contentPath)
     .first()
 )
 
-if (!post.value) {
-  throw createError({ statusCode: 404, statusMessage: 'Post not found' })
-}
+// Handle 404 once data resolves
+watch(status, (s) => {
+  if (s === 'success' && !post.value) {
+    throw createError({ statusCode: 404, statusMessage: 'Post not found' })
+  }
+})
 
 function formatDate(dateStr: string) {
   return new Date(dateStr).toLocaleDateString('en-US', {
@@ -29,15 +32,40 @@ function estimateReadingTime(description: string) {
   return `${minutes} min read`
 }
 
+const pageTitle = computed(() =>
+  post.value ? `${post.value.title} — Bahrain.js Blog` : 'Loading… — Bahrain.js Blog'
+)
+const pageDescription = computed(() =>
+  post.value?.description || 'A blog post from the Bahrain.js community.'
+)
+
 useSeoMeta({
-  title: `${post.value.title} — Bahrain.js Blog`,
-  description: post.value.description
+  title: pageTitle,
+  description: pageDescription
 })
 </script>
 
 <template>
+  <!-- Loading state -->
   <UContainer
-    v-if="post"
+    v-if="status === 'pending'"
+    class="py-16 max-w-3xl"
+  >
+    <USkeleton class="h-6 w-24 rounded mb-8" />
+    <USkeleton class="h-10 w-3/4 rounded mb-4" />
+    <USkeleton class="h-6 w-full rounded mb-4" />
+    <USkeleton class="h-6 w-2/3 rounded mb-8" />
+    <div class="space-y-3">
+      <USkeleton
+        v-for="i in 6"
+        :key="i"
+        class="h-4 w-full rounded"
+      />
+    </div>
+  </UContainer>
+
+  <UContainer
+    v-else-if="post"
     class="py-16 max-w-3xl"
   >
     <!-- Back link -->
