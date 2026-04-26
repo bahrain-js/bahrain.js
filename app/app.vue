@@ -55,6 +55,8 @@ useSeoMeta({
   description,
   ogTitle: title,
   ogDescription: description,
+  ogImage: 'https://bahrain.js.org/og-image.png',
+  ogUrl: 'https://bahrain.js.org',
   twitterCard: 'summary_large_image'
 })
 </script>
@@ -64,7 +66,12 @@ useSeoMeta({
     <AppHeader />
 
     <UMain>
-      <NuxtPage />
+      <NuxtPage
+        :transition="{
+          name: 'page',
+          mode: 'out-in'
+        }"
+      />
     </UMain>
 
     <AppFooter />

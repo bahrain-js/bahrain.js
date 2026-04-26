@@ -12,7 +12,7 @@ const {
   updateEventStatus, deleteEvent,
   createJob, deleteJob, updateJobStatus,
   createOss, deleteOss, updateOssStatus, updateOss,
-  createIdea, deleteIdea, updateIdeaStatus,
+  createIdea, deleteIdea, updateIdeaStatus, updateIdea,
   createProject, deleteProject, updateProjectStatus, updateProject
 } = useAdminData()
 
@@ -188,6 +188,7 @@ useSeoMeta({
           @update-status="updateIdeaStatus"
           @delete-idea="deleteIdea"
           @create="createIdea"
+          @edit="updateIdea"
         />
       </div>
 

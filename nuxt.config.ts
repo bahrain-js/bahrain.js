@@ -6,6 +6,17 @@ export default defineNuxtConfig({
     enabled: true
   },
 
+  // GitHub Pages returns 301 redirects with http:// (not https://) when adding
+  // a trailing slash. Since Cloudflare proxies over HTTPS, this causes
+  // cross-protocol errors. Force trailing slashes so the redirect never fires.
+  experimental: {
+    defaults: {
+      nuxtLink: {
+        trailingSlash: 'append'
+      }
+    }
+  },
+
   css: ['~/assets/css/main.css'],
 
   runtimeConfig: {

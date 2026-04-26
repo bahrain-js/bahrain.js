@@ -47,35 +47,7 @@
       </div>
     </template>
 
-    <!-- <template #default> -->
-    <!-- <div class="flex items-center justify-end gap-4 text-sm text-muted">
-        <NuxtLink
-          to="/events"
-          class="hover:text-default transition-colors"
-        >
-          Events
-        </NuxtLink>
-        <NuxtLink
-          to="/projects"
-          class="hover:text-default transition-colors"
-        >
-          Projects
-        </NuxtLink>
-        <NuxtLink
-          to="/people"
-          class="hover:text-default transition-colors"
-        >
-          People
-        </NuxtLink>
-        <NuxtLink
-          to="/blog"
-          class="hover:text-default transition-colors"
-        >
-          Blog
-        </NuxtLink>
-      </div> -->
-    <UNavigationMenu :items="navItems"  />
-    <!-- </template> -->
+    <UNavigationMenu :items="navItems" />
 
     <template #right>
       <div class="flex items-center gap-1">

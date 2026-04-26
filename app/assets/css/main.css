@@ -11,12 +11,12 @@
   --color-yellow-200: #FCE588;
   --color-yellow-300: #F9D34A;
   --color-yellow-400: #EFDB50;
-  /* --color-yellow-500: #D4A017;
+  --color-yellow-500: #D4A017;
   --color-yellow-600: #B8860B;
   --color-yellow-700: #926A08;
   --color-yellow-800: #6B4E06;
   --color-yellow-900: #473504;
-  --color-yellow-950: #281D02; */
+  --color-yellow-950: #281D02;
 }
 
 /* Scroll reveal animation */
@@ -29,4 +29,18 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* Page transition */
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.page-enter-from {
+  opacity: 0;
+  transform: translateY(8px);
+}
+.page-leave-to {
+  opacity: 0;
+  transform: translateY(-8px);
 }

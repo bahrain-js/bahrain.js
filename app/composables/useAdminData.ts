@@ -452,6 +452,42 @@ export function useAdminData() {
     }
   }
 
+  async function updateIdea(id: string, formData: {
+    title: string
+    problem: string
+    description: string
+    looking_for: string
+    sector: string
+    contact_url: string
+    tags: string[]
+  }) {
+    oppActionId.value = id
+    try {
+      const { error } = await client
+        .from('startup_ideas')
+        .update({
+          title: formData.title,
+          problem: formData.problem || null,
+          description: formData.description || null,
+          looking_for: formData.looking_for,
+          sector: formData.sector || null,
+          contact_url: formData.contact_url || null,
+          tags: formData.tags || []
+        })
+        .eq('id', id)
+      if (error) throw error
+      const idx = startupIdeas.value.findIndex(i => i.id === id)
+      if (idx !== -1) {
+        Object.assign(startupIdeas.value[idx]!, formData)
+      }
+    } catch (err) {
+      console.error('[admin] Failed to update idea:', err)
+      alert('Failed to update startup idea.')
+    } finally {
+      oppActionId.value = null
+    }
+  }
+
   // ─── Projects CRUD ───────────────────────────────────────────────
   async function createProject(formData: {
     name: string
@@ -601,6 +637,7 @@ export function useAdminData() {
     createIdea,
     deleteIdea,
     updateIdeaStatus,
+    updateIdea,
     createProject,
     deleteProject,
     updateProjectStatus,
