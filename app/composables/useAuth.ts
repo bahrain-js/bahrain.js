@@ -2,6 +2,15 @@ import type { AuthUser, AuthSession, Member } from '~/types'
 import { resolveGitHubUsername } from '~/utils/github'
 import { resetNeonClient } from '~/composables/useNeonClient'
 
+/**
+ * In-flight session fetch shared by every useAuth() caller.
+ * Several components call useAuth() during the same render (header, hero,
+ * page), and each used to start its own fetchSession(). That ran
+ * ensureMemberProfile concurrently, so a first sign-in could insert
+ * duplicate member rows and trigger several /profile redirects.
+ */
+let sessionRequest: Promise<void> | null = null
+
 export function useAuth() {
   const client = useNeonClient()
   const user = useState<AuthUser | null>('auth-user', () => null)
@@ -23,7 +32,16 @@ export function useAuth() {
 
   const isAuthenticated = computed(() => !!user.value)
 
-  async function fetchSession() {
+  function fetchSession() {
+    if (!sessionRequest) {
+      sessionRequest = runFetchSession().finally(() => {
+        sessionRequest = null
+      })
+    }
+    return sessionRequest
+  }
+
+  async function runFetchSession() {
     loading.value = true
     try {
       const { data } = await client.auth.getSession()
