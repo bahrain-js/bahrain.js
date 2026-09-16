@@ -11,6 +11,7 @@ const event = ref<CommunityEvent | null>(null)
 const rsvps = ref<EventRsvpWithMember[]>([])
 const loading = ref(true)
 const rsvpLoading = ref(false)
+const loadError = ref(false)
 
 const eventTypeConfig: Record<string, { icon: string, label: string, color: string }> = {
   'meetup': { icon: 'i-lucide-mic', label: 'Meetup', color: 'text-yellow-500' },
@@ -61,8 +62,13 @@ async function fetchEvent() {
       .eq('id', eventId)
       .limit(1)
 
-    if (error || !data?.length) {
-      throw createError({ statusCode: 404, statusMessage: 'Event not found' })
+    if (error) throw error
+    if (!data?.length) {
+      // This page is client-only (ssr: false), so a thrown createError inside
+      // onMounted would be an unhandled rejection and the page would stay blank.
+      // showError renders the app-level error page instead.
+      showError({ statusCode: 404, statusMessage: 'Event not found' })
+      return
     }
     event.value = data[0]
 
@@ -90,8 +96,8 @@ async function fetchEvent() {
       rsvps.value = []
     }
   } catch (err: unknown) {
-    if (err instanceof Error && 'statusCode' in err && (err as { statusCode: number }).statusCode === 404) throw err
     console.error('Failed to fetch event:', err)
+    loadError.value = true
   } finally {
     loading.value = false
   }
@@ -368,5 +374,16 @@ watchEffect(() => {
         </div>
       </div>
     </template>
+
+    <!-- Fetch failed (network, database) -->
+    <UAlert
+      v-else-if="loadError"
+      color="error"
+      variant="subtle"
+      icon="i-lucide-circle-alert"
+      title="Couldn't load this event"
+      description="Something went wrong while fetching the event. Please try again."
+      :actions="[{ label: 'Retry', color: 'neutral', variant: 'outline', onClick: fetchEvent }]"
+    />
   </UContainer>
 </template>
