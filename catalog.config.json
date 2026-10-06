@@ -1,0 +1,5 @@
+{
+  "routesDir": "none",
+  "schemaFiles": [],
+  "authPatterns": ["require[A-Z][A-Za-z]*", "useAuth", "useAdmin"]
+}
